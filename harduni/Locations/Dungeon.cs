@@ -1,0 +1,169 @@
+using System;
+using System.Collections.Generic;
+using Harduni.Core;
+
+namespace Harduni.Locations;
+
+public abstract class Dungeon : Location
+{
+    protected Dungeon(World world, string name, string description) : base(world, name, description)
+    {
+    }
+
+    public abstract void Initialize(GameEngine engine);
+
+    public virtual void Reset(GameEngine engine)
+    {
+        var data = engine.State.DungeonData;
+        data.CurrentRoomIndex = 0;
+        data.IsEventActive = false;
+        foreach (var room in data.Rooms)
+        {
+            room.Reset();
+        }
+    }
+
+    public override void Update(float deltaTime, GameEngine engine)
+    {
+        var data = engine.State.DungeonData;
+        if (data.IsEventActive && data.Rooms.Count > data.CurrentRoomIndex)
+        {
+            var room = data.Rooms[data.CurrentRoomIndex];
+            if (room.EventInstance != null)
+            {
+                room.EventInstance.Update(deltaTime, engine);
+            }
+        }
+    }
+
+    public override void Render(GameEngine engine)
+    {
+        var data = engine.State.DungeonData;
+        var p = engine.State.Player;
+        
+        int width = 80;
+        try { width = Console.WindowWidth - 1; } catch { }
+
+        Console.WriteLine($"=== {Name} ===".PadRight(width));
+        string playerStats = $"{p.Name} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp}";
+        Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+        Console.WriteLine();
+        
+        if (data.Rooms.Count > 0)
+        {
+            string progress = new string('-', data.CurrentRoomIndex) + "o" + new string('-', Math.Max(0, data.Rooms.Count - data.CurrentRoomIndex - 1));
+            Console.WriteLine($"Напредък: [{progress}] (Стая {data.CurrentRoomIndex + 1}/{data.Rooms.Count})");
+            
+            if (data.CurrentRoomIndex < data.Rooms.Count)
+            {
+                var currentRoom = data.Rooms[data.CurrentRoomIndex];
+                
+                if (data.IsEventActive && currentRoom.EventInstance != null)
+                {
+                    Console.WriteLine();
+                    currentRoom.EventInstance.Render(engine);
+                    return; // Stop rendering dungeon options
+                }
+
+                if (currentRoom.IsCleared)
+                {
+                    Console.WriteLine("\nСтаята е изчистена.");
+                }
+                else if (currentRoom.EventType == 0 && currentRoom.EventInstance != null)
+                {
+                    Console.WriteLine("\nПредстои събитие!");
+                }
+                else if (currentRoom.EventType == 0)
+                {
+                    Console.WriteLine("\nСтаята изглежда празна.");
+                }
+                else if (currentRoom.EventType == 3)
+                {
+                    Console.WriteLine("\nПредстои битка с БОС!");
+                }
+                else
+                {
+                    Console.WriteLine("\nПредстои битка!");
+                }
+            }
+        }
+
+        Console.WriteLine("\nВъзможни действия:");
+        foreach (var option in Options)
+        {
+            Console.WriteLine($" {option.Id}. {option.Text}");
+        }
+    }
+
+    public override void ProcessInput(string input, GameEngine engine)
+    {
+        var data = engine.State.DungeonData;
+
+        if (data.IsEventActive && data.Rooms.Count > data.CurrentRoomIndex)
+        {
+            var room = data.Rooms[data.CurrentRoomIndex];
+            if (room.EventInstance != null)
+            {
+                room.EventInstance.ProcessInput(input, engine);
+                return; // Event takes inputs
+            }
+        }
+
+        if (!InputHandler.Handle(input, Options, out Option selectedOption))
+        {
+            selectedOption.OnSelect?.Invoke(engine);
+        }
+    }
+
+    protected void GoForward(GameEngine engine)
+    {
+        var data = engine.State.DungeonData;
+        if (data.Rooms.Count == 0) return;
+
+        var currentRoom = data.Rooms[data.CurrentRoomIndex];
+        if (!currentRoom.IsCleared)
+        {
+            if (currentRoom.EventType > 0)
+            {
+                var battleData = engine.State.BattleData;
+                battleData.Enemies = currentRoom.EnemiesToSpawn;
+                battleData.IsFinished = false;
+                battleData.BattleMessage = "Битката започва!";
+                battleData.CurrentSubPanel = null;
+                battleData.SelectedSkill = null;
+                battleData.XpGained = 0;
+                battleData.SourcePanel = this; // Store source!
+
+                currentRoom.IsCleared = true; 
+
+                engine.ChangeRootPanel(World.BattlePanel);
+            }
+            else if (currentRoom.EventInstance != null)
+            {
+                data.IsEventActive = true;
+            }
+            else
+            {
+                currentRoom.IsCleared = true;
+                AdvanceRoom(engine);
+            }
+        }
+        else
+        {
+            AdvanceRoom(engine);
+        }
+    }
+
+    protected void AdvanceRoom(GameEngine engine)
+    {
+        var data = engine.State.DungeonData;
+        data.CurrentRoomIndex++;
+        if (data.CurrentRoomIndex >= data.Rooms.Count)
+        {
+            // Fully cleared!
+            Escape(engine);
+        }
+    }
+
+    protected abstract void Escape(GameEngine engine);
+}
