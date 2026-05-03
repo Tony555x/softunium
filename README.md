@@ -1,6 +1,8 @@
 # Harduni
 
-**Harduni** is a text-based, terminal Role-Playing Game (RPG). Journey through mysterious dungeons, face off against challenging enemies like the Weak Programmer and the Boss Senior Developer, and grow your character by earning XP and leveling up. The game features real-time Active Time Battle (ATB) combat, where you must wait for your energy to fill up before executing your next move.
+**Harduni** is a text-based, terminal Role-Playing Game (RPG). Journey through
+
+това ai slop описание беше изтрито в името на Шамтка БКП
 
 ## Controls
 
