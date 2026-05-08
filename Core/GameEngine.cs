@@ -82,10 +82,11 @@ public class GameEngine
                 Console.Clear(); // Clear safely upon submission to refresh screen geometry
                 
                 string lowerInput = input.ToLower();
-                if (lowerInput == "х" || lowerInput == "хар")
+                if (lowerInput == "х" || lowerInput == "хар" || lowerInput == "@")
                 {
                     if (CurrentPanel != State.World.StatsPanel)
                     {
+                        State.LastLocationPanel = CurrentPanel;
                         PreviousRootPanel = CurrentPanel;
                         CurrentPanel = State.World.StatsPanel;
                     }

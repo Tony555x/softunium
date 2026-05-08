@@ -1,50 +1,77 @@
 using System;
+using System.Collections.Generic;
 using Harduni.Core;
 
 namespace Harduni.Panels;
 
 public class StatsPanel : IPanel
 {
+    public IPanel? CurrentSubPanel { get; set; }
+    private List<Option> _options = new();
+
     public void Update(float deltaTime, GameEngine engine) { }
+
+    private void BuildOptions(GameEngine engine)
+    {
+        _options.Clear();
+        bool inBattle = engine.PreviousRootPanel == engine.State.World.BattlePanel;
+
+        _options.Add(new Option(1, "Инвентар", "Вижте своите предмети.", (eng) => CurrentSubPanel = eng.State.World.InventoryPanel));
+        _options.Add(new Option(2, "Умения", "Вижте своите умения.", (eng) => CurrentSubPanel = eng.State.World.SkillListPanel));
+
+        if (!inBattle)
+        {
+            _options.Add(new Option(3, "Запис", "Запишете играта в някой от слотовете.", (eng) => CurrentSubPanel = new SaveSlotPanel(true)));
+            _options.Add(new Option(4, "Зареждане", "Заредете играта от някой от слотовете.", (eng) => CurrentSubPanel = new SaveSlotPanel(false)));
+        }
+    }
 
     public void Render(GameEngine engine)
     {
+        if (CurrentSubPanel != null)
+        {
+            var player = engine.State.Player;
+            if(CurrentSubPanel is not SaveSlotPanel)
+            {
+                DrawBar("Живот ", player.Hp, player.MaxHp);
+                DrawBar("Айрян ", player.Mp, player.MaxMp);
+                Console.WriteLine();
+            }
+            CurrentSubPanel.Render(engine);
+            return;
+        }
+
+        BuildOptions(engine);
+
         var p = engine.State.Player;
         Console.WriteLine("=== ХАРАКТЕРИСТИКИ И УМЕНИЯ ===");
         Console.WriteLine($"Име: {p.Name} ({p.BattleName})");
         Console.WriteLine($"Ниво: {p.Level}");
+        Console.WriteLine($"Пари: {p.Money} Лева");
         
         DrawBar("Живот ", p.Hp, p.MaxHp);
         DrawBar("Айрян ", p.Mp, p.MaxMp);
         DrawBar("Опит  ", p.Xp, p.MaxXp);
         
         string alignmentTitle = p.Alignment == 0 ? "Неутрален (0)" : 
-                                p.Alignment > 0 ? $"Петуриум ({p.Alignment})" : 
-                                $"Гамениум ({p.Alignment})";
+                                 p.Alignment > 0 ? $"Петуриум ({p.Alignment})" : 
+                                 $"Гамениум ({p.Alignment})";
         Console.WriteLine($"\nСклонност: {alignmentTitle}");
 
         Console.WriteLine("\n--- Атрибути ---");
         Console.WriteLine($"Атака    : {p.Attack}");
         Console.WriteLine($"Защита   : {p.Defence}");
         Console.WriteLine($"Скорост  : {p.Speed}");
-        Console.WriteLine($"Точност  : {p.Magic}");
-        Console.WriteLine($"Избягване: {p.Wisdom}");
+        Console.WriteLine($"Магия    : {p.Magic}");
+        Console.WriteLine($"Мъдрост  : {p.Wisdom}");
         Console.WriteLine($"Късмет   : {p.Luck}");
 
-        Console.WriteLine("\n=== УМЕНИЯ ===");
-        if (p.Skills.Count == 0)
+        Console.WriteLine("\nВъзможни действия:");
+        foreach (var opt in _options)
         {
-            Console.WriteLine("Нямате умения.");
+            Console.WriteLine($" [{opt.Id}] {opt.Text}");
         }
-        else
-        {
-            foreach (var skill in p.Skills)
-            {
-                Console.WriteLine($"- {skill.Name} ({skill.MpCost} Айрян): {skill.Description}");
-            }
-        }
-
-        Console.WriteLine("\n[Натиснете Enter за затваряне]");
+        Console.WriteLine("\n[Enter - Затваряне]");
     }
 
     private void DrawBar(string label, int current, int max)
@@ -59,6 +86,35 @@ public class StatsPanel : IPanel
 
     public void ProcessInput(string input, GameEngine engine)
     {
-        engine.ReturnToPreviousRoot();
+        if (CurrentSubPanel != null)
+        {
+            CurrentSubPanel.ProcessInput(input, engine);
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            engine.ReturnToPreviousRoot();
+            return;
+        }
+
+        BuildOptions(engine);
+        
+        // Handle И/У shortcuts first for compatibility
+        if (input.Equals("и", StringComparison.OrdinalIgnoreCase) || input.Equals("I", StringComparison.OrdinalIgnoreCase))
+        {
+            CurrentSubPanel = engine.State.World.InventoryPanel;
+            return;
+        }
+        if (input.Equals("у", StringComparison.OrdinalIgnoreCase) || input.Equals("S", StringComparison.OrdinalIgnoreCase))
+        {
+            CurrentSubPanel = engine.State.World.SkillListPanel;
+            return;
+        }
+
+        if (!InputHandler.Handle(input, _options, out Option selectedOption))
+        {
+            selectedOption.OnSelect?.Invoke(engine);
+        }
     }
 }

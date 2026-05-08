@@ -10,6 +10,7 @@ public abstract class Location : IPanel
     public string Name { get; set; }
     public string Description { get; set; }
     public List<Option> Options { get; set; }
+    public string LocationMessage { get; set; } = "";
 
     public Location(World world, string name, string description)
     {
@@ -31,6 +32,11 @@ public abstract class Location : IPanel
         Console.WriteLine($"=== {Name} ===");
         Console.WriteLine(Description);
         
+        if (!string.IsNullOrEmpty(LocationMessage))
+        {
+            Console.WriteLine($"\n[ {LocationMessage} ]");
+        }
+        
         Console.WriteLine("\nВъзможни действия:");
         foreach (var option in Options)
         {
@@ -40,6 +46,7 @@ public abstract class Location : IPanel
 
     public virtual void ProcessInput(string input, GameEngine engine)
     {
+        LocationMessage = ""; 
         if (!InputHandler.Handle(input, Options, out Option selectedOption))
         {
             selectedOption.OnSelect?.Invoke(engine);

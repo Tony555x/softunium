@@ -11,10 +11,13 @@ public class BattleData
     public List<Enemy> Enemies { get; set; } = new List<Enemy>();
     public bool IsFinished { get; set; } = false;
     public bool IsPlayerTurn { get; set; } = false;
-    public string BattleMessage { get; set; } = "Битката започва!";
+    public List<string> BattleLog { get; set; } = new List<string> { "Битката започва!" };
+    public void Log(string message) => BattleLog.Add(message);
     public IPanel CurrentSubPanel { get; set; }
     public Skill SelectedSkill { get; set; }
     public int XpGained { get; set; }
+    public int MoneyGained { get; set; }
+    public float LootMultiplier { get; set; } = 1.0f;
     public IPanel SourcePanel { get; set; }
 }
 
@@ -31,6 +34,8 @@ public class GameState
     public World World { get; set; }
     public BattleData BattleData { get; set; }
     public DungeonData DungeonData { get; set; }
+    public Dictionary<string, string> Flags { get; set; } = new();
+    public IPanel? LastLocationPanel { get; set; }
 
     public GameState()
     {

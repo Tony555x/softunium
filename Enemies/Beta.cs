@@ -4,12 +4,22 @@ namespace Harduni.Enemies;
 
 public class Beta : Enemy
 {
-    public Beta() : base("Бета", 20, 6, 3, 5, 5, 0, 5, 5) { }
+    public Beta() : base(
+        name: "Бета",
+        maxHp: 20,
+        attack: 8,
+        defence: 6,
+        speed: 5,
+        magic: 8,
+        wisdom: 0,
+        luck: 5,
+        xpReward: 5,
+        moneyReward: 10) { }
 
     public override void TakeAction(GameEngine engine)
     {
         var p = engine.State.Player;
         var ctx = this.PerformAttack(p, this.Attack);
-        engine.State.BattleData.BattleMessage = $"{Name} ви удари силно и нанесе {ctx.DamageTaken} щети!";
+        engine.State.BattleData.Log($"{Name} ви удари силно и нанесе {ctx.DamageTaken} щети!");
     }
 }

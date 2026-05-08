@@ -45,7 +45,7 @@ public class TargetSelectionPanel : IPanel
         }
     }
 
-    private void ExecuteSkill(Harduni.Enemies.Enemy target, GameEngine engine)
+    public void ExecuteSkill(Harduni.Enemies.Enemy target, GameEngine engine)
     {
         var data = engine.State.BattleData;
         var p = engine.State.Player;
@@ -53,7 +53,7 @@ public class TargetSelectionPanel : IPanel
 
         if (p.Mp < skill.MpCost)
         {
-            data.BattleMessage = $"Нямате достатъчно Айрян за {skill.Name}!";
+            data.Log($"Нямате достатъчно Айрян за {skill.Name}!");
             data.CurrentSubPanel = null;
             return;
         }
@@ -62,19 +62,9 @@ public class TargetSelectionPanel : IPanel
 
         string resultMsg = skill.Execute(p, data.Enemies, target);
         
-        data.BattleMessage = $"Използвахте {skill.Name}. {resultMsg}";
+        data.Log($"Използвахте {skill.Name}. {resultMsg}");
         
         data.IsPlayerTurn = false; // END PLAYER TURN
-        
-        if (data.Enemies.All(e => e.Hp <= 0))
-        {
-            data.IsFinished = true;
-            data.XpGained = data.Enemies.Sum(e => e.XpReward);
-            data.CurrentSubPanel = engine.State.World.BattleEndPanel;
-        }
-        else
-        {
-            data.CurrentSubPanel = null;
-        }
+        data.CurrentSubPanel = null;
     }
 }

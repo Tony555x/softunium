@@ -14,16 +14,22 @@ public enum TargetType
 public abstract class Skill
 {
     public string Name { get; set; }
-    public string Description { get; set; }
+    public string ShortDescription { get; set; }
+    public string AccurateDescription { get; set; }
     public TargetType Target { get; set; }
     public int MpCost { get; set; }
+    public bool UsableInBattle { get; set; }
+    public bool UsableOutsideBattle { get; set; }
 
-    protected Skill(string name, string description, TargetType target, int mpCost)
+    protected Skill(string name, string shortDesc, string accurateDesc, TargetType target, int mpCost, bool usableInBattle = true, bool usableOutsideBattle = false)
     {
         Name = name;
-        Description = description;
+        ShortDescription = shortDesc;
+        AccurateDescription = accurateDesc;
         Target = target;
         MpCost = mpCost;
+        UsableInBattle = usableInBattle;
+        UsableOutsideBattle = usableOutsideBattle;
     }
 
     // Returns a string which is the message to display.

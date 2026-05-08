@@ -24,13 +24,15 @@ public class BattleEndPanel : IPanel
         if (!_evaluated)
         {
             engine.State.Player.AddXp(data.XpGained);
+            engine.State.Player.Money += data.MoneyGained;
             _levelUpMessages = engine.State.Player.ProcessLevelUps();
             _evaluated = true;
         }
 
-        Console.WriteLine("\n=== БИТКАТА ПРИКЛЮЧИ ===");
-        Console.WriteLine("Победихте всички врагове!");
-        Console.WriteLine($"\nПолучихте {data.XpGained} Опит. ({engine.State.Player.Xp} / {engine.State.Player.MaxXp})");
+        Console.WriteLine("=== БИТКАТА ПРИКЛЮЧИ ===");
+        
+        Console.WriteLine($"\nОпит: +{data.XpGained} (Общо: {engine.State.Player.Xp}/{engine.State.Player.MaxXp})");
+        Console.WriteLine($"Пари: +{data.MoneyGained} Лв. (Общо: {engine.State.Player.Money})");
         
         foreach (var msg in _levelUpMessages)
         {

@@ -8,7 +8,7 @@ public static class InputHandler
 {
     // Returns true if the input was fully handled (e.g. info was shown)
     // Returns false if it should try to execute the option
-    public static bool Handle(string input, List<Option> options, out Option selectedOption)
+    public static bool Handle(string input, List<Option> options, out Option selectedOption, Action<string> displayInfo = null)
     {
         selectedOption = null;
         if (string.IsNullOrWhiteSpace(input)) return true;
@@ -17,7 +17,7 @@ public static class InputHandler
         bool isInfoRequest = false;
         string targetString = input.Trim();
 
-        if (parts.Length > 0 && parts[0].Equals("п", StringComparison.OrdinalIgnoreCase))
+        if (parts.Length > 0 && (parts[0].Equals("п", StringComparison.OrdinalIgnoreCase) || parts[0] == "?"))
         {
             isInfoRequest = true;
             if (parts.Length > 1)
@@ -47,10 +47,18 @@ public static class InputHandler
         {
             if (isInfoRequest)
             {
-                Console.WriteLine();
-                Console.WriteLine($"Информация за [{matchedOption.Text}]: {matchedOption.Info}");
-                Console.WriteLine("Натиснете Enter за продължаване...");
-                Console.ReadLine();
+                string displayName = matchedOption.BaseValue ?? matchedOption.Text;
+                if (displayInfo != null)
+                {
+                    displayInfo($"Информация за [{displayName}]: {matchedOption.Info}");
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Информация за [{displayName}]: {matchedOption.Info}");
+                    Console.WriteLine("Натиснете Enter за продължаване...");
+                    Console.ReadLine();
+                }
                 return true; // Handled info request
             }
             else

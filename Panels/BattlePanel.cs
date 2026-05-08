@@ -40,7 +40,7 @@ public class BattlePanel : IPanel
             {
                 p.Energy -= 1000;
                 data.IsPlayerTurn = true;
-                data.BattleMessage = "Ваш ред е!";
+                data.Log("Ваш ред е!");
                 return; 
             }
         }
@@ -61,13 +61,14 @@ public class BattlePanel : IPanel
         if (data.Enemies.TrueForAll(e => e.Hp <= 0))
         {
             data.IsFinished = true;
-            data.XpGained = data.Enemies.Sum(e => e.XpReward);
+            data.XpGained = (int)(data.Enemies.Sum(e => e.XpReward) * data.LootMultiplier);
+            data.MoneyGained = (int)(data.Enemies.Sum(e => e.MoneyReward) * data.LootMultiplier);
             data.CurrentSubPanel = engine.State.World.BattleEndPanel;
         }
         else if (p.Hp <= 0)
         {
             data.IsFinished = true;
-            data.BattleMessage = "БЯХТЕ ПОБЕДЕНИ!";
+            data.Log("БЯХТЕ ПОБЕДЕНИ!");
         }
     }
 
@@ -80,17 +81,24 @@ public class BattlePanel : IPanel
         Console.WriteLine("=== БИТКА ===".PadRight(width));
         
         var p = engine.State.Player;
-        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} | Енергия: {GetEnergyBar(p.Energy)}";
+        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} | Енергия: {GetEnergyBar(p.Energy, p.EnergyBarSize)}";
         Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
         Console.WriteLine();
         
-        Console.WriteLine(data.BattleMessage.PadRight(System.Math.Max(data.BattleMessage.Length, width)));
+        
+        // Render last 4 log messages
+        for (int i = 0; i < 4; i++)
+        {
+            int logIndex = data.BattleLog.Count - 4 + i;
+            string logLine = logIndex >= 0 ? data.BattleLog[logIndex] : "-";
+            Console.WriteLine(logLine.PadRight(width));
+        }
         
         Console.WriteLine("\nВрагове:");
         for (int i = 0; i < data.Enemies.Count; i++)
         {
             var e = data.Enemies[i];
-            string status = e.Hp > 0 ? $"{e.Hp}/{e.MaxHp} HP | Енергия: {GetEnergyBar(e.Energy)}" : "МЪРТЪВ".PadRight(25);
+            string status = e.Hp > 0 ? $"{e.Hp}/{e.MaxHp} HP | Енергия: {GetEnergyBar(e.Energy, e.EnergyBarSize)}" : "МЪРТЪВ".PadRight(25);
             string enemyLine = $"{i + 1}. {e.Name.PadRight(20)} - {status}";
             Console.WriteLine(enemyLine.PadRight(System.Math.Max(enemyLine.Length, width)));
         }
@@ -154,10 +162,9 @@ public class BattlePanel : IPanel
         engine.ChangeRootPanel(engine.State.World.WisdomRoom);
     }
 
-    private string GetEnergyBar(float energy)
+    private string GetEnergyBar(float energy, int segments)
     {
-        int barLength = 10;
-        int filled = (int)System.Math.Clamp(System.Math.Round((energy / 1000f) * barLength), 0, barLength);
-        return "[" + new string('█', filled) + new string('-', barLength - filled) + "]";
+        int filled = (int)System.Math.Clamp(System.Math.Round((energy / 1000f) * segments), 0, segments);
+        return "[" + new string('█', filled) + new string('-', segments - filled) + "]";
     }
 }

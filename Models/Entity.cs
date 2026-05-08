@@ -16,6 +16,8 @@ public abstract class Entity
     public int Luck { get; set; }
     
     public float Energy { get; set; }
+    public int InitialEnergyBarSize { get; set; }
+    public int EnergyBarSize { get; set; }
 
     protected Entity(string name, string battleName, int maxHp, int attack, int defence, int speed, int magic, int wisdom, int luck)
     {
@@ -54,5 +56,13 @@ public abstract class Entity
             this.Hp = 0;
             ctx.IsLethal = true;
         }
+    }
+
+    public HealContext Heal(int amount)
+    {
+        int oldHp = this.Hp;
+        this.Hp = System.Math.Min(this.MaxHp, this.Hp + amount);
+        int actual = this.Hp - oldHp;
+        return new HealContext(this, amount, actual);
     }
 }

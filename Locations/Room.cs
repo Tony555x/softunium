@@ -9,28 +9,14 @@ public class Room
 {
     public int EventType { get; set; } // 0 = event/empty, > 0 enemies
     public List<Enemy> EnemiesToSpawn { get; set; }
-    public Func<List<Enemy>> EnemySpawner { get; set; }
     public IPanel EventInstance { get; set; }
+    public float LootMultiplier { get; set; } = 1.0f;
     public bool IsCleared { get; set; } = false;
 
-    public Room(int eventType, Func<List<Enemy>> enemySpawner = null, IPanel eventInstance = null)
+    public Room(int eventType, List<Enemy> enemiesToSpawn = null, IPanel eventInstance = null)
     {
         EventType = eventType;
-        EnemySpawner = enemySpawner;
+        EnemiesToSpawn = enemiesToSpawn ?? new List<Enemy>();
         EventInstance = eventInstance;
-        Reset();
-    }
-
-    public void Reset()
-    {
-        IsCleared = false;
-        if (EnemySpawner != null)
-        {
-            EnemiesToSpawn = EnemySpawner();
-        }
-        else
-        {
-            EnemiesToSpawn = new List<Enemy>();
-        }
     }
 }

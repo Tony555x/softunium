@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Harduni.Enemies;
 using Harduni.Skills;
+using Harduni.Core;
+using Harduni.Items;
 
 namespace Harduni.Models;
 
@@ -17,31 +19,33 @@ public class Player : Entity
     
     // Alignment
     public int Alignment { get; set; } // Positive = Peturium, Negative = Gamenium
+    public int Money { get; set; }
 
-    public List<Item> Inventory { get; set; }
+    public Inventory Inventory { get; private set; }
     public List<Skill> Skills { get; set; }
 
     public Player() : base(
-        "Бойомир Шамтката (БКПто)", 
-        "Шамтка", 
-        20,  // MaxHp
-        10,  // Attack
-        6,   // Defence
-        5,   // Speed
-        8,   // Magic
-        0,   // Wisdom
-        1    // Luck
+        name: "Бойомир Шамтката (БКПто)", 
+        battleName: "Шамтка", 
+        maxHp: 20,
+        attack: 10,
+        defence: 6,
+        speed: 5,
+        magic: 8,
+        wisdom: 0,
+        luck: 1
     )
     {
-        MaxMp = 50;
-        Mp = 50;
+        MaxMp = 10;
+        Mp = 10;
         
         Level = 1;
         Xp = 0;
         Alignment = 0;
+        Money = 0;
 
-        Inventory = new List<Item>();
-        Inventory.Add(new Item("Малка отвара", "Възстановява 20 Живот.", (p) => p.Hp = System.Math.Min(p.Hp + 20, p.MaxHp)));
+        Inventory = new Inventory();
+        Inventory.AddItem(new SmallPotion());
 
         Skills = new List<Skill>();
     }
@@ -54,52 +58,85 @@ public class Player : Entity
     public List<string> ProcessLevelUps()
     {
         var messages = new List<string>();
+        int initialLevel = Level;
         
         while (Xp >= MaxXp)
         {
             Xp -= MaxXp;
             Level++;
-            
-            int L = Level - 1;
-            
-            int newMaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.1);
-            int newMaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.02);
-            int newAtk = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.08);
-            int newDef = (int)(6 + L * 1.5 + System.Math.Pow(L, 2) * 0.04);
-            int newMag = (int)(8 + L * 1.8 + System.Math.Pow(L, 2) * 0.06);
-            int newSpd = (int)(5 + (double)L / 2 + System.Math.Pow(L, 2) * 0.01);
-            int newLuck = (int)(1 + (double)L / 10 + System.Math.Pow(L, 2) / 500);
-            int newWis = (int)(0 + (double)L / 40);
+        }
 
-            int hpGain = newMaxHp - MaxHp;
-            int mpGain = newMaxMp - MaxMp;
-            int atkGain = newAtk - Attack;
-            int defGain = newDef - Defence;
-            int magGain = newMag - Magic;
-            int spdGain = newSpd - Speed;
-            int luckGain = newLuck - Luck;
-            int wisGain = newWis - Wisdom;
-
-            MaxHp = newMaxHp;
-            MaxMp = newMaxMp;
-            Attack = newAtk;
-            Defence = newDef;
-            Magic = newMag;
-            Speed = newSpd;
-            Luck = newLuck;
-            Wisdom = newWis;
-
+        if (Level > initialLevel)
+        {
             messages.Add($"\n*** ДОСТИГНАХТЕ НИВО {Level}! ***");
-            messages.Add($"+{hpGain} Макс. Живот (Общо: {MaxHp})");
-            messages.Add($"+{mpGain} Макс. Айрян (Общо: {MaxMp})");
-            messages.Add($"+{atkGain} Атака (Общо: {Attack})");
-            messages.Add($"+{defGain} Защита (Общо: {Defence})");
-            if(spdGain > 0) messages.Add($"+{spdGain} Скорост (Общо: {Speed})");
-            if (magGain > 0) messages.Add($"+{magGain} Магия (Общо: {Magic})");
-            if (wisGain > 0) messages.Add($"+{wisGain} Мъдрост (Общо: {Wisdom})");
-            if (luckGain > 0) messages.Add($"+{luckGain} Късмет (Общо: {Luck})");
+            messages.AddRange(RecalculateBaseStats());
         }
 
         return messages;
     }
+
+    public List<string> RecalculateBaseStats()
+    {
+        var messages = new List<string>();
+        int L = Level - 1;
+
+        int oldMaxHp = MaxHp;
+        int oldMaxMp = MaxMp;
+        int oldAtk = Attack;
+        int oldDef = Defence;
+        int oldMag = Magic;
+        int oldSpd = Speed;
+        int oldLuck = Luck;
+        int oldWis = Wisdom;
+
+        MaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.1);
+        MaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.02);
+        Attack = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.08);
+        Defence = (int)(6 + L * 1.5 + System.Math.Pow(L, 2) * 0.04);
+        Magic = (int)(8 + L * 1.8 + System.Math.Pow(L, 2) * 0.06);
+        Speed = (int)(5 + (double)L / 2 + System.Math.Pow(L, 2) * 0.01);
+        Luck = (int)(1 + (double)L / 10 + System.Math.Pow(L, 2) / 500);
+        Wisdom = (int)(0 + (double)L / 40);
+
+        int hpGain = MaxHp - oldMaxHp;
+        int mpGain = MaxMp - oldMaxMp;
+        int atkGain = Attack - oldAtk;
+        int defGain = Defence - oldDef;
+        int magGain = Magic - oldMag;
+        int spdGain = Speed - oldSpd;
+        int luckGain = Luck - oldLuck;
+        int wisGain = Wisdom - oldWis;
+
+        if (hpGain > 0 || mpGain > 0 || atkGain > 0 || defGain > 0)
+        {
+            messages.Add($"+{hpGain} Макс. Живот, +{mpGain} Макс. Айрян, +{atkGain} Атака, +{defGain} Защита");
+        }
+
+        var otherStatsList = new List<string>();
+        if (magGain > 0) otherStatsList.Add($"+{magGain} Магия");
+        if (spdGain > 0) otherStatsList.Add($"+{spdGain} Скорост");
+        if (luckGain > 0) otherStatsList.Add($"+{luckGain} Късмет");
+        if (wisGain > 0) otherStatsList.Add($"+{wisGain} Мъдрост");
+
+        if (otherStatsList.Count > 0)
+            messages.Add(string.Join(", ", otherStatsList));
+
+        // Skill checks
+        CheckAndAddSkill(2, new HeavyAttack(), messages);
+        CheckAndAddSkill(3, new Heal(), messages);
+        CheckAndAddSkill(4, new Cleave(), messages);
+
+        return messages;
+    }
+
+    private void CheckAndAddSkill(int minLevel, Skill skill, List<string> messages)
+    {
+        if (Level >= minLevel && !Skills.Exists(s => s.Name == skill.Name))
+        {
+            Skills.Add(skill);
+            messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+        }
+    }
+
+
 }

@@ -10,18 +10,7 @@ public abstract class Dungeon : Location
     {
     }
 
-    public abstract void Initialize(GameEngine engine);
-
-    public virtual void Reset(GameEngine engine)
-    {
-        var data = engine.State.DungeonData;
-        data.CurrentRoomIndex = 0;
-        data.IsEventActive = false;
-        foreach (var room in data.Rooms)
-        {
-            room.Reset();
-        }
-    }
+    public abstract void Enter(GameEngine engine);
 
     public override void Update(float deltaTime, GameEngine engine)
     {
@@ -125,18 +114,8 @@ public abstract class Dungeon : Location
         {
             if (currentRoom.EventType > 0)
             {
-                var battleData = engine.State.BattleData;
-                battleData.Enemies = currentRoom.EnemiesToSpawn;
-                battleData.IsFinished = false;
-                battleData.BattleMessage = "Битката започва!";
-                battleData.CurrentSubPanel = null;
-                battleData.SelectedSkill = null;
-                battleData.XpGained = 0;
-                battleData.SourcePanel = this; // Store source!
-
                 currentRoom.IsCleared = true; 
-
-                engine.ChangeRootPanel(World.BattlePanel);
+                BattleManager.StartBattle(engine, currentRoom.EnemiesToSpawn, this, currentRoom.LootMultiplier);
             }
             else if (currentRoom.EventInstance != null)
             {
