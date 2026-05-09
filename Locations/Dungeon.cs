@@ -35,7 +35,16 @@ public abstract class Dungeon : Location
 
         Console.WriteLine($"=== {Name} ===".PadRight(width));
         string playerStats = $"{p.Name} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp}";
-        Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+        if (p.Hp <= 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+            Console.ResetColor();
+        }
+        else
+        {
+            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+        }
         Console.WriteLine();
         
         if (data.Rooms.Count > 0)
@@ -94,6 +103,7 @@ public abstract class Dungeon : Location
             if (room.EventInstance != null)
             {
                 room.EventInstance.ProcessInput(input, engine);
+                if (!data.IsEventActive) room.IsCleared = true;
                 return; // Event takes inputs
             }
         }
@@ -119,6 +129,7 @@ public abstract class Dungeon : Location
             }
             else if (currentRoom.EventInstance != null)
             {
+                currentRoom.IsCleared = true;
                 data.IsEventActive = true;
             }
             else

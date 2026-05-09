@@ -31,9 +31,28 @@ public class BattlePanel : IPanel
 
         if (data.IsPlayerTurn) return;
 
+        var p = engine.State.Player;
+        
+        if (p.Hp <= 0)
+        {
+            if (data.PlayerDeathTimer == 0f)
+            {
+                data.Log("БЯХТЕ ПОБЕДЕНИ!");
+            }
+
+            data.PlayerDeathTimer += deltaTime;
+
+            if (data.PlayerDeathTimer >= 2f)
+            {
+                data.IsFinished = true;
+                data.PlayerDeathTimer = 0f;
+                engine.ChangeRootPanel(engine.State.World.DeathPanel);
+            }
+            return;
+        }
+
         float tickRate = 60f; 
 
-        var p = engine.State.Player;
         if (p.Hp > 0)
         {
             p.Energy += p.Speed * deltaTime * tickRate;
@@ -69,11 +88,6 @@ public class BattlePanel : IPanel
             data.MoneyGained = (int)(data.Enemies.Sum(e => e.MoneyReward) * data.LootMultiplier);
             data.CurrentSubPanel = engine.State.World.BattleEndPanel;
         }
-        else if (p.Hp <= 0)
-        {
-            data.IsFinished = true;
-            data.Log("БЯХТЕ ПОБЕДЕНИ!");
-        }
     }
 
     public void Render(GameEngine engine)
@@ -87,7 +101,18 @@ public class BattlePanel : IPanel
         var p = engine.State.Player;
         string pStatusStr = p.Status.GetCombinedDisplayString();
         string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} | Енергия: {GetEnergyBar(p.Energy, p.EnergyBarSize)} {pStatusStr}";
-        Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+        
+        if (p.Hp <= 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+            Console.ResetColor();
+        }
+        else
+        {
+            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+        }
+        
         Console.WriteLine();
         
         

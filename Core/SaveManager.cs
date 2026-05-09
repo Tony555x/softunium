@@ -134,8 +134,14 @@ public static class SaveManager
         var world = engine.State.World;
         IPanel targetPanel = panelName switch
         {
-            "WisdomRoom" => world.WisdomRoom,
+            "WisdomRoomLocation" => world.WisdomRoom,
             "WisdomDungeon" => world.WisdomDungeon,
+            "ProgressRoomLocation" => world.ProgressRoom,
+            "ProgressDungeon" => world.ProgressDungeon,
+            "TeamworkRoomLocation" => world.TeamworkRoom,
+            "TeamworkDungeon" => world.TeamworkDungeon,
+            "IntegrityRoomLocation" => world.IntegrityRoom,
+            "IntegrityDungeon" => world.IntegrityDungeon,
             "KordorLocation" => world.Kordor,
             _ => null
         };

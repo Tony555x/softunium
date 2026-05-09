@@ -62,7 +62,7 @@ public class WisdomDungeon : Dungeon
                 }
                 else if (eventType == 3)
                 {
-                    enemies.Add(new BossSenior());
+                    enemies.Add(new OligofrenBoss());
                 }
                 
                 var room = new Room(eventType, enemies);

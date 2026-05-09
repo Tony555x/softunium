@@ -2,11 +2,11 @@ using Harduni.Core;
 
 namespace Harduni.Enemies;
 
-public class BossSenior : Enemy
+public class OligofrenBoss : Enemy
 {
     private int _turnCount = 0;
 
-    public BossSenior() : base(
+    public OligofrenBoss() : base(
         name: "Олигофрен (БОС)",
         maxHp: 100,
         attack: 15,

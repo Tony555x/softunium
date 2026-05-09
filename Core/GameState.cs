@@ -11,6 +11,7 @@ public class BattleData
     public List<Enemy> Enemies { get; set; } = new List<Enemy>();
     public bool IsFinished { get; set; } = false;
     public bool IsPlayerTurn { get; set; } = false;
+    public float PlayerDeathTimer { get; set; } = 0f;
     public List<string> BattleLog { get; set; } = new List<string> { "Битката започва!" };
     public void Log(string message) => BattleLog.Add(message);
     public IPanel CurrentSubPanel { get; set; }

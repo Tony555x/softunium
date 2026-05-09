@@ -12,11 +12,21 @@ public class World
     public TargetSelectionPanel TargetSelectionPanel { get; private set; }
     public SkillListPanel SkillListPanel { get; private set; }
     public BattleEndPanel BattleEndPanel { get; private set; }
+    public DeathPanel DeathPanel { get; private set; }
     
     // Locations
     public KordorLocation Kordor { get; private set; }
     public WisdomRoomLocation WisdomRoom { get; private set; }
     public WisdomDungeon WisdomDungeon { get; private set; }
+    
+    public ProgressRoomLocation ProgressRoom { get; private set; }
+    public ProgressDungeon ProgressDungeon { get; private set; }
+    
+    public TeamworkRoomLocation TeamworkRoom { get; private set; }
+    public TeamworkDungeon TeamworkDungeon { get; private set; }
+    
+    public IntegrityRoomLocation IntegrityRoom { get; private set; }
+    public IntegrityDungeon IntegrityDungeon { get; private set; }
 
     public World()
     {
@@ -27,10 +37,20 @@ public class World
         TargetSelectionPanel = new TargetSelectionPanel();
         SkillListPanel = new SkillListPanel();
         BattleEndPanel = new BattleEndPanel();
+        DeathPanel = new DeathPanel();
         
         Kordor = new KordorLocation(this);
         WisdomRoom = new WisdomRoomLocation(this);
         WisdomDungeon = new WisdomDungeon(this);
+        
+        ProgressRoom = new ProgressRoomLocation(this);
+        ProgressDungeon = new ProgressDungeon(this);
+        
+        TeamworkRoom = new TeamworkRoomLocation(this);
+        TeamworkDungeon = new TeamworkDungeon(this);
+        
+        IntegrityRoom = new IntegrityRoomLocation(this);
+        IntegrityDungeon = new IntegrityDungeon(this);
     }
 
     public void Initialize(GameEngine engine)
@@ -39,5 +59,14 @@ public class World
         Kordor.InitLinks();
         WisdomRoom.InitLinks();
         WisdomDungeon.InitLinks();
+        
+        ProgressRoom.InitLinks();
+        ProgressDungeon.InitLinks();
+        
+        TeamworkRoom.InitLinks();
+        TeamworkDungeon.InitLinks();
+        
+        IntegrityRoom.InitLinks();
+        IntegrityDungeon.InitLinks();
     }
 }

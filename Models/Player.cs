@@ -24,7 +24,7 @@ public class Player : Entity
     public Player() : base(
         name: "Бойомир Шамтката (БКПто)", 
         battleName: "Шамтка", 
-        maxHp: 20,
+        maxHp: 1,//temporary 1
         attack: 10,
         defence: 6,
         speed: 5,

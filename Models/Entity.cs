@@ -74,14 +74,14 @@ public abstract class Entity
         int oldMaxHp = MaxHp;
         int oldMaxMp = MaxMp;
 
-        MaxHp = (int)((BaseMaxHp + ctx.MaxHpAdd) * ctx.MaxHpMult);
-        MaxMp = (int)((BaseMaxMp + ctx.MaxMpAdd) * ctx.MaxMpMult);
-        Attack = (int)((BaseAttack + ctx.AtkAdd) * ctx.AtkMult);
-        Defence = (int)((BaseDefence + ctx.DefAdd) * ctx.DefMult);
-        Speed = (int)((BaseSpeed + ctx.SpdAdd) * ctx.SpdMult);
-        Magic = (int)((BaseMagic + ctx.MagAdd) * ctx.MagMult);
-        Wisdom = (int)((BaseWisdom + ctx.WisAdd) * ctx.WisMult);
-        Luck = (int)((BaseLuck + ctx.LuckAdd) * ctx.LuckMult);
+        MaxHp = (int)((BaseMaxHp + ctx.MaxHpAdd) * ctx.GetMultiplier(ctx.MaxHpMult));
+        MaxMp = (int)((BaseMaxMp + ctx.MaxMpAdd) * ctx.GetMultiplier(ctx.MaxMpMult));
+        Attack = (int)((BaseAttack + ctx.AtkAdd) * ctx.GetMultiplier(ctx.AtkMult));
+        Defence = (int)((BaseDefence + ctx.DefAdd) * ctx.GetMultiplier(ctx.DefMult));
+        Speed = (int)((BaseSpeed + ctx.SpdAdd) * ctx.GetMultiplier(ctx.SpdMult));
+        Magic = (int)((BaseMagic + ctx.MagAdd) * ctx.GetMultiplier(ctx.MagMult));
+        Wisdom = (int)((BaseWisdom + ctx.WisAdd) * ctx.GetMultiplier(ctx.WisMult));
+        Luck = (int)((BaseLuck + ctx.LuckAdd) * ctx.GetMultiplier(ctx.LuckMult));
 
         // Clamping logic: if max decreases, clamp current to new max.
         if (MaxHp < oldMaxHp && Hp > MaxHp) Hp = MaxHp;
