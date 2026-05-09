@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Harduni.Core;
+using Harduni.Models;
 
 namespace Harduni.Panels;
 
@@ -41,6 +42,7 @@ public class BattlePanel : IPanel
                 p.Energy -= 1000;
                 data.IsPlayerTurn = true;
                 data.Log("Ваш ред е!");
+                p.TriggerEvent(GameEvent.StartTurn, new TurnContext(engine));
                 return; 
             }
         }
@@ -53,7 +55,9 @@ public class BattlePanel : IPanel
                 if (e.Energy >= 1000)
                 {
                     e.Energy -= 1000;
-                    e.TakeAction(engine); 
+                    e.TriggerEvent(GameEvent.StartTurn, new TurnContext(engine));
+                    if (e.Hp > 0) e.TakeAction(engine); 
+                    e.TriggerEvent(GameEvent.EndTurn, new TurnContext(engine));
                 }
             }
         }
@@ -81,7 +85,8 @@ public class BattlePanel : IPanel
         Console.WriteLine("=== БИТКА ===".PadRight(width));
         
         var p = engine.State.Player;
-        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} | Енергия: {GetEnergyBar(p.Energy, p.EnergyBarSize)}";
+        string pStatusStr = p.Status.GetCombinedDisplayString();
+        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} | Енергия: {GetEnergyBar(p.Energy, p.EnergyBarSize)} {pStatusStr}";
         Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
         Console.WriteLine();
         
@@ -98,7 +103,8 @@ public class BattlePanel : IPanel
         for (int i = 0; i < data.Enemies.Count; i++)
         {
             var e = data.Enemies[i];
-            string status = e.Hp > 0 ? $"{e.Hp}/{e.MaxHp} HP | Енергия: {GetEnergyBar(e.Energy, e.EnergyBarSize)}" : "МЪРТЪВ".PadRight(25);
+            string eStatusStr = e.Status.GetCombinedDisplayString();
+            string status = e.Hp > 0 ? $"{e.Hp}/{e.MaxHp} HP | Енергия: {GetEnergyBar(e.Energy, e.EnergyBarSize)} {eStatusStr}" : "МЪРТЪВ".PadRight(25);
             string enemyLine = $"{i + 1}. {e.Name.PadRight(20)} - {status}";
             Console.WriteLine(enemyLine.PadRight(System.Math.Max(enemyLine.Length, width)));
         }

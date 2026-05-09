@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Harduni.Core;
+using Harduni.Models;
 using Harduni.Skills;
 
 namespace Harduni.Panels;
@@ -64,6 +65,7 @@ public class TargetSelectionPanel : IPanel
         
         data.Log($"Използвахте {skill.Name}. {resultMsg}");
         
+        p.TriggerEvent(GameEvent.EndTurn, new TurnContext(engine));
         data.IsPlayerTurn = false; // END PLAYER TURN
         data.CurrentSubPanel = null;
     }

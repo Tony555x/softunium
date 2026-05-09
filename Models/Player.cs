@@ -9,9 +9,6 @@ namespace Harduni.Models;
 
 public class Player : Entity
 {
-    public int MaxMp { get; set; }
-    public int Mp { get; set; }
-    
     // Level and XP
     public int Level { get; set; }
     public int Xp { get; set; }
@@ -36,8 +33,8 @@ public class Player : Entity
         luck: 1
     )
     {
-        MaxMp = 10;
-        Mp = 10;
+        BaseMaxMp = 10;
+        InitFullStats();
         
         Level = 1;
         Xp = 0;
@@ -80,32 +77,34 @@ public class Player : Entity
         var messages = new List<string>();
         int L = Level - 1;
 
-        int oldMaxHp = MaxHp;
-        int oldMaxMp = MaxMp;
-        int oldAtk = Attack;
-        int oldDef = Defence;
-        int oldMag = Magic;
-        int oldSpd = Speed;
-        int oldLuck = Luck;
-        int oldWis = Wisdom;
+        int oldMaxHp = BaseMaxHp;
+        int oldMaxMp = BaseMaxMp;
+        int oldAtk = BaseAttack;
+        int oldDef = BaseDefence;
+        int oldMag = BaseMagic;
+        int oldSpd = BaseSpeed;
+        int oldLuck = BaseLuck;
+        int oldWis = BaseWisdom;
 
-        MaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.1);
-        MaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.02);
-        Attack = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.08);
-        Defence = (int)(6 + L * 1.5 + System.Math.Pow(L, 2) * 0.04);
-        Magic = (int)(8 + L * 1.8 + System.Math.Pow(L, 2) * 0.06);
-        Speed = (int)(5 + (double)L / 2 + System.Math.Pow(L, 2) * 0.01);
-        Luck = (int)(1 + (double)L / 10 + System.Math.Pow(L, 2) / 500);
-        Wisdom = (int)(0 + (double)L / 40);
+        BaseMaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.1);
+        BaseMaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.02);
+        BaseAttack = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.08);
+        BaseDefence = (int)(6 + L * 1.5 + System.Math.Pow(L, 2) * 0.04);
+        BaseMagic = (int)(8 + L * 1.8 + System.Math.Pow(L, 2) * 0.06);
+        BaseSpeed = (int)(5 + (double)L / 2 + System.Math.Pow(L, 2) * 0.01);
+        BaseLuck = (int)(1 + (double)L / 10 + System.Math.Pow(L, 2) / 500);
+        BaseWisdom = (int)(0 + (double)L / 40);
 
-        int hpGain = MaxHp - oldMaxHp;
-        int mpGain = MaxMp - oldMaxMp;
-        int atkGain = Attack - oldAtk;
-        int defGain = Defence - oldDef;
-        int magGain = Magic - oldMag;
-        int spdGain = Speed - oldSpd;
-        int luckGain = Luck - oldLuck;
-        int wisGain = Wisdom - oldWis;
+        RecalcStats();
+
+        int hpGain = BaseMaxHp - oldMaxHp;
+        int mpGain = BaseMaxMp - oldMaxMp;
+        int atkGain = BaseAttack - oldAtk;
+        int defGain = BaseDefence - oldDef;
+        int magGain = BaseMagic - oldMag;
+        int spdGain = BaseSpeed - oldSpd;
+        int luckGain = BaseLuck - oldLuck;
+        int wisGain = BaseWisdom - oldWis;
 
         if (hpGain > 0 || mpGain > 0 || atkGain > 0 || defGain > 0)
         {
@@ -138,5 +137,9 @@ public class Player : Entity
         }
     }
 
-
+    public override void TriggerEvent(GameEvent ev, EventContext ctx)
+    {
+        // Future: trigger equipment, passives, etc.
+        base.TriggerEvent(ev, ctx);
+    }
 }

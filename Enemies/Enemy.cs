@@ -13,6 +13,7 @@ public abstract class Enemy : Entity
     {
         XpReward = xpReward;
         MoneyReward = moneyReward;
+        InitFullStats();
     }
 
     public abstract void TakeAction(GameEngine engine);

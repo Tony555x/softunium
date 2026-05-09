@@ -1,6 +1,6 @@
 namespace Harduni.Models;
 
-public class HealContext
+public class HealContext : EventContext
 {
     public Entity Target { get; set; }
     public int HealAmount { get; set; }

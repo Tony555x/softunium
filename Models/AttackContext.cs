@@ -1,6 +1,6 @@
 namespace Harduni.Models;
 
-public class AttackContext
+public class AttackContext : EventContext
 {
     public Entity Attacker { get; set; }
     public Entity Target { get; set; }

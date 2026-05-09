@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Harduni.Core;
+using Harduni.Models;
 using Harduni.Items;
 
 namespace Harduni.Panels;
@@ -36,6 +37,7 @@ public class InventoryPanel : IPanel
                 {
                     eng.State.BattleData.Log($"{result}");
                     eng.State.BattleData.CurrentSubPanel = null;
+                    p.TriggerEvent(GameEvent.EndTurn, new TurnContext(eng));
                     eng.State.BattleData.IsPlayerTurn = false;
                 }
                 else
