@@ -13,6 +13,7 @@ public class TargetSelectionPanel : IPanel
     }
 
     public void Update(float deltaTime, GameEngine engine) { }
+    public void OnOpen(GameEngine engine) { }
 
     public void Render(GameEngine engine)
     {

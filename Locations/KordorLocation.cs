@@ -8,13 +8,9 @@ public class KordorLocation : Location
     {
     }
 
-    public override void InitLinks()
+    public override void OnOpen(GameEngine engine)
     {
-    }
-
-    public override void Update(float deltaTime, GameEngine engine)
-    {
-        Options.Clear();
+        base.OnOpen(engine);
         Options.Add(new Option(1, "Към Стая Уйздом", "Път, който води към тайнствената Стая Уйздом.", (eng) => eng.ChangeRootPanel(World.WisdomRoom)));
         
         int offset = 1;
@@ -34,5 +30,10 @@ public class KordorLocation : Location
             this.LocationMessage = "Починахте си добре. Всички показатели са възстановени!";
         }));
         Options.Add(new Option(offset + 2, "Изход", "Спира играта.", (eng) => eng.Stop()));
+    }
+
+    public override void Update(float deltaTime, GameEngine engine)
+    {
+        // Keep empty to prevent memory leak
     }
 }

@@ -6,29 +6,30 @@ namespace Harduni.Enemies;
 
 public class SmellyProgrammer : Enemy
 {
-    private static readonly Random _rand = new();
+    private int _turnCount = 0;
 
     public SmellyProgrammer() : base(
         name: "Смрадлив Програмист",
-        maxHp: 30,
-        attack: 10,
-        defence: 7,
-        speed: 8,
-        magic: 10,
+        maxHp: 55,
+        attack: 12,
+        defence: 10,
+        speed: 7,
+        magic: 12,
         wisdom: 0,
-        luck: 3,
-        xpReward: 12,
+        luck: 1,
+        xpReward: 22,
         moneyReward: 12) { }
 
     public override void TakeAction(GameEngine engine)
     {
         var p = engine.State.Player;
+        _turnCount++;
         
-        if (_rand.Next(100) < 35) // 35% chance to poison
+        if (_turnCount % 3 == 1)
         {
-            var ctx = this.PerformAttack(p, this.Attack - 2); 
-            p.Status.ApplyStatus(new PoisonStatus(2));
-            engine.State.BattleData.Log($"{Name} хвърли мръсни чорапи! Нанесе {ctx.DamageTaken} щети и ви отрови (2 стака)!");
+            int poisonStacks = this.Magic / 2;
+            p.Status.ApplyStatus(new PoisonStatus(poisonStacks));
+            engine.State.BattleData.Log($"{Name} хвърли мръсни чорапи и ви отрови ({poisonStacks} стака)");
         }
         else
         {

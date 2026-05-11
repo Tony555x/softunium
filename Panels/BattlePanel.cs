@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Harduni.Core;
 using Harduni.Models;
+using Harduni.Skills;
 
 namespace Harduni.Panels;
 
@@ -16,7 +17,8 @@ public class BattlePanel : IPanel
         _options.Add(new Option(1, "Атака", "Извършва основната атака.", OpenAttackTargeting));
         _options.Add(new Option(2, "Умения", "Списък с вашите умения.", OpenSkills));
         _options.Add(new Option(3, "Инвентар", "Отваря инвентара с предмети.", OpenInventory));
-        _options.Add(new Option(4, "Бягство", "Бягство от битката.", Escape));
+        _options.Add(new Option(4, "Анализ", "Прегледайте статистиките и ефектите на целта.", OpenAnalysis));
+        _options.Add(new Option(5, "Бягство", "Бягство от битката.", Escape));
     }
 
     public void Update(float deltaTime, GameEngine engine)
@@ -173,18 +175,29 @@ public class BattlePanel : IPanel
 
     private void OpenAttackTargeting(GameEngine engine)
     {
-        engine.State.BattleData.SelectedSkill = new Harduni.Skills.BasicAttack();
+        var skill = new BasicAttack();
+
+        engine.State.BattleData.SelectedSkill = skill;
         engine.State.BattleData.CurrentSubPanel = engine.State.World.TargetSelectionPanel;
+        engine.State.World.TargetSelectionPanel.OnOpen(engine);
     }
 
     private void OpenSkills(GameEngine engine)
     {
         engine.State.BattleData.CurrentSubPanel = engine.State.World.SkillListPanel;
+        engine.State.World.SkillListPanel.OnOpen(engine);
     }
 
     private void OpenInventory(GameEngine engine)
     {
         engine.State.BattleData.CurrentSubPanel = engine.State.World.InventoryPanel;
+        engine.State.World.InventoryPanel.OnOpen(engine);
+    }
+
+    private void OpenAnalysis(GameEngine engine)
+    {
+        engine.State.BattleData.CurrentSubPanel = engine.State.World.AnalysisTargetSelectionPanel;
+        engine.State.World.AnalysisTargetSelectionPanel.OnOpen(engine);
     }
 
     private void Escape(GameEngine engine)

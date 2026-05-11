@@ -13,6 +13,8 @@ public class World
     public SkillListPanel SkillListPanel { get; private set; }
     public BattleEndPanel BattleEndPanel { get; private set; }
     public DeathPanel DeathPanel { get; private set; }
+    public AnalysisTargetSelectionPanel AnalysisTargetSelectionPanel { get; private set; }
+    public AnalysisResultPanel AnalysisResultPanel { get; private set; }
     
     // Locations
     public KordorLocation Kordor { get; private set; }
@@ -38,6 +40,8 @@ public class World
         SkillListPanel = new SkillListPanel();
         BattleEndPanel = new BattleEndPanel();
         DeathPanel = new DeathPanel();
+        AnalysisTargetSelectionPanel = new AnalysisTargetSelectionPanel();
+        AnalysisResultPanel = new AnalysisResultPanel();
         
         Kordor = new KordorLocation(this);
         WisdomRoom = new WisdomRoomLocation(this);
@@ -53,20 +57,5 @@ public class World
         IntegrityDungeon = new IntegrityDungeon(this);
     }
 
-    public void Initialize(GameEngine engine)
-    {
-        // 2. Initialization Phase
-        Kordor.InitLinks();
-        WisdomRoom.InitLinks();
-        WisdomDungeon.InitLinks();
-        
-        ProgressRoom.InitLinks();
-        ProgressDungeon.InitLinks();
-        
-        TeamworkRoom.InitLinks();
-        TeamworkDungeon.InitLinks();
-        
-        IntegrityRoom.InitLinks();
-        IntegrityDungeon.InitLinks();
-    }
+
 }

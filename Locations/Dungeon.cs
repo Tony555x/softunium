@@ -151,8 +151,15 @@ public abstract class Dungeon : Location
         if (data.CurrentRoomIndex >= data.Rooms.Count)
         {
             // Fully cleared!
-            Escape(engine);
+            PerformEscape(engine);
         }
+    }
+
+    protected void PerformEscape(GameEngine engine)
+    {
+        engine.State.Player.Status.ClearAll();
+        engine.State.Player.RecalcStats();
+        Escape(engine);
     }
 
     protected abstract void Escape(GameEngine engine);

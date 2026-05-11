@@ -22,9 +22,9 @@ public abstract class Location : IPanel
 
     public virtual void Update(float deltaTime, GameEngine engine) { }
 
-    public virtual void InitLinks()
+    public virtual void OnOpen(GameEngine engine)
     {
-        // Override in derived classes to setup links and options
+        Options.Clear();
     }
 
     public virtual void Render(GameEngine engine)

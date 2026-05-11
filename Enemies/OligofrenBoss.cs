@@ -13,8 +13,8 @@ public class OligofrenBoss : Enemy
         defence: 10,
         speed: 5,
         magic: 15,
-        wisdom: 10,
-        luck: 15,
+        wisdom: 0,
+        luck: 1,
         xpReward: 40,
         moneyReward: 100) { }
 

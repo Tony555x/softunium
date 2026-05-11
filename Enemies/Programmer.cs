@@ -6,28 +6,29 @@ namespace Harduni.Enemies;
 
 public class Programmer : Enemy
 {
-    private static readonly Random _rand = new();
+    private int _turnCount = 0;
 
     public Programmer() : base(
         name: "Програмист",
-        maxHp: 35,
-        attack: 12,
-        defence: 8,
+        maxHp: 65,
+        attack: 15,
+        defence: 12,
         speed: 6,
-        magic: 8,
-        wisdom: 2,
-        luck: 6,
-        xpReward: 10,
+        magic: 10,
+        wisdom: 0,
+        luck: 1,
+        xpReward: 20,
         moneyReward: 15) { }
 
     public override void TakeAction(GameEngine engine)
     {
         var p = engine.State.Player;
+        _turnCount++;
         
-        if (_rand.Next(100) < 30) // 30% chance to debuff
+        if (_turnCount % 3 == 2)
         {
             var ctx = this.PerformAttack(p, this.Attack / 2); // weaker hit
-            p.Status.ApplyStatus(new AtkDownStatus(3, 0.15f));
+            p.Status.ApplyStatus(new AtkDownStatus(3, 0.25f));
             p.RecalcStats();
             engine.State.BattleData.Log($"{Name} изпрати объркващ код! Нанесе {ctx.DamageTaken} щети и намали атаката ви!");
         }

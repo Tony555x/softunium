@@ -26,6 +26,10 @@ public class BattleEndPanel : IPanel
             engine.State.Player.AddXp(data.XpGained);
             engine.State.Player.Money += data.MoneyGained;
             _levelUpMessages = engine.State.Player.ProcessLevelUps();
+            
+            engine.State.Player.Status.ClearNonPersistent();
+            engine.State.Player.RecalcStats();
+            
             _evaluated = true;
         }
 

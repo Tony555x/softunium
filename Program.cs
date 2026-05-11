@@ -15,8 +15,7 @@ class Program
 
         Engine = new GameEngine();
 
-        // Initialize the world graph
-        Engine.State.World.Initialize(Engine);
+
 
         // Start game at Kordor
         Engine.Start(Engine.State.World.Kordor);

@@ -44,6 +44,25 @@ public class StatusComponent
         _statuses.Remove(status);
     }
 
+    public void ClearNonPersistent()
+    {
+        for (int i = _statuses.Count - 1; i >= 0; i--)
+        {
+            if (!_statuses[i].IsPersistent)
+            {
+                _statuses[i].Destroy();
+            }
+        }
+    }
+
+    public void ClearAll()
+    {
+        for (int i = _statuses.Count - 1; i >= 0; i--)
+        {
+            _statuses[i].Destroy();
+        }
+    }
+
     public string GetCombinedDisplayString()
     {
         if (_statuses.Count == 0) return "";

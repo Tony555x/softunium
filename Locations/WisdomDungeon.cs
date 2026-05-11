@@ -13,10 +13,11 @@ public class WisdomDungeon : Dungeon
     {
     }
 
-    public override void InitLinks()
+    public override void OnOpen(GameEngine engine)
     {
+        base.OnOpen(engine);
         Options.Add(new Option(1, "Напред", "Продължава към следващата стая или битка.", (engine) => GoForward(engine)));
-        Options.Add(new Option(2, "Бягство", "Връща ви в предходната локация.", (engine) => Escape(engine)));
+        Options.Add(new Option(2, "Бягство", "Връща ви в предходната локация.", (engine) => PerformEscape(engine)));
     }
 
     public override void Enter(GameEngine engine)

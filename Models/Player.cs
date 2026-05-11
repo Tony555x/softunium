@@ -12,7 +12,7 @@ public class Player : Entity
     // Level and XP
     public int Level { get; set; }
     public int Xp { get; set; }
-    public int MaxXp => (int)(10 * Level * Math.Pow(1.1, Level-1));
+    public int MaxXp => (int)(10 * Level * Math.Pow(1.2, Level-1));
     
     // Alignment
     public int Alignment { get; set; } // Positive = Peturium, Negative = Gamenium

@@ -44,7 +44,12 @@ public class DeathPanel : IPanel
             engine.State.Player.Hp = engine.State.Player.MaxHp;
             engine.State.Player.Mp = engine.State.Player.MaxMp;
             _timer = 0f;
+            once = false;
             engine.State.BattleData.PlayerDeathTimer = 0f; // clean up state
+            
+            engine.State.Player.Status.ClearAll();
+            engine.State.Player.RecalcStats();
+            
             engine.ChangeRootPanel(engine.State.World.Kordor);
         }
     }

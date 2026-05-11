@@ -14,10 +14,11 @@ public class ProgressDungeon : Dungeon
     {
     }
 
-    public override void InitLinks()
+    public override void OnOpen(GameEngine engine)
     {
+        base.OnOpen(engine);
         Options.Add(new Option(1, "Напред", "Продължава към следващата стая или битка.", (engine) => GoForward(engine)));
-        Options.Add(new Option(2, "Бягство", "Връща ви в предходната локация.", (engine) => Escape(engine)));
+        Options.Add(new Option(2, "Бягство", "Връща ви в предходната локация.", (engine) => PerformEscape(engine)));
     }
 
     public override void Enter(GameEngine engine)
@@ -30,7 +31,7 @@ public class ProgressDungeon : Dungeon
 
         for (int i = 0; i < 21; i++)
         {
-            if (i == 10)
+            if (i == 11)
             {
                 // Shop event
                 if (engine.State.Flags.ContainsKey("shop_unlocked"))
@@ -52,41 +53,93 @@ public class ProgressDungeon : Dungeon
             }
 
             var enemies = new List<Enemy>();
+            float mult=1.0f;
             
-            if (i < 4) // 0-3
+            if (i <= 2) // 0-2
             {
-                enemies.Add(_rand.Next(2) == 0 ? new Programmer() : new SmellyProgrammer());
+                enemies.Add(i%2 == 0 ? new Programmer() : new SmellyProgrammer());
             }
-            else if (i < 7) // 4-6
+            else if(i==3){
+                enemies.Add(new WeakProgrammer());
+                enemies.Add(new WeakProgrammer());
+                enemies.Add(new WeakProgrammer());
+                enemies.Add(new WeakProgrammer());
+                enemies.Add(new WeakProgrammer());
+                enemies.Add(new WeakProgrammer());
+            }
+            else if(i==4){
+                enemies.Add(new Programmer());
+                enemies.Add(new Beta());
+                enemies.Add(new WeakProgrammer());
+            }
+            else if (i==5) // 5-6
             {
+                mult=1.5f;
                 enemies.Add(new Programmer());
                 enemies.Add(new SmellyProgrammer());
             }
-            else if (i < 10) // 7-9
+            else if (i==6) // 5-6
             {
-                enemies.Add(new StuckProgrammer());
-            }
-            else if (i < 14) // 11-13
-            {
-                enemies.Add(new StuckProgrammer());
+                mult=1.5f;
+                enemies.Add(new Programmer());
                 enemies.Add(new Programmer());
             }
-            else if (i < 17) // 14-16
+            else if (i==7) // 5-6
             {
-                enemies.Add(new StuckProgrammer());
+                mult=1.5f;
+                enemies.Add(new SmellyProgrammer());
+                enemies.Add(new SmellyProgrammer());
+            }
+            else if (i==8){
+                mult=2f;
+                enemies.Add(new Programmer());
+                enemies.Add(new Programmer());
+                enemies.Add(new Programmer());
+            }
+            else if (i==9){
+                mult=2f;
+                enemies.Add(new SmellyProgrammer());
+                enemies.Add(new SmellyProgrammer());
+                enemies.Add(new SmellyProgrammer());
+            }
+            else if (i==10){
+                mult=2f;
+                enemies.Add(new Programmer());
+                enemies.Add(new SmellyProgrammer());
+                enemies.Add(new SmellyProgrammer());
+            }
+            else if (i<=13){//12-13
                 enemies.Add(new StuckProgrammer());
             }
-            else // 17-19
+            else if (i <= 15) // 13-14
             {
+                mult=1.5f;
+                enemies.Add(new StuckProgrammer());
+                enemies.Add(i%2 == 0 ? new Programmer() : new SmellyProgrammer());
+            }
+            else if (i <= 17)// 15-16
+            {
+                mult=2f;
+                enemies.Add(new StuckProgrammer());
+                enemies.Add(new Programmer());
+                enemies.Add(new SmellyProgrammer());
+            }
+            else if(i==18)// 18
+            {
+                mult=2f;
                 enemies.Add(new StuckProgrammer());
                 enemies.Add(new StuckProgrammer());
-                enemies.Add(_rand.Next(2) == 0 ? new Programmer() : new SmellyProgrammer());
+            }else{
+                mult=2.5f;
+                enemies.Add(new StuckProgrammer());
+                enemies.Add(new StuckProgrammer());
+                enemies.Add(new Programmer());
+                enemies.Add(new SmellyProgrammer());
             }
 
             var room = new Room(1, enemies);
-            // Higher loot in later rooms
-            if (i > 10) room.LootMultiplier = 1.5f;
-            if (i > 15) room.LootMultiplier = 2.0f;
+            
+            room.LootMultiplier = mult;
             
             rooms.Add(room);
         }

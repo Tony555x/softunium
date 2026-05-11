@@ -35,9 +35,15 @@ public class AtkDownStatus : Status
 
     public override string GetDisplayString()
     {
-        if (_instances.Count == 0) return "";
         float total = _instances.Sum(i => i.Amount);
+        if (total <= 0) return "";
         return $"[Атк -{(int)(total * 100)}%]";
+    }
+
+    public override string GetDescription()
+    {
+        float total = _instances.Sum(i => i.Amount);
+        return $"Намалява Атаката с {(int)(total * 100)}%.";
     }
 
     public override void ProcessEvent(GameEvent ev, EventContext ctx)

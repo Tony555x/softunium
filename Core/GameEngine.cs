@@ -23,7 +23,8 @@ public class GameEngine
     {
         CurrentPanel = initialPanel;
         IsRunning = true;
-        
+        CurrentPanel?.OnOpen(this);
+
         try 
         {
             Console.CursorVisible = false;
@@ -89,6 +90,7 @@ public class GameEngine
                         State.LastLocationPanel = CurrentPanel;
                         PreviousRootPanel = CurrentPanel;
                         CurrentPanel = State.World.StatsPanel;
+                        CurrentPanel?.OnOpen(this);
                     }
                 }
                 else
@@ -114,6 +116,7 @@ public class GameEngine
     {
         CurrentPanel = panel;
         Console.Clear();
+        CurrentPanel?.OnOpen(this);
     }
 
     public void ReturnToPreviousRoot()
@@ -123,6 +126,7 @@ public class GameEngine
             CurrentPanel = PreviousRootPanel;
             PreviousRootPanel = null;
             Console.Clear();
+            CurrentPanel?.OnOpen(this);
         }
     }
 

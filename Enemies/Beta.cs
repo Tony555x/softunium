@@ -12,7 +12,7 @@ public class Beta : Enemy
         speed: 5,
         magic: 8,
         wisdom: 0,
-        luck: 5,
+        luck: 1,
         xpReward: 5,
         moneyReward: 10) { }
 

@@ -16,14 +16,20 @@ public class StatsPanel : IPanel
         _options.Clear();
         bool inBattle = engine.PreviousRootPanel == engine.State.World.BattlePanel;
 
-        _options.Add(new Option(1, "Инвентар", "Вижте своите предмети.", (eng) => CurrentSubPanel = eng.State.World.InventoryPanel));
-        _options.Add(new Option(2, "Умения", "Вижте своите умения.", (eng) => CurrentSubPanel = eng.State.World.SkillListPanel));
+        _options.Add(new Option(1, "Инвентар", "Вижте своите предмети.", (eng) => { CurrentSubPanel = eng.State.World.InventoryPanel; CurrentSubPanel.OnOpen(eng); }));
+        _options.Add(new Option(2, "Умения", "Вижте своите умения.", (eng) => { CurrentSubPanel = eng.State.World.SkillListPanel; CurrentSubPanel.OnOpen(eng); }));
 
         if (!inBattle)
         {
-            _options.Add(new Option(3, "Запис", "Запишете играта в някой от слотовете.", (eng) => CurrentSubPanel = new SaveSlotPanel(true)));
-            _options.Add(new Option(4, "Зареждане", "Заредете играта от някой от слотовете.", (eng) => CurrentSubPanel = new SaveSlotPanel(false)));
+            _options.Add(new Option(3, "Запис", "Запишете играта в някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(true); CurrentSubPanel.OnOpen(eng); }));
+            _options.Add(new Option(4, "Зареждане", "Заредете играта от някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(false); CurrentSubPanel.OnOpen(eng); }));
         }
+    }
+
+    public void OnOpen(GameEngine engine)
+    {
+        BuildOptions(engine);
+        CurrentSubPanel = null;
     }
 
     public void Render(GameEngine engine)
@@ -40,8 +46,6 @@ public class StatsPanel : IPanel
             CurrentSubPanel.Render(engine);
             return;
         }
-
-        BuildOptions(engine);
 
         var p = engine.State.Player;
         Console.WriteLine("=== ХАРАКТЕРИСТИКИ И УМЕНИЯ ===");
@@ -104,11 +108,13 @@ public class StatsPanel : IPanel
         if (input.Equals("и", StringComparison.OrdinalIgnoreCase) || input.Equals("I", StringComparison.OrdinalIgnoreCase))
         {
             CurrentSubPanel = engine.State.World.InventoryPanel;
+            CurrentSubPanel.OnOpen(engine);
             return;
         }
         if (input.Equals("у", StringComparison.OrdinalIgnoreCase) || input.Equals("S", StringComparison.OrdinalIgnoreCase))
         {
             CurrentSubPanel = engine.State.World.SkillListPanel;
+            CurrentSubPanel.OnOpen(engine);
             return;
         }
 

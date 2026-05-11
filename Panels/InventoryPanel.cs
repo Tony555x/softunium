@@ -48,9 +48,13 @@ public class InventoryPanel : IPanel
         }
     }
 
-    public void Render(GameEngine engine)
+    public void OnOpen(GameEngine engine)
     {
         BuildOptions(engine);
+    }
+
+    public void Render(GameEngine engine)
+    {
         Console.WriteLine("=== ИНВЕНТАР ===");
         if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
         

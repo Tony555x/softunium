@@ -49,9 +49,13 @@ public class SkillListPanel : IPanel
         }
     }
 
-    public void Render(GameEngine engine)
+    public void OnOpen(GameEngine engine)
     {
         BuildOptions(engine);
+    }
+
+    public void Render(GameEngine engine)
+    {
         Console.WriteLine("=== УМЕНИЯ ===");
         if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
         Console.WriteLine("\nИзберете умение (или натиснете Enter за връщане):");

@@ -22,7 +22,12 @@ public class PoisonStatus : Status
 
     public override string GetDisplayString()
     {
-        return $"[Отрова: {Stacks}]";
+        return $"[Отрова {Stacks}]";
+    }
+
+    public override string GetDescription()
+    {
+        return $"Нанася {Stacks} щети в края на хода. Губи 1/3 от силата си всеки ход.";
     }
 
     public override void ProcessEvent(GameEvent ev, EventContext ctx)

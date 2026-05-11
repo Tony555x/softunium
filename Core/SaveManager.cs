@@ -77,17 +77,12 @@ public static class SaveManager
             p.Name = data.Player.Name;
             p.BattleName = data.Player.BattleName;
             p.Level = data.Player.Level;
+            p.RecalculateBaseStats();
+            
             p.Xp = data.Player.Xp;
-            p.MaxHp = data.Player.MaxHp;
             p.Hp = data.Player.Hp;
-            p.MaxMp = data.Player.MaxMp;
             p.Mp = data.Player.Mp;
-            p.Attack = data.Player.Attack;
-            p.Defence = data.Player.Defence;
-            p.Speed = data.Player.Speed;
-            p.Magic = data.Player.Magic;
-            p.Wisdom = data.Player.Wisdom;
-            p.Luck = data.Player.Luck;
+            
             p.Alignment = data.Player.Alignment;
             p.Money = data.Player.Money;
 
