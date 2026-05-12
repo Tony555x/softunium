@@ -86,20 +86,20 @@ public class SlavEvent : IPanel
         //Console.WriteLine("<=- СЛАВ -=>");
         if (_state == SlavState.Initial)
         {
-            Console.WriteLine("\nВиждате Слав да стои спокойно в края на залата.");
+            Console.WriteLine("Виждате Слав да стои спокойно в края на залата.");
         }
         else if (_state == SlavState.Talking1)
         {
-            Console.WriteLine("\nСлав: Здрасти.");
+            Console.WriteLine("Слав: Здрасти.");
         }
         else if (_state == SlavState.Talking2)
         {
-            Console.WriteLine("\nСлав: Защо си тук?");
+            Console.WriteLine("Слав: Защо си тук?");
         }
         else if (_state == SlavState.Talking3)
         {
-            Console.WriteLine("\nСлав: Там.");
-            Console.WriteLine("\nОтключени са стаите: 'Стая Прогрес', 'Стая Тимуърк' и 'Стая Интегрити'.");
+            Console.WriteLine("Слав: Там.");
+            Console.WriteLine("Отключени са стаите: 'Стая Прогрес', 'Стая Тимуърк' и 'Стая Интегрити'.");
         }
 
         Console.WriteLine("\nВъзможни действия:");
