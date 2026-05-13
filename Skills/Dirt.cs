@@ -16,7 +16,7 @@ public class Dirt : Skill
     {
         if (target == null) return "Няма цел.";
         
-        int poisonAmount = (int)(player.Magic * 1.5);
+        int poisonAmount = (int)(player.Magic / 2);
         target.Status.ApplyStatus(new PoisonStatus(poisonAmount));
         
         return $"Нанесохте {poisonAmount} отрова на {target.Name}.";

@@ -72,7 +72,7 @@ public class MushroomEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Странни Гъби ===");
+        Console.WriteLine("=== Странни Гъби ===");
         Console.WriteLine(_message);
         
         if (_done)

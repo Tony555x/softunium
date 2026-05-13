@@ -161,6 +161,10 @@ public static class SaveManager
             "Тежък Удар" => new HeavyAttack(),
             "Лечение" => new Heal(),
             "Разсичане" => new Cleave(),
+            "Фокус" => new Focus(),
+            "Сила на духа" => new PassiveAtkBonus(),
+            "Мръсотия" => new Dirt(),
+            "Защита" => new DefenseSkill(),
             _ => null
         };
     }
