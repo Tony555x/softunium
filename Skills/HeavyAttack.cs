@@ -6,7 +6,7 @@ namespace Harduni.Skills;
 
 public class HeavyAttack : Skill
 {
-    public HeavyAttack() : base("Тежък Удар", "Силна единична атака.", "Нанася (Атака + 15) щети на един враг.", TargetType.Enemy, 3, true, false) { }
+    public HeavyAttack() : base("Тежък Удар", "Силна единична атака.", "Атакува един враг за (Атака + 15) щети.", TargetType.Enemy, 3, true, false) { }
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

@@ -8,10 +8,25 @@ public class AttackContext : EventContext
     public int DamageTaken { get; set; }
     public bool IsLethal { get; set; }
 
+    public int DamageAdd { get; set; } = 0;
+    public float DamageMult { get; set; } = 0.0f;
+
     public AttackContext(Entity attacker, Entity target, int baseDamage)
     {
         Attacker = attacker;
         Target = target;
         BaseDamage = baseDamage;
+    }
+
+    public float GetMultiplier(float sum)
+    {
+        if (sum >= 0)
+        {
+            return 1.0f + sum;
+        }
+        else
+        {
+            return 1.0f / (1.0f - sum);
+        }
     }
 }

@@ -7,7 +7,10 @@ namespace Harduni.Skills;
 
 public class Focus : Skill
 {
-    public Focus() : base("Фокус", "Увеличава атаката за 3 хода следващия ход.", "+50% Атака за следващите 3 хода.", TargetType.Self, 6, true, false) { }
+    public Focus() : base("Фокус", "Увеличава атаката за следващите 3 хода.", "+50% Атака за следващите 3 хода.", TargetType.Self, 6, true, false) 
+    {
+        Keywords.Add("percent");
+    }
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

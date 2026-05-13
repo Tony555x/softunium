@@ -1,6 +1,7 @@
 using System;
 using Harduni.Core;
 using Harduni.Models;
+using Harduni.Skills;
 
 namespace Harduni.Panels;
 
@@ -36,7 +37,16 @@ public class AnalysisResultPanel : IPanel
         {
             foreach (var status in statuses)
             {
-                Console.WriteLine($" - {status.GetDisplayString()}: {status.GetDescription()}");
+                string line = $" - {status.GetDisplayString()}: {status.GetDescription()}";
+                foreach (var kw in status.Keywords)
+                {
+                    string explanation = Skill.GetKeywordExplanation(kw);
+                    if (!string.IsNullOrEmpty(explanation))
+                    {
+                        line += "\n   > " + explanation;
+                    }
+                }
+                Console.WriteLine(line);
             }
         }
         Console.WriteLine("\n[Натиснете Enter за връщане]");

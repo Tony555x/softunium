@@ -6,7 +6,7 @@ namespace Harduni.Skills;
 
 public class Cleave : Skill
 {
-    public Cleave() : base("Разсичане", "Атакува всички врагове.", "Нанася (Атака * 0.8) щети на всички врагове.", TargetType.Aoe, 4, true, false) { }
+    public Cleave() : base("Разсичане", "Атакува всички врагове.", "Атакува всички врагове за (Атака * 0.8) щети.", TargetType.Aoe, 4, true, false) { }
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

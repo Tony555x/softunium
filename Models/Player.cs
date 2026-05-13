@@ -19,7 +19,7 @@ public class Player : Entity
     public int Money { get; set; }
 
     public Inventory Inventory { get; private set; }
-    public List<Skill> Skills { get; set; }
+    public List<Skill> Skills { get; set; } = new();
     public GameState GameState { get; set; }
 
     public Player() : base(
@@ -35,7 +35,6 @@ public class Player : Entity
     )
     {
         BaseMaxMp = 10;
-        InitFullStats();
         
         Level = 1;
         Xp = 0;
@@ -45,7 +44,7 @@ public class Player : Entity
         Inventory = new Inventory();
         Inventory.AddItem(new SmallPotion());
 
-        Skills = new List<Skill>();
+        InitFullStats();
     }
 
     public void AddXp(int amount)
@@ -126,6 +125,9 @@ public class Player : Entity
         CheckAndAddSkill(3, new Heal(), messages);
         CheckAndAddSkill(4, new Cleave(), messages);
         CheckAndAddSkill(5, new Focus(), messages);
+        CheckAndAddSkill(6, new PassiveAtkBonus(), messages);
+        CheckAndAddSkill(7, new Dirt(), messages);
+        CheckAndAddSkill(8, new DefenseSkill(), messages);
 
         return messages;
     }
@@ -136,12 +138,20 @@ public class Player : Entity
         {
             Skills.Add(skill);
             messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+            RecalcStats();
         }
     }
 
     public override void TriggerEvent(GameEvent ev, EventContext ctx)
     {
         HandlePermanentBonuses(ev, ctx);
+        
+        // Trigger all skills before triggering all statuses
+        for (int i = Skills.Count - 1; i >= 0; i--)
+        {
+            Skills[i].ProcessEvent(this, ev, ctx);
+        }
+        
         base.TriggerEvent(ev, ctx);
     }
 

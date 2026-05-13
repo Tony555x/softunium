@@ -1,4 +1,5 @@
 using Harduni.Models;
+using System.Collections.Generic;
 
 namespace Harduni.Statuses;
 
@@ -6,6 +7,7 @@ public abstract class Status
 {
     public Entity Owner { get; set; }
     public bool IsPersistent { get; set; } = false;
+    public List<string> Keywords { get; set; } = new();
 
     public abstract void ProcessEvent(GameEvent ev, EventContext ctx);
     

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Harduni.Core;
+using Harduni.Skills;
 
 namespace Harduni.Panels;
 
@@ -22,7 +23,17 @@ public class SkillListPanel : IPanel
             var skill = p.Skills[i];
             bool isDisabled = inBattle ? !skill.UsableInBattle : !skill.UsableOutsideBattle;
             
-            _options.Add(new Option(i + 1, $"{skill.Name} ({skill.MpCost} Айрян): {skill.ShortDescription}", skill.AccurateDescription, (eng) =>
+            string info = skill.AccurateDescription;
+            foreach (var kw in skill.Keywords)
+            {
+                string explanation = Skill.GetKeywordExplanation(kw);
+                if (!string.IsNullOrEmpty(explanation))
+                {
+                    info += "\n" + explanation;
+                }
+            }
+
+            _options.Add(new Option(i + 1, $"{skill.Name} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
             {
                 if (inBattle)
                 {
