@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Harduni.Core;
+using Harduni.Models;
 
 namespace Harduni.Panels;
 
@@ -28,6 +29,7 @@ public class BattleEndPanel : IPanel
             _levelUpMessages = engine.State.Player.ProcessLevelUps();
             
             engine.State.Player.Status.ClearNonPersistent();
+            engine.State.Player.TriggerEvent(GameEvent.CombatEnd, new CombatEndContext());
             engine.State.Player.RecalcStats();
             
             _evaluated = true;

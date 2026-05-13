@@ -44,8 +44,8 @@ public class PoisonStatus : Status
             // Print to battle log
             battleData.Log($"{Owner.Name} поема {dmg} щети от отрова.");
 
-            // Reduce stacks by 1/3, rounded up
-            int reduction = (int)Math.Ceiling(Stacks / 3.0);
+            // Reduce stacks by 1/3, rounded down, min 1
+            int reduction = Math.Max(Stacks / 3, 1);
             Stacks -= reduction;
 
             if (Stacks <= 0)

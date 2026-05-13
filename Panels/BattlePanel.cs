@@ -64,6 +64,7 @@ public class BattlePanel : IPanel
                 data.IsPlayerTurn = true;
                 data.Log("Ваш ред е!");
                 p.TriggerEvent(GameEvent.StartTurn, new TurnContext(engine));
+                p.RecalcStats();
                 return; 
             }
         }
@@ -77,6 +78,7 @@ public class BattlePanel : IPanel
                 {
                     e.Energy -= 1000;
                     e.TriggerEvent(GameEvent.StartTurn, new TurnContext(engine));
+                    e.RecalcStats();
                     if (e.Hp > 0) e.TakeAction(engine); 
                     e.TriggerEvent(GameEvent.EndTurn, new TurnContext(engine));
                 }

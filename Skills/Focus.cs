@@ -1,0 +1,18 @@
+using System.Collections.Generic;
+using Harduni.Models;
+using Harduni.Enemies;
+using Harduni.Statuses;
+
+namespace Harduni.Skills;
+
+public class Focus : Skill
+{
+    public Focus() : base("Фокус", "Увеличава атаката за 3 хода следващия ход.", "+50% Атака за следващите 3 хода.", TargetType.Self, 6, true, false) { }
+
+    public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
+    {
+        player.Status.ApplyStatus(new AtkUpStatus(3, 0.5f), DelayedTurn.Next);
+        
+        return "Подготвяте се за атака следващия ход!";
+    }
+}

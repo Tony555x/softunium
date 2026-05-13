@@ -131,6 +131,7 @@ public abstract class Dungeon : Location
             {
                 currentRoom.IsCleared = true;
                 data.IsEventActive = true;
+                currentRoom.EventInstance.OnOpen(engine);
             }
             else
             {

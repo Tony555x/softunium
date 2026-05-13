@@ -74,6 +74,11 @@ public class SlavEvent : IPanel
         data.IsEventActive = false;
     }
 
+    public void OnOpen(GameEngine engine)
+    {
+        EnsureOptions(engine);
+    }
+
     public void Render(GameEngine engine)
     {
         if (!string.IsNullOrEmpty(_message))
@@ -82,7 +87,6 @@ public class SlavEvent : IPanel
             return;
         }
 
-        EnsureOptions(engine);
         //Console.WriteLine("<=- СЛАВ -=>");
         if (_state == SlavState.Initial)
         {
@@ -117,10 +121,10 @@ public class SlavEvent : IPanel
             return;
         }
 
-        EnsureOptions(engine);
         if (!InputHandler.Handle(input, _options, out Option selectedOption))
         {
             selectedOption.OnSelect?.Invoke(engine);
+            EnsureOptions(engine); // Update options if state changed
         }
     }
 }

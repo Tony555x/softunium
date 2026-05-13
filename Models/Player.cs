@@ -20,6 +20,7 @@ public class Player : Entity
 
     public Inventory Inventory { get; private set; }
     public List<Skill> Skills { get; set; }
+    public GameState GameState { get; set; }
 
     public Player() : base(
         name: "Бойомир Шамтката (БКПто)", 
@@ -86,8 +87,8 @@ public class Player : Entity
         int oldLuck = BaseLuck;
         int oldWis = BaseWisdom;
 
-        BaseMaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.1);
-        BaseMaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.02);
+        BaseMaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.2);
+        BaseMaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.05);
         BaseAttack = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.08);
         BaseDefence = (int)(6 + L * 1.5 + System.Math.Pow(L, 2) * 0.04);
         BaseMagic = (int)(8 + L * 1.8 + System.Math.Pow(L, 2) * 0.06);
@@ -124,6 +125,7 @@ public class Player : Entity
         CheckAndAddSkill(2, new HeavyAttack(), messages);
         CheckAndAddSkill(3, new Heal(), messages);
         CheckAndAddSkill(4, new Cleave(), messages);
+        CheckAndAddSkill(5, new Focus(), messages);
 
         return messages;
     }
@@ -139,7 +141,18 @@ public class Player : Entity
 
     public override void TriggerEvent(GameEvent ev, EventContext ctx)
     {
-        // Future: trigger equipment, passives, etc.
+        HandlePermanentBonuses(ev, ctx);
         base.TriggerEvent(ev, ctx);
+    }
+
+    private void HandlePermanentBonuses(GameEvent ev, EventContext ctx)
+    {
+        if (ev == GameEvent.StatAdd && ctx is StatModContext smc)
+        {
+            if (GameState?.Flags.ContainsKey("ai_temple_magic_bonus") == true)
+            {
+                smc.MagAdd += 4;
+            }
+        }
     }
 }

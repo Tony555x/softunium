@@ -8,5 +8,6 @@ public enum GameEvent
     StatMult,
     OnAttack,
     OnAttacked,
-    OnHeal
+    OnHeal,
+    CombatEnd
 }

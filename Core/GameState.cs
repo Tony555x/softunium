@@ -41,6 +41,7 @@ public class GameState
     public GameState()
     {
         Player = new Player();
+        Player.GameState = this;
         World = new World();
         BattleData = new BattleData();
         DungeonData = new DungeonData();

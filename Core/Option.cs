@@ -11,7 +11,7 @@ public class Option
     public bool IsDisabled { get; set; }
     public Action<GameEngine> OnSelect { get; set; }
 
-    public Option(int id, string text, string info, Action<GameEngine> onSelect, bool isDisabled = false, string baseValue = null)
+    public Option(int id, string text, string info, Action<GameEngine> onSelect, bool isDisabled = false, string? baseValue = null)
     {
         Id = id;
         Text = text;

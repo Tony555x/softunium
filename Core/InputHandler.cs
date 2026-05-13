@@ -8,7 +8,7 @@ public static class InputHandler
 {
     // Returns true if the input was fully handled (e.g. info was shown)
     // Returns false if it should try to execute the option
-    public static bool Handle(string input, List<Option> options, out Option selectedOption, Action<string> displayInfo = null)
+    public static bool Handle(string input, List<Option> options, out Option selectedOption, Action<string>? displayInfo = null)
     {
         selectedOption = null;
         if (string.IsNullOrWhiteSpace(input)) return true;
