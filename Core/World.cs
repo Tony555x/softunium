@@ -15,6 +15,8 @@ public class World
     public DeathPanel DeathPanel { get; private set; }
     public AnalysisTargetSelectionPanel AnalysisTargetSelectionPanel { get; private set; }
     public AnalysisResultPanel AnalysisResultPanel { get; private set; }
+    public RestPanel RestPanel { get; private set; }
+    public SkillLoadoutPanel SkillLoadoutPanel { get; private set; }
     
     // Locations
     public KordorLocation Kordor { get; private set; }
@@ -42,6 +44,8 @@ public class World
         DeathPanel = new DeathPanel();
         AnalysisTargetSelectionPanel = new AnalysisTargetSelectionPanel();
         AnalysisResultPanel = new AnalysisResultPanel();
+        RestPanel = new RestPanel();
+        SkillLoadoutPanel = new SkillLoadoutPanel();
         
         Kordor = new KordorLocation(this);
         WisdomRoom = new WisdomRoomLocation(this);

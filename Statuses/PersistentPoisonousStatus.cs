@@ -25,8 +25,7 @@ public class PersistentPoisonousStatus : Status
     public override string GetDisplayString()
     {
         int total = _instances.Sum(i => i.Potency);
-        int maxFights = _instances.Max(i => i.Fights);
-        return $"[Отровен +{total} ({maxFights} б.)]";
+        return $"[Отровен {total}]";
     }
 
     public override string GetDescription()

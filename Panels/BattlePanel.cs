@@ -4,6 +4,7 @@ using System.Linq;
 using Harduni.Core;
 using Harduni.Models;
 using Harduni.Skills;
+using Harduni.Locations;
 
 namespace Harduni.Panels;
 
@@ -205,7 +206,20 @@ public class BattlePanel : IPanel
     private void Escape(GameEngine engine)
     {
         engine.State.BattleData.IsPlayerTurn = false;
-        engine.ChangeRootPanel(engine.State.World.WisdomRoom);
+        var source = engine.State.BattleData.SourcePanel;
+        
+        if (source is Dungeon dungeon)
+        {
+            // Clear statuses when escaping a dungeon battle, matching dungeon escape logic
+            engine.State.Player.Status.ClearAll();
+            engine.State.Player.RecalcStats();
+            engine.ChangeRootPanel(dungeon.RetreatPanel);
+        }
+        else
+        {
+            // Fallback for non-dungeon battles
+            engine.ChangeRootPanel(engine.State.World.WisdomRoom);
+        }
     }
 
     private string GetEnergyBar(float energy, int segments)

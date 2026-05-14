@@ -7,7 +7,7 @@ namespace Harduni.Skills;
 
 public class Dirt : Skill
 {
-    public Dirt() : base("Мръсотия", "Нанася отрова.", "Нанася отрова със сила (Магия * 1.5).", TargetType.Enemy, 4, true, false) 
+    public Dirt() : base("Мръсотия", "Нанася отрова.", "Нанася отрова със сила (Магия * 2 / 3).", TargetType.Enemy, 4, true, false) 
     {
         Keywords.Add("poison");
     }
@@ -16,7 +16,7 @@ public class Dirt : Skill
     {
         if (target == null) return "Няма цел.";
         
-        int poisonAmount = (int)(player.Magic / 2);
+        int poisonAmount = (int)(player.Magic * 2 / 3);
         target.Status.ApplyStatus(new PoisonStatus(poisonAmount));
         
         return $"Нанесохте {poisonAmount} отрова на {target.Name}.";

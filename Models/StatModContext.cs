@@ -26,6 +26,8 @@ public class StatModContext : EventContext
     public int LuckAdd { get; set; } = 0;
     public float LuckMult { get; set; } = 0.0f;
 
+    public int SkillSlotsAdd { get; set; } = 0;
+
     public float GetMultiplier(float sum)
     {
         if (sum >= 0)

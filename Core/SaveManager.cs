@@ -42,7 +42,8 @@ public static class SaveManager
                 Alignment = p.Alignment,
                 Money = p.Money,
                 Inventory = p.Inventory.Items.Select(i => new ItemSaveData { Name = i.Name, Amount = i.Amount }).ToList(),
-                Skills = p.Skills.Select(s => s.Name).ToList()
+                Skills = p.Skills.Select(s => s.Name).ToList(),
+                EquippedSkills = p.EquippedSkills.Select(s => s.Name).ToList()
             },
             Dungeon = new DungeonSaveData
             {
@@ -104,6 +105,17 @@ public static class SaveManager
                 if (skill != null) p.Skills.Add(skill);
             }
 
+            p.EquippedSkills.Clear();
+            if (data.Player.EquippedSkills != null)
+            {
+                foreach (var skillName in data.Player.EquippedSkills)
+                {
+                    // Find the skill instance from the already loaded Skills list to ensure reference equality
+                    var skill = p.Skills.Find(s => s.Name == skillName);
+                    if (skill != null && !p.EquippedSkills.Contains(skill)) p.EquippedSkills.Add(skill);
+                }
+            }
+
             engine.State.Flags = data.Flags ?? new Dictionary<string, string>();
             
             // Restore Location
@@ -117,6 +129,8 @@ public static class SaveManager
                     engine.State.DungeonData.Rooms[i].IsCleared = data.Dungeon.ClearedRooms[i];
                 }
             }
+
+            p.RecalcStats();
         }
         catch (Exception ex)
         {

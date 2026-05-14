@@ -10,7 +10,7 @@ public class ProgressDungeon : Dungeon
 {
     private static readonly Random _rand = new();
 
-    public ProgressDungeon(World world) : base(world, "Подземие на Прогрес", "Изключително дълго и трудно подземие.")
+    public ProgressDungeon(World world) : base(world, "Подземие на Прогрес", "Изключително дълго и трудно подземие.", world.ProgressRoom)
     {
     }
 

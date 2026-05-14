@@ -6,7 +6,7 @@ namespace Harduni.Locations;
 
 public class TeamworkDungeon : Dungeon
 {
-    public TeamworkDungeon(World world) : base(world, "Подземие на Тиймуърк", "Място за изграждане на екипен дух.")
+    public TeamworkDungeon(World world) : base(world, "Подземие на Тиймуърк", "Място за изграждане на екипен дух.", world.TeamworkRoom)
     {
     }
 

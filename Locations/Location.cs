@@ -11,6 +11,12 @@ public abstract class Location : IPanel
     public string Description { get; set; }
     public List<Option> Options { get; set; }
     public string LocationMessage { get; set; } = "";
+    public IPanel? CurrentSubPanel { get; set; }
+
+    public void SetSubPanel(IPanel? panel)
+    {
+        CurrentSubPanel = panel;
+    }
 
     public Location(World world, string name, string description)
     {
@@ -29,6 +35,12 @@ public abstract class Location : IPanel
 
     public virtual void Render(GameEngine engine)
     {
+        if (CurrentSubPanel != null)
+        {
+            CurrentSubPanel.Render(engine);
+            return;
+        }
+
         Console.WriteLine($"=== {Name} ===");
         Console.WriteLine(Description);
         
@@ -46,6 +58,12 @@ public abstract class Location : IPanel
 
     public virtual void ProcessInput(string input, GameEngine engine)
     {
+        if (CurrentSubPanel != null)
+        {
+            CurrentSubPanel.ProcessInput(input, engine);
+            return;
+        }
+
         LocationMessage = ""; 
         if (!InputHandler.Handle(input, Options, out Option selectedOption))
         {

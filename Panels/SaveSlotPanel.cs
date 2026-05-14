@@ -25,7 +25,8 @@ public class SaveSlotPanel : IPanel
         {
             int slot = i;
             string status = SaveManager.SaveExists(slot) ? " [Съществува]" : " [Празен]";
-            _options.Add(new Option(slot, $"{actionName} в Слот {slot}{status}", "", (eng) =>
+            string preposition = _isSaving ? "в" : "от";
+            _options.Add(new Option(slot, $"{actionName} {preposition} Слот {slot}{status}", "", (eng) =>
             {
                 if (_isSaving)
                 {

@@ -6,8 +6,11 @@ namespace Harduni.Locations;
 
 public abstract class Dungeon : Location
 {
-    protected Dungeon(World world, string name, string description) : base(world, name, description)
+    public IPanel RetreatPanel { get; set; }
+
+    protected Dungeon(World world, string name, string description, IPanel retreatPanel) : base(world, name, description)
     {
+        RetreatPanel = retreatPanel;
     }
 
     public abstract void Enter(GameEngine engine);

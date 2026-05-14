@@ -6,7 +6,7 @@ namespace Harduni.Locations;
 
 public class IntegrityDungeon : Dungeon
 {
-    public IntegrityDungeon(World world) : base(world, "Подземие на Интегрити", "Подземие, изискващо пълна почтеност.")
+    public IntegrityDungeon(World world) : base(world, "Подземие на Интегрити", "Подземие, изискващо пълна почтеност.", world.IntegrityRoom)
     {
     }
 

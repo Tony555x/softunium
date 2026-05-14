@@ -9,7 +9,7 @@ namespace Harduni.Locations;
 
 public class WisdomDungeon : Dungeon
 {
-    public WisdomDungeon(World world) : base(world, "Подземие на Уйздом", "")
+    public WisdomDungeon(World world) : base(world, "Подземие на Уйздом", "", world.WisdomRoom)
     {
     }
 

@@ -14,6 +14,7 @@ public class BattleData
     public float PlayerDeathTimer { get; set; } = 0f;
     public List<string> BattleLog { get; set; } = new List<string> { "Битката започва!" };
     public void Log(string message) => BattleLog.Add(message);
+    public void ClearLog() => BattleLog.Clear();
     public IPanel CurrentSubPanel { get; set; }
     public Skill SelectedSkill { get; set; }
     public int XpGained { get; set; }

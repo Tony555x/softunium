@@ -20,7 +20,11 @@ public class Player : Entity
 
     public Inventory Inventory { get; private set; }
     public List<Skill> Skills { get; set; } = new();
+    public List<Skill> EquippedSkills { get; set; } = new();
     public GameState GameState { get; set; }
+
+    public int BaseMaxSkillSlots { get; set; } = 4;
+    public int MaxSkillSlots { get; set; }
 
     public Player() : base(
         name: "Бойомир Шамтката (БКПто)", 
@@ -137,19 +141,37 @@ public class Player : Entity
         if (Level >= minLevel && !Skills.Exists(s => s.Name == skill.Name))
         {
             Skills.Add(skill);
-            messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+            
+            if (EquippedSkills.Count < MaxSkillSlots)
+            {
+                EquippedSkills.Add(skill);
+                messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+            }
+            else
+            {
+                messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+                messages.Add($"(Може да го екипирате от Кордор, тъй като слотовете ви са пълни.)");
+            }
+            
             RecalcStats();
         }
+    }
+
+    public override StatModContext RecalcStats()
+    {
+        var ctx = base.RecalcStats();
+        MaxSkillSlots = BaseMaxSkillSlots + ctx.SkillSlotsAdd;
+        return ctx;
     }
 
     public override void TriggerEvent(GameEvent ev, EventContext ctx)
     {
         HandlePermanentBonuses(ev, ctx);
         
-        // Trigger all skills before triggering all statuses
-        for (int i = Skills.Count - 1; i >= 0; i--)
+        // Trigger all equipped skills before triggering all statuses
+        for (int i = EquippedSkills.Count - 1; i >= 0; i--)
         {
-            Skills[i].ProcessEvent(this, ev, ctx);
+            EquippedSkills[i].ProcessEvent(this, ev, ctx);
         }
         
         base.TriggerEvent(ev, ctx);

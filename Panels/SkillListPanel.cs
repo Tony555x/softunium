@@ -8,6 +8,7 @@ namespace Harduni.Panels;
 public class SkillListPanel : IPanel
 {
     private List<Option> _options = new List<Option>();
+    private bool _showAll = false;
     private string _message = "";
 
     public void Update(float deltaTime, GameEngine engine) { }
@@ -18,22 +19,34 @@ public class SkillListPanel : IPanel
         var p = engine.State.Player;
         bool inBattle = engine.CurrentPanel == engine.State.World.BattlePanel;
 
-        for (int i = 0; i < p.Skills.Count; i++)
+        var skillsToShow = inBattle ? p.EquippedSkills : p.Skills;
+
+        for (int i = 0; i < skillsToShow.Count; i++)
         {
-            var skill = p.Skills[i];
-            bool isDisabled = inBattle ? !skill.UsableInBattle : !skill.UsableOutsideBattle;
+            var skill = skillsToShow[i];
+            bool isEquipped = p.EquippedSkills.Contains(skill);
             
+            // In battle, we only show equipped skills anyway.
+            // Out of battle, we show all, but if not equipped and _showAll is false, we skip?
+            // "add a toggle to show unequipped skills out of battle"
+            
+            if (!inBattle && !isEquipped && !_showAll) continue;
+
+            bool isDisabled = inBattle ? !skill.UsableInBattle : !skill.UsableOutsideBattle;
+            if (!isEquipped) isDisabled = true;
+            
+            string prefix = isEquipped ? "" : "[НЕЕКИПИРАНО] ";
             string info = skill.AccurateDescription;
             foreach (var kw in skill.Keywords)
             {
-                string explanation = Skill.GetKeywordExplanation(kw);
+                string explanation = SkillKeywords.GetExplanation(kw);
                 if (!string.IsNullOrEmpty(explanation))
                 {
                     info += "\n" + explanation;
                 }
             }
 
-            _options.Add(new Option(i + 1, $"{skill.Name} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
+            _options.Add(new Option(_options.Count + 1, $"{prefix}{skill.Name} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
             {
                 if (inBattle)
                 {
@@ -57,6 +70,16 @@ public class SkillListPanel : IPanel
                     }
                 }
             }, isDisabled, skill.Name));
+        }
+
+        if (!inBattle)
+        {
+            string toggleText = _showAll ? "Скрий неекипирани умения" : "Покажи всички умения";
+            _options.Add(new Option(0, toggleText, "Превключва показването на всички притежавани умения.", (eng) => 
+            {
+                _showAll = !_showAll;
+                BuildOptions(eng);
+            }));
         }
     }
 
@@ -101,7 +124,11 @@ public class SkillListPanel : IPanel
 
         if (!InputHandler.Handle(input, _options, out Option selectedOption, info => 
         {
-            if (inBattle) engine.State.BattleData.Log(info);
+            if (inBattle)
+            {
+                engine.State.BattleData.ClearLog();
+                engine.State.BattleData.Log(info);
+            }
             else _message = info;
         }))
         {

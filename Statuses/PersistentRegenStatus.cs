@@ -37,8 +37,7 @@ public class PersistentRegenStatus : Status
     public override string GetDisplayString()
     {
         int total = _instances.Sum(i => i.Potency);
-        int maxFights = _instances.Max(i => i.Fights);
-        return $"[Реген +{total} ({maxFights} б.)]";
+        return $"[Реген {total}]";
     }
 
     public override string GetDescription()

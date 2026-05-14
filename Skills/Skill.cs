@@ -35,13 +35,7 @@ public abstract class Skill
 
     public static string GetKeywordExplanation(string keyword)
     {
-        return keyword.ToLower() switch
-        {
-            "poison" or "отрова" => "Отрова: Нанася щети всеки ход. Стаковете намаляват с 1/3 всеки път (мин. 1).",
-            "percent" or "процент" => "% бонуси за статистики/щети се събират: +50% Атака + +50% Атака = +100% Атака (не +125%).",
-            "negative" => "Негативни % използват (1-1/x) формула: -50% Атака = 2/3 Атака. -100% Щети = 1/2 Щети. -200% = 1/3.",
-            _ => ""
-        };
+        return SkillKeywords.GetExplanation(keyword);
     }
 
     // Returns a string which is the message to display.

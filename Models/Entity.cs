@@ -65,7 +65,7 @@ public abstract class Entity
         Status.TriggerEvent(ev, ctx);
     }
 
-    public virtual void RecalcStats()
+    public virtual StatModContext RecalcStats()
     {
         var ctx = new StatModContext();
         TriggerEvent(GameEvent.StatAdd, ctx);
@@ -86,6 +86,8 @@ public abstract class Entity
         // Clamping logic: if max decreases, clamp current to new max.
         if (MaxHp < oldMaxHp && Hp > MaxHp) Hp = MaxHp;
         if (MaxMp < oldMaxMp && Mp > MaxMp) Mp = MaxMp;
+
+        return ctx;
     }
 
     public AttackContext PerformAttack(Entity target, int baseDamage)

@@ -35,6 +35,7 @@ public class PlayerSaveData
     public int Money { get; set; }
     public List<ItemSaveData> Inventory { get; set; }
     public List<string> Skills { get; set; }
+    public List<string> EquippedSkills { get; set; }
 }
 
 public class DungeonSaveData

@@ -89,7 +89,11 @@ public class InventoryPanel : IPanel
 
         if (!InputHandler.Handle(input, _options, out Option selectedOption, info => 
         {
-            if (inBattle) engine.State.BattleData.Log(info);
+            if (inBattle)
+            {
+                engine.State.BattleData.ClearLog();
+                engine.State.BattleData.Log(info);
+            }
             else _message = info;
         }))
         {
