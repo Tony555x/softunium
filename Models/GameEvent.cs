@@ -9,5 +9,6 @@ public enum GameEvent
     OnAttack,
     OnAttacked,
     OnHeal,
+    OnHealMp,
     CombatEnd
 }

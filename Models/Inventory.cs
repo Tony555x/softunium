@@ -12,35 +12,43 @@ public class Inventory
 
     public Item this[int index] => _items[index];
 
-    public void AddItem(Item item)
+    public int TotalWeight
     {
+        get
+        {
+            int total = 0;
+            foreach (var item in _items)
+            {
+                total += item.Weight * item.Amount;
+            }
+            return total;
+        }
+    }
+
+    public bool AddItem(Item item, int maxWeight)
+    {
+        int weightToAdd = item.Weight * item.Amount;
+        if (TotalWeight + weightToAdd > maxWeight)
+        {
+            return false;
+        }
+
         var existing = _items.Find(i => i.Name == item.Name);
-        
         if (existing != null)
         {
-            if (existing.MaxStacks == -1)
-            {
-                existing.Amount += item.Amount;
-            }
-            else
-            {
-                int space = existing.MaxStacks - existing.Amount;
-                int toAdd = System.Math.Min(space, item.Amount);
-                existing.Amount += toAdd;
-                
-                // If there's still leftover and we want to support multiple stacks of same item:
-                // For now, the existing logic in Player.cs didn't seem to support multiple stacks of the same item type,
-                // it just capped it. I'll stick to that logic unless told otherwise.
-            }
+            existing.Amount += item.Amount;
         }
         else
         {
-            if (item.MaxStacks != -1)
-            {
-                item.Amount = System.Math.Min(item.Amount, item.MaxStacks);
-            }
             _items.Add(item);
         }
+        return true;
+    }
+
+    // Keep parameterless AddItem for backward compatibility (e.g. from SaveManager) or default to large weight
+    public void AddItem(Item item)
+    {
+        AddItem(item, int.MaxValue);
     }
 
     public void RemoveItem(Item item)

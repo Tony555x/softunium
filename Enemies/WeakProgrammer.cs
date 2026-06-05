@@ -14,7 +14,7 @@ public class WeakProgrammer : Enemy
         wisdom: 0,
         luck: 1,
         xpReward: 5,
-        moneyReward: 5) { }
+        moneyReward: 1) { }
 
     public override void TakeAction(GameEngine engine)
     {

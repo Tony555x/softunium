@@ -5,7 +5,7 @@ using Harduni.Models;
 
 namespace Harduni.Events;
 
-public class AITempleEvent : IPanel
+public class TikTokShrineEvent : IPanel
 {
     private enum EventState { Initial, Repeating, BeepsHeard }
     private EventState _state = EventState.Initial;
@@ -16,7 +16,7 @@ public class AITempleEvent : IPanel
 
     public void OnOpen(GameEngine engine)
     {
-        if (engine.State.Flags.ContainsKey("ai_temple_magic_bonus"))
+        if (engine.State.Flags.ContainsKey("tiktok_shrine_def_bonus"))
         {
             _state = EventState.Repeating;
         }
@@ -34,16 +34,16 @@ public class AITempleEvent : IPanel
         switch (_state)
         {
             case EventState.Initial:
-                _message = "Намирате странен олтар, заобиколен от кръг течаща вода.\nУсещате лека магическа аура наоколо.";
+                _message = "Намирате странен олтар, заобиколен от кръг от вода.\nУсещате присъствието на картини и звуци наоколо.";
                 _options.Add(new Option(1, "Приближи се", "Приближете се към олтара.", (eng) => Approach(eng)));
                 break;
 
             case EventState.Repeating:
-                _message = "Виждате странният олтар отново. Водата все още гори! Но не усещате нищо странно.";
+                _message = "Виждате странният олтар. Водата около него е черна като мастило.";
                 break;
 
             case EventState.BeepsHeard:
-                _message = "Когато стъпвате наблизо, водата се запалва! Едновременно с това чувате странни компютърни звуци в съзнанието си.\nЧувствате се по-умни. (Получихте +4 Магия перманентно!)";
+                _message = "Когато се приближите, водата около олтара става черна като мастило!\nВ съзнанието ви нахлува кратка какофония от неразбираеми изображения и звуци.\nЧувствате ума си по-затворен, но защитен. (Получихте +4 Защита перманентно!)";
                 break;
         }
     }
@@ -51,14 +51,14 @@ public class AITempleEvent : IPanel
     private void Approach(GameEngine engine)
     {
         _state = EventState.BeepsHeard;
-        engine.State.Flags["ai_temple_magic_bonus"] = "true";
+        engine.State.Flags["tiktok_shrine_def_bonus"] = "true";
         engine.State.Player.RecalcStats();
         EnsureOptions(engine);
     }
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Странен Олтар ===");
+        Console.WriteLine("=== Странен Олтар ===");
         Console.WriteLine(_message);
 
         if (_state == EventState.Initial)

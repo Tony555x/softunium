@@ -28,6 +28,13 @@ public static class BattleManager
         p.Energy = 0;
         p.InitialEnergyBarSize = 10;
         p.EnergyBarSize = 10;
+        foreach (var skill in p.Skills)
+        {
+            skill.Cooldown = skill.BaseCooldown + 1;
+        }
+
+
+
 
         foreach (var e in enemies)
         {

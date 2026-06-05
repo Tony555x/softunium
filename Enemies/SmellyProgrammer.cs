@@ -18,14 +18,14 @@ public class SmellyProgrammer : Enemy
         wisdom: 0,
         luck: 1,
         xpReward: 22,
-        moneyReward: 12) { }
+        moneyReward: 3) { }
 
     public override void TakeAction(GameEngine engine)
     {
         var p = engine.State.Player;
         _turnCount++;
         
-        if (_turnCount % 3 == 1)
+        if (_turnCount % 2 == 1)
         {
             int poisonStacks = this.Magic / 2;
             p.Status.ApplyStatus(new PoisonStatus(poisonStacks));

@@ -9,7 +9,7 @@ public class BreakEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Междучасие ===");
+        Console.WriteLine("=== Междучасие ===");
         Console.WriteLine("Настъпва междучасие в стаята. Усещаш как духът ти се възстановява!");
         Console.WriteLine(" 1. Ядене (+5 Живот)");
         Console.WriteLine(" 2. Спане (+2 Айрян)");

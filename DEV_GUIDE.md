@@ -20,6 +20,7 @@ The game uses a panel-based UI system where the active panel is managed by the `
 - Menus are built using `List<Option>`.
 - Use `InputHandler.Handle(input, _options, out Option selectedOption)` in `ProcessInput` to resolve player choices.
 - This pattern ensures consistent input handling across the whole game.
+- **Rendering Rule**: Do not put `\n` before the title in an event's `Render` method. The `Dungeon` class already provides a newline before rendering the active event.
 
 ## 2. Event & Trigger System
 The game uses a decoupled event system to handle complex interactions like buffs, debuffs, and passives.

@@ -21,10 +21,18 @@ public class Player : Entity
     public Inventory Inventory { get; private set; }
     public List<Skill> Skills { get; set; } = new();
     public List<Skill> EquippedSkills { get; set; } = new();
+    public List<Relic> Relics { get; set; } = new();
+    public List<Relic> EquippedRelics { get; set; } = new();
     public GameState GameState { get; set; }
 
     public int BaseMaxSkillSlots { get; set; } = 4;
     public int MaxSkillSlots { get; set; }
+
+    public int BaseMaxWeight { get; set; } = 2;
+    public int MaxWeight { get; set; }
+
+    public int BaseMaxRelics { get; set; } = 2;
+    public int MaxRelics { get; set; }
 
     public Player() : base(
         name: "Бойомир Шамтката (БКПто)", 
@@ -46,7 +54,6 @@ public class Player : Entity
         Money = 0;
 
         Inventory = new Inventory();
-        Inventory.AddItem(new SmallPotion());
 
         InitFullStats();
     }
@@ -128,10 +135,19 @@ public class Player : Entity
         CheckAndAddSkill(2, new HeavyAttack(), messages);
         CheckAndAddSkill(3, new Heal(), messages);
         CheckAndAddSkill(4, new Cleave(), messages);
-        CheckAndAddSkill(5, new Focus(), messages);
-        CheckAndAddSkill(6, new PassiveAtkBonus(), messages);
-        CheckAndAddSkill(7, new Dirt(), messages);
-        CheckAndAddSkill(8, new DefenseSkill(), messages);
+        CheckAndAddSkill(5, new Warcry(), messages);
+        CheckAndAddSkill(6, new PassiveDamageBonus(), messages);
+        CheckAndAddSkill(7, new Filth(), messages);
+        CheckAndAddSkill(8, new GuardSkill(), messages);
+        CheckAndAddSkill(9, new HitAndRun(), messages);
+        CheckAndAddSkill(10, new QuickStrike(), messages);
+        CheckAndAddSkill(11, new Concentration(), messages);
+        CheckAndAddSkill(12, new IronSkin(), messages);
+        CheckAndAddSkill(13, new PoisonStrike(), messages);
+        CheckAndAddSkill(14, new Pulse(), messages);
+        CheckAndAddSkill(15, new PiercingStrike(), messages);
+        CheckAndAddSkill(16, new MagicAffinity(), messages);
+        CheckAndAddSkill(17, new VampiricStrike(), messages);
 
         return messages;
     }
@@ -161,12 +177,20 @@ public class Player : Entity
     {
         var ctx = base.RecalcStats();
         MaxSkillSlots = BaseMaxSkillSlots + ctx.SkillSlotsAdd;
+        MaxWeight = BaseMaxWeight + ctx.MaxWeightAdd;
+        MaxRelics = BaseMaxRelics + ctx.MaxRelicsAdd;
         return ctx;
     }
 
     public override void TriggerEvent(GameEvent ev, EventContext ctx)
     {
         HandlePermanentBonuses(ev, ctx);
+
+        // Propagate events to equipped relics
+        for (int i = EquippedRelics.Count - 1; i >= 0; i--)
+        {
+            EquippedRelics[i].ProcessEvent(this, ev, ctx);
+        }
         
         // Trigger all equipped skills before triggering all statuses
         for (int i = EquippedSkills.Count - 1; i >= 0; i--)
@@ -181,9 +205,17 @@ public class Player : Entity
     {
         if (ev == GameEvent.StatAdd && ctx is StatModContext smc)
         {
-            if (GameState?.Flags.ContainsKey("ai_temple_magic_bonus") == true)
+            if (GameState?.Flags.ContainsKey("ai_shrine_magic_bonus") == true || GameState?.Flags.ContainsKey("ai_temple_magic_bonus") == true)
             {
                 smc.MagAdd += 4;
+            }
+            if (GameState?.Flags.ContainsKey("tiktok_shrine_def_bonus") == true)
+            {
+                smc.DefAdd += 4;
+            }
+            if (GameState?.Flags.ContainsKey("andrew_tate_atk_bonus") == true)
+            {
+                smc.AtkAdd += 4;
             }
         }
     }

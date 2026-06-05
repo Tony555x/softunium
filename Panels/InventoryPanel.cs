@@ -25,10 +25,9 @@ public class InventoryPanel : IPanel
             bool isDisabled = inBattle ? !item.UsableInBattle : !item.UsableOutsideBattle;
             
             string amountStr = item.Amount > 1 ? $" [x{item.Amount}]" : "";
-            string limitStr = (item.MaxStacks > 1) ? $" (Макс: {item.MaxStacks})" : "";
-            if (item.MaxStacks == -1) limitStr = "";
+            string weightStr = $" (Тегло: {item.Weight * item.Amount})";
 
-            _options.Add(new Option(i + 1, $"{item.Name}{amountStr}: {item.Description}{limitStr}", item.AccurateDescription, (eng) =>
+            _options.Add(new Option(i + 1, $"{item.Name}{amountStr}: {item.Description}{weightStr}", item.AccurateDescription, (eng) =>
             {
                 string result = item.Use(p);
                 p.Inventory.RemoveItem(item);
@@ -55,7 +54,8 @@ public class InventoryPanel : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== ИНВЕНТАР ===");
+        var p = engine.State.Player;
+        Console.WriteLine($"=== ИНВЕНТАР (Тегло: {p.Inventory.TotalWeight}/{p.MaxWeight}) ===");
         if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
         
         if (_options.Count == 0)

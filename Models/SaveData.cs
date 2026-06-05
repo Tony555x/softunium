@@ -7,6 +7,7 @@ public class SaveData
     public PlayerSaveData Player { get; set; }
     public Dictionary<string, string> Flags { get; set; }
     public DungeonSaveData Dungeon { get; set; }
+    public string? TimeSaved { get; set; }
 }
 
 public class ItemSaveData

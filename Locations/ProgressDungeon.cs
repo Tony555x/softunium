@@ -55,7 +55,7 @@ public class ProgressDungeon : Dungeon
             }
             else if (i == 6) // AI Temple Event
             {
-                room = new Room(0, null, new AITempleEvent());
+                room = new Room(0, null, new AIShrineEvent());
             }
             else if (i == 7) // Combat 6
             {
@@ -91,22 +91,22 @@ public class ProgressDungeon : Dungeon
                 room = new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer(), new SmellyProgrammer() });
                 room.LootMultiplier = 2f;
             }
-            else if (i == 14) // Shop / Break
+            else if (i == 14) // Tempo / Break
             {
-                if (engine.State.Flags.ContainsKey("shop_unlocked"))
+                if (engine.State.Flags.ContainsKey("tempo_unlocked"))
                 {
                     room = new Room(0, null, new BreakEvent());
                 }
                 else
                 {
-                    room = new Room(0, null, new ShopUnlockEvent());
+                    room = new Room(0, null, new TempoUnlockEvent());
                 }
             }
             else if (i == 15) // Combat 12
             {
                 room = new Room(1, new List<Enemy> { new StuckProgrammer() });
             }
-            else if (i == 16) // Flavor Event 2
+            else if (i == 16) // DEBUFF EVENT
             {
                 room = new Room(0, null, new AfterShopRestEvent());
             }

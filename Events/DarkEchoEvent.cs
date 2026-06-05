@@ -9,7 +9,7 @@ public class DarkEchoEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Ехо в мрака ===");
+        Console.WriteLine("=== Ехо в мрака ===");
         Console.WriteLine("Чувате далечен звук от механична клавиатура. Някой още работи...");
         Console.WriteLine("\n[Натиснете Enter за продължаване]");
     }

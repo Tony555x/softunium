@@ -49,8 +49,9 @@ public class SkillLoadoutPanel : IPanel
                 }
             }
 
-            _options.Add(new Option(i + 1, $"{status} {skill.Name}: {skill.ShortDescription}", info, (eng) => 
-            {
+            string cdStr = skill.BaseCooldown > 0 ? $" [(~) {skill.BaseCooldown}]" : "";
+            _options.Add(new Option(i + 1, $"{status} {skill.Name}{cdStr} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) => 
+{
                 if (isEquipped)
                 {
                     p.EquippedSkills.Remove(skill);

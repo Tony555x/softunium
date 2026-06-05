@@ -15,14 +15,20 @@ public class StatsPanel : IPanel
     {
         _options.Clear();
         bool inBattle = engine.PreviousRootPanel == engine.State.World.BattlePanel;
+        bool isShopUnlocked = engine.State.Flags.ContainsKey("shop_unlocked");
 
-        _options.Add(new Option(1, "Инвентар", "Вижте своите предмети.", (eng) => { CurrentSubPanel = eng.State.World.InventoryPanel; CurrentSubPanel.OnOpen(eng); }));
-        _options.Add(new Option(2, "Умения", "Вижте своите умения.", (eng) => { CurrentSubPanel = eng.State.World.SkillListPanel; CurrentSubPanel.OnOpen(eng); }));
+        int id = 1;
+        if (isShopUnlocked)
+        {
+            _options.Add(new Option(id++, "Инвентар", "Вижте своите предмети.", (eng) => { CurrentSubPanel = eng.State.World.InventoryPanel; CurrentSubPanel.OnOpen(eng); }));
+        }
+        
+        _options.Add(new Option(id++, "Умения", "Вижте своите умения.", (eng) => { CurrentSubPanel = eng.State.World.SkillListPanel; CurrentSubPanel.OnOpen(eng); }));
 
         if (!inBattle)
         {
-            _options.Add(new Option(3, "Запис", "Запишете играта в някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(true); CurrentSubPanel.OnOpen(eng); }));
-            _options.Add(new Option(4, "Зареждане", "Заредете играта от някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(false); CurrentSubPanel.OnOpen(eng); }));
+            _options.Add(new Option(id++, "Запис", "Запишете играта в някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(true); CurrentSubPanel.OnOpen(eng); }));
+            _options.Add(new Option(id++, "Зареждане", "Заредете играта от някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(false); CurrentSubPanel.OnOpen(eng); }));
         }
     }
 
@@ -107,8 +113,11 @@ public class StatsPanel : IPanel
         // Handle И/У shortcuts first for compatibility
         if (input.Equals("и", StringComparison.OrdinalIgnoreCase) || input.Equals("I", StringComparison.OrdinalIgnoreCase))
         {
-            CurrentSubPanel = engine.State.World.InventoryPanel;
-            CurrentSubPanel.OnOpen(engine);
+            if (engine.State.Flags.ContainsKey("shop_unlocked"))
+            {
+                CurrentSubPanel = engine.State.World.InventoryPanel;
+                CurrentSubPanel.OnOpen(engine);
+            }
             return;
         }
         if (input.Equals("у", StringComparison.OrdinalIgnoreCase) || input.Equals("S", StringComparison.OrdinalIgnoreCase))

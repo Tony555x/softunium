@@ -2,17 +2,17 @@ using Harduni.Models;
 
 namespace Harduni.Statuses;
 
-public class DefenseStatus : Status
+public class GuardStatus : Status
 {
     private int _hitsLeft;
 
-    public DefenseStatus(int hits)
+    public GuardStatus(int hits)
     {
         _hitsLeft = hits;
     }
     public override void OnStack(Status newStatus)
     {
-        if (newStatus is DefenseStatus def)
+        if (newStatus is GuardStatus def)
         {
             _hitsLeft += def._hitsLeft;
         }
@@ -20,19 +20,19 @@ public class DefenseStatus : Status
 
     public override string GetDisplayString()
     {
-        return $"[Защита ({_hitsLeft})]";
+        return $"[Блок ({_hitsLeft})]";
     }
 
     public override string GetDescription()
     {
-        return $"Намалява щетите от следващите {_hitsLeft} атаки със 100%.";
+        return $"Намалява щетите от следващите {_hitsLeft} атаки със 150%.";
     }
 
     public override void ProcessEvent(GameEvent ev, EventContext ctx)
     {
         if (ev == GameEvent.OnAttacked && ctx is AttackContext aCtx)
         {
-            aCtx.DamageMult -= 1.0f; // This results in 0.5x damage in the additive system
+            aCtx.DamageMult -= 1.5f; 
             _hitsLeft--;
             if (_hitsLeft <= 0)
             {

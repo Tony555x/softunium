@@ -3,6 +3,18 @@ using System.Collections.Generic;
 
 namespace Harduni.Statuses;
 
+public class DebuffInstance
+{
+    public int Duration { get; set; }
+    public float Amount { get; set; }
+
+    public DebuffInstance(int duration, float amount)
+    {
+        Duration = duration;
+        Amount = amount;
+    }
+}
+
 public abstract class Status
 {
     public Entity Owner { get; set; }

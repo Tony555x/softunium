@@ -18,24 +18,24 @@ public class Programmer : Enemy
         wisdom: 0,
         luck: 1,
         xpReward: 20,
-        moneyReward: 15) { }
+        moneyReward: 3) { }
 
     public override void TakeAction(GameEngine engine)
     {
         var p = engine.State.Player;
         _turnCount++;
         
-        if (_turnCount % 3 == 2)
+        if (_turnCount % 3 == 1)
         {
-            var ctx = this.PerformAttack(p, this.Attack / 2); // weaker hit
-            p.Status.ApplyStatus(new AtkDownStatus(3, 0.25f));
+            var ctx = this.PerformAttack(p, this.Attack - 3); // weaker hit
+            p.Status.ApplyStatus(new AtkDownStatus(3, 0.5f));
             p.RecalcStats();
             engine.State.BattleData.Log($"{Name} изпрати объркващ код! Нанесе {ctx.DamageTaken} щети и намали атаката ви!");
         }
         else
         {
             var ctx = this.PerformAttack(p, this.Attack);
-            engine.State.BattleData.Log($"{Name} използва Basic Attack и нанесе {ctx.DamageTaken} щети!");
+            engine.State.BattleData.Log($"{Name} нанесе {ctx.DamageTaken} щети с основна атака!");
         }
     }
 }

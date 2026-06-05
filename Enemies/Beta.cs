@@ -14,7 +14,7 @@ public class Beta : Enemy
         wisdom: 0,
         luck: 1,
         xpReward: 5,
-        moneyReward: 10) { }
+        moneyReward: 2) { }
 
     public override void TakeAction(GameEngine engine)
     {

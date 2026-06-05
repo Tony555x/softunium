@@ -61,6 +61,8 @@ public class TargetSelectionPanel : IPanel
         }
 
         p.Mp -= skill.MpCost;
+        skill.Cooldown = skill.BaseCooldown + 1;
+
 
         string resultMsg = skill.Execute(p, data.Enemies, target);
         

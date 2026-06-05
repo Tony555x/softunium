@@ -6,7 +6,14 @@ namespace Harduni.Skills;
 
 public class BasicAttack : Skill
 {
-    public BasicAttack() : base("Атака", "Стандартна атака.", "Атакува един враг за (Атака) щети.", TargetType.Enemy, 0, true, false) { }
+    public override string Name => "Атака";
+    public override string ShortDescription => "Стандартна атака.";
+    public override string AccurateDescription => "Атакува един враг за (Атака) щети.";
+    public override TargetType Target => TargetType.Enemy;
+    public override int MpCost => 0;
+    public override bool UsableInBattle => true;
+    public override bool UsableOutsideBattle => false;
+
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

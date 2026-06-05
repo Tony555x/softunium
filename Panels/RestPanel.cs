@@ -31,10 +31,15 @@ public class RestPanel : IPanel
             engine.State.World.Kordor.SetSubPanel(engine.State.World.SkillLoadoutPanel);
             engine.State.World.SkillLoadoutPanel.OnOpen(engine);
         }));
-        _options.Add(new Option(3, "Реликви (Loadout)", "Екипирайте или сменете вашите реликви.", (eng) => 
+        bool isRelicUnlocked = engine.State.Flags.ContainsKey("relics_unlocked");
+        if (isRelicUnlocked)
         {
-            _message = "Системата за реликви все още не е внедрена.";
-        }));
+            _options.Add(new Option(3, "Реликви (Loadout)", "Екипирайте или сменете вашите реликви.", (eng) => 
+            {
+                engine.State.World.Kordor.SetSubPanel(engine.State.World.RelicLoadoutPanel);
+                engine.State.World.RelicLoadoutPanel.OnOpen(engine);
+            }));
+        }
     }
 
     public void Render(GameEngine engine)

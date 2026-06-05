@@ -13,24 +13,29 @@ public enum TargetType
 
 public abstract class Skill
 {
-    public string Name { get; set; }
-    public string ShortDescription { get; set; }
-    public string AccurateDescription { get; set; }
-    public TargetType Target { get; set; }
-    public int MpCost { get; set; }
-    public bool UsableInBattle { get; set; }
-    public bool UsableOutsideBattle { get; set; }
+    public virtual string Name { get; set; } = "Skill";
+    public virtual string ShortDescription { get; set; } = "";
+    public virtual string AccurateDescription { get; set; } = "";
+    public virtual TargetType Target { get; set; } = TargetType.Enemy;
+    public virtual int MpCost { get; set; } = 0;
+    public virtual bool UsableInBattle { get; set; } = true;
+    public virtual bool UsableOutsideBattle { get; set; } = false;
     public List<string> Keywords { get; set; } = new();
 
-    protected Skill(string name, string shortDesc, string accurateDesc, TargetType target, int mpCost, bool usableInBattle = true, bool usableOutsideBattle = false)
+    public int Cooldown { get; set; }
+    public virtual int BaseCooldown { get; set; } = 0;
+
+    protected Skill()
     {
-        Name = name;
-        ShortDescription = shortDesc;
-        AccurateDescription = accurateDesc;
-        Target = target;
-        MpCost = mpCost;
-        UsableInBattle = usableInBattle;
-        UsableOutsideBattle = usableOutsideBattle;
+    }
+
+    public virtual bool CanPlay(bool inBattle)
+    {
+        if (inBattle)
+        {
+            return UsableInBattle && Cooldown == 0;
+        }
+        return UsableOutsideBattle;
     }
 
     public static string GetKeywordExplanation(string keyword)

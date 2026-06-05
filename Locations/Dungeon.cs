@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Harduni.Core;
+using Harduni.Models;
+using Harduni.Statuses;
+
 
 namespace Harduni.Locations;
 
@@ -37,7 +40,9 @@ public abstract class Dungeon : Location
         try { width = Console.WindowWidth - 1; } catch { }
 
         Console.WriteLine($"=== {Name} ===".PadRight(width));
-        string playerStats = $"{p.Name} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp}";
+        string pStatusStr = p.Status.GetCombinedDisplayString();
+        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} {pStatusStr}";
+        
         if (p.Hp <= 0)
         {
             Console.ForegroundColor = ConsoleColor.Red;

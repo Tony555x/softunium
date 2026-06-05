@@ -2,9 +2,9 @@ using Harduni.Core;
 
 namespace Harduni.Locations;
 
-public class IntegrityRoomLocation : Location
+public class LeadershipRoomLocation : Location
 {
-    public IntegrityRoomLocation(World world) : base(world, "Стая Интегрити", "Място за почтеност и честност.")
+    public LeadershipRoomLocation(World world) : base(world, "Стая Лийдършип", "Място за лидери.")
     {
     }
 
@@ -14,7 +14,7 @@ public class IntegrityRoomLocation : Location
         Options.Add(new Option(1, "Връщане в коридора", "Връща ви обратно в Земите на Кордор.", (eng) => eng.ChangeRootPanel(World.Kordor)));
         Options.Add(new Option(2, "Започване на изследване", "Влизате в подземието.", (eng) => 
         {
-            World.IntegrityDungeon.Enter(eng);
+            World.LeadershipDungeon.Enter(eng);
         }));
     }
 }

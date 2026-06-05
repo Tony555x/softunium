@@ -126,4 +126,15 @@ public abstract class Entity
         ctx.ActualHealed = this.Hp - oldHp;
         return ctx;
     }
+
+    public HealMpContext HealMp(int amount)
+    {
+        var ctx = new HealMpContext(this, amount, 0);
+        TriggerEvent(GameEvent.OnHealMp, ctx);
+        
+        int oldMp = this.Mp;
+        this.Mp = System.Math.Min(this.MaxMp, this.Mp + ctx.HealAmount);
+        ctx.ActualHealed = this.Mp - oldMp;
+        return ctx;
+    }
 }

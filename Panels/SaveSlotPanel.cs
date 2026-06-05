@@ -8,6 +8,8 @@ public class SaveSlotPanel : IPanel
 {
     private bool _isSaving;
     private List<Option> _options = new();
+    private string _message = "";
+    private int _currentPage = 1;
 
     public SaveSlotPanel(bool isSaving)
     {
@@ -20,33 +22,45 @@ public class SaveSlotPanel : IPanel
     {
         _options.Clear();
         string actionName = _isSaving ? "Запис" : "Зареждане";
+        string preposition = _isSaving ? "в" : "от";
 
-        for (int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 9; i++)
         {
-            int slot = i;
-            string status = SaveManager.SaveExists(slot) ? " [Съществува]" : " [Празен]";
-            string preposition = _isSaving ? "в" : "от";
-            _options.Add(new Option(slot, $"{actionName} {preposition} Слот {slot}{status}", "", (eng) =>
+            int slotOffset = i;
+            int actualSlot = (_currentPage - 1) * 9 + slotOffset;
+
+            var metadata = SaveManager.GetSaveMetadata(actualSlot);
+            string statusText;
+            if (metadata != null)
+            {
+                string levelInfo = $" Ниво {metadata.Value.Level}";
+                string timeInfo = metadata.Value.TimeSaved ?? "null";
+                statusText = $" [{levelInfo}, {timeInfo}]";
+            }
+            else
+            {
+                statusText = " [Празен]";
+            }
+
+            _options.Add(new Option(slotOffset, $"{actionName} {preposition} Слот {actualSlot}{statusText}", "", (eng) =>
             {
                 if (_isSaving)
                 {
-                    SaveManager.Save(slot, eng);
-                    Console.WriteLine($"\nИграта е записана в Слот {slot}!");
+                    SaveManager.Save(actualSlot, eng);
+                    _message = $"Играта е записана в Слот {actualSlot}!";
                 }
                 else
                 {
-                    if (SaveManager.SaveExists(slot))
+                    if (SaveManager.SaveExists(actualSlot))
                     {
-                        SaveManager.Load(slot, eng);
-                        Console.WriteLine($"\nИграта е заредена от Слот {slot}!");
+                        SaveManager.Load(actualSlot, eng);
                         ((StatsPanel)engine.State.World.StatsPanel).CurrentSubPanel = null;
                     }
                     else
                     {
-                        Console.WriteLine($"\nСлот {slot} е празен!");
+                        _message = $"Слот {actualSlot} е празен!";
                     }
                 }
-                Console.WriteLine("Натиснете Enter за продължаване...");
             }));
         }
     }
@@ -56,19 +70,41 @@ public class SaveSlotPanel : IPanel
         BuildOptions(engine);
         string title = _isSaving ? "ЗАПИС НА ИГРА" : "ЗАРЕЖДАНЕ НА ИГРА";
         Console.WriteLine($"=== {title} ===");
+        if (!string.IsNullOrEmpty(_message))
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"\n{_message}");
+            Console.ResetColor();
+        }
         
         foreach (var opt in _options)
         {
             Console.WriteLine($" {opt.Id}. {opt.Text}");
         }
-        Console.WriteLine("\n[Въведете номер на слот или Enter за връщане]");
+
+        Console.WriteLine($"\n--- Страница {_currentPage} (Слотове {(_currentPage - 1) * 9 + 1} - {_currentPage * 9}) ---");
+        Console.WriteLine("[ < ] Предишна страница  |  [ > ] Следваща страница");
+        Console.WriteLine("\n[Въведете номер на слот 1-9, < или > за навигация, или Enter за връщане]");
     }
 
     public void ProcessInput(string input, GameEngine engine)
     {
+        _message = "";
         if (string.IsNullOrWhiteSpace(input))
         {
             ((StatsPanel)engine.State.World.StatsPanel).CurrentSubPanel = null;
+            return;
+        }
+
+        string trimmed = input.Trim();
+        if (trimmed == "<")
+        {
+            if (_currentPage > 1) _currentPage--;
+            return;
+        }
+        if (trimmed == ">")
+        {
+            _currentPage++;
             return;
         }
 

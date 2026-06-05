@@ -9,7 +9,7 @@ public class OldLibraryEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Стара Библиотека ===");
+        Console.WriteLine("=== Стара Библиотека ===");
         Console.WriteLine("Намирате прашна секция с книги за Fortran. Усещате тежестта на миналото.");
         Console.WriteLine("\n[Натиснете Enter за продължаване]");
     }

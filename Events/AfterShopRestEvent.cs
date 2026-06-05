@@ -9,7 +9,7 @@ public class AfterShopRestEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Почивка след пазар ===");
+        Console.WriteLine("=== Почивка след пазар ===");
         Console.WriteLine("Сядате на един изгнил стол, за да проверите новите си придобивки.");
         Console.WriteLine("\n[Натиснете Enter за продължаване]");
     }

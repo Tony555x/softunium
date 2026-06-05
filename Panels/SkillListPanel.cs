@@ -31,12 +31,29 @@ public class SkillListPanel : IPanel
             // "add a toggle to show unequipped skills out of battle"
             
             if (!inBattle && !isEquipped && !_showAll) continue;
-
-            bool isDisabled = inBattle ? !skill.UsableInBattle : !skill.UsableOutsideBattle;
+            
+            bool isDisabled = !skill.CanPlay(inBattle);
             if (!isEquipped) isDisabled = true;
             
             string prefix = isEquipped ? "" : "[НЕЕКИПИРАНО] ";
+            string cdText = "";
+            string currentCdText = "";
+            if (inBattle)
+            {
+                if (skill.BaseCooldown > 0)
+                {
+                    int charged = Math.Max(0, skill.BaseCooldown - skill.Cooldown);
+                    cdText = $" [(~) {charged}/{skill.BaseCooldown}]";
+                }
+            }
+            else
+            {
+                cdText = skill.BaseCooldown > 0 ? $" [(~) {skill.BaseCooldown}]" : "";
+            }
+
             string info = skill.AccurateDescription;
+            if (skill.BaseCooldown > 0) info += $"\nИзчакване: {skill.BaseCooldown} хода.";
+
             foreach (var kw in skill.Keywords)
             {
                 string explanation = SkillKeywords.GetExplanation(kw);
@@ -46,7 +63,7 @@ public class SkillListPanel : IPanel
                 }
             }
 
-            _options.Add(new Option(_options.Count + 1, $"{prefix}{skill.Name} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
+            _options.Add(new Option(_options.Count + 1, $"{prefix}{skill.Name}{cdText}{currentCdText} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
             {
                 if (inBattle)
                 {

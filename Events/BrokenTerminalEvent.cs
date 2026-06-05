@@ -9,7 +9,7 @@ public class BrokenTerminalEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== Счупен терминал ===");
+        Console.WriteLine("=== Счупен терминал ===");
         Console.WriteLine("Виждате терминал, който постоянно изписва 'Segmentation Fault'. Тъжно.");
         Console.WriteLine("\n[Натиснете Enter за продължаване]");
     }

@@ -15,6 +15,22 @@ public static class SaveManager
 
     public static bool SaveExists(int slot) => File.Exists(GetFilePath(slot));
 
+    public static (int Level, string? TimeSaved)? GetSaveMetadata(int slot)
+    {
+        if (!SaveExists(slot)) return null;
+        try
+        {
+            string json = File.ReadAllText(GetFilePath(slot));
+            var data = JsonSerializer.Deserialize<SaveData>(json);
+            if (data?.Player != null)
+            {
+                return (data.Player.Level, data.TimeSaved);
+            }
+        }
+        catch { }
+        return null;
+    }
+
     public static void Save(int slot, GameEngine engine)
     {
         var p = engine.State.Player;
@@ -23,6 +39,7 @@ public static class SaveManager
         var data = new SaveData
         {
             Flags = engine.State.Flags,
+            TimeSaved = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             Player = new PlayerSaveData
             {
                 Name = p.Name,
@@ -149,8 +166,9 @@ public static class SaveManager
             "ProgressDungeon" => world.ProgressDungeon,
             "TeamworkRoomLocation" => world.TeamworkRoom,
             "TeamworkDungeon" => world.TeamworkDungeon,
-            "IntegrityRoomLocation" => world.IntegrityRoom,
-            "IntegrityDungeon" => world.IntegrityDungeon,
+            "LeadershipRoomLocation" => world.LeadershipRoom,
+            "LeadershipDungeon" => world.LeadershipDungeon,
+
             "KordorLocation" => world.Kordor,
             _ => null
         };
@@ -175,10 +193,20 @@ public static class SaveManager
             "Тежък Удар" => new HeavyAttack(),
             "Лечение" => new Heal(),
             "Разсичане" => new Cleave(),
-            "Фокус" => new Focus(),
-            "Сила на духа" => new PassiveAtkBonus(),
-            "Мръсотия" => new Dirt(),
-            "Защита" => new DefenseSkill(),
+            "Фокус" => new Warcry(),
+            "Боен вик" => new Warcry(),
+            "Сила на духа" => new PassiveDamageBonus(),
+            "Мръсотия" => new Filth(),
+            "Гадост" => new Filth(),
+            "Защита" => new GuardSkill(),
+            "Блок" => new GuardSkill(),
+            "Удар и отстъп" => new HitAndRun(),
+            "Бърз удар" => new QuickStrike(),
+            "Концентрация" => new Concentration(),
+            "Желязна кожа" => new IronSkin(),
+            "Отровен удар" => new PoisonStrike(),
+            "Пулс" => new Pulse(),
+            "Пробиващ удар" => new PiercingStrike(),
             _ => null
         };
     }

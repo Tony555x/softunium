@@ -9,7 +9,9 @@ public static class ItemFactory
     {
         return name switch
         {
-            "Малка отвара" => new SmallPotion(),
+            "Баница" => new Banitsa(),
+            "Вода" => new Water(),
+            "Бонбони" => new Candy(),
             _ => null
         };
     }

@@ -17,6 +17,8 @@ public class World
     public AnalysisResultPanel AnalysisResultPanel { get; private set; }
     public RestPanel RestPanel { get; private set; }
     public SkillLoadoutPanel SkillLoadoutPanel { get; private set; }
+    public RelicLoadoutPanel RelicLoadoutPanel { get; private set; }
+    public ShopPanel ShopPanel { get; private set; }
     
     // Locations
     public KordorLocation Kordor { get; private set; }
@@ -29,8 +31,9 @@ public class World
     public TeamworkRoomLocation TeamworkRoom { get; private set; }
     public TeamworkDungeon TeamworkDungeon { get; private set; }
     
-    public IntegrityRoomLocation IntegrityRoom { get; private set; }
-    public IntegrityDungeon IntegrityDungeon { get; private set; }
+    public LeadershipRoomLocation LeadershipRoom { get; private set; }
+    public LeadershipDungeon LeadershipDungeon { get; private set; }
+
 
     public World()
     {
@@ -46,6 +49,8 @@ public class World
         AnalysisResultPanel = new AnalysisResultPanel();
         RestPanel = new RestPanel();
         SkillLoadoutPanel = new SkillLoadoutPanel();
+        RelicLoadoutPanel = new RelicLoadoutPanel();
+        ShopPanel = new ShopPanel();
         
         Kordor = new KordorLocation(this);
         WisdomRoom = new WisdomRoomLocation(this);
@@ -57,8 +62,9 @@ public class World
         TeamworkRoom = new TeamworkRoomLocation(this);
         TeamworkDungeon = new TeamworkDungeon(this);
         
-        IntegrityRoom = new IntegrityRoomLocation(this);
-        IntegrityDungeon = new IntegrityDungeon(this);
+        LeadershipRoom = new LeadershipRoomLocation(this);
+        LeadershipDungeon = new LeadershipDungeon(this);
+
     }
 
 

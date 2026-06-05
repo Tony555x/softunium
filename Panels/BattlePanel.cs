@@ -65,7 +65,13 @@ public class BattlePanel : IPanel
                 data.IsPlayerTurn = true;
                 data.Log("Ваш ред е!");
                 p.TriggerEvent(GameEvent.StartTurn, new TurnContext(engine));
+                foreach (var skill in p.Skills)
+                {
+                    if (skill.Cooldown > 0) skill.Cooldown--;
+                }
+
                 p.RecalcStats();
+
                 return; 
             }
         }

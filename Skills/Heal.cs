@@ -7,7 +7,15 @@ namespace Harduni.Skills;
 
 public class Heal : Skill
 {
-    public Heal() : base("Лечение", "Възстановява малко живот.", "Възстановява 30 Живот.", TargetType.Self, 4, true, true) { }
+    public override string Name => "Лечение";
+    public override string ShortDescription => "Възстановява малко живот.";
+    public override string AccurateDescription => "Възстановява 30 Живот.";
+    public override TargetType Target => TargetType.Self;
+    public override int MpCost => 4;
+    public override bool UsableInBattle => true;
+    public override bool UsableOutsideBattle => true;
+    public override int BaseCooldown => 1; // Example cooldown
+
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
