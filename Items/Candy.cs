@@ -19,7 +19,7 @@ public class Candy : Item
 
     public override string Use(Player player)
     {
-        player.Status.AddStatus(new PersistentRegenStatus(1, 15));
+        player.Status.ApplyStatus(new PersistentRegenStatus(1, 15));
         return "Изядохте бонбоните и усещате прилив на енергия! (+15 Регенерация)";
     }
 }

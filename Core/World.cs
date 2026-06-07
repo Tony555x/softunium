@@ -18,6 +18,8 @@ public class World
     public RestPanel RestPanel { get; private set; }
     public SkillLoadoutPanel SkillLoadoutPanel { get; private set; }
     public RelicLoadoutPanel RelicLoadoutPanel { get; private set; }
+    public TempoSkillListPanel TempoSkillListPanel { get; private set; }
+    public TempoSkillLoadoutPanel TempoSkillLoadoutPanel { get; private set; }
     public ShopPanel ShopPanel { get; private set; }
     
     // Locations
@@ -50,6 +52,8 @@ public class World
         RestPanel = new RestPanel();
         SkillLoadoutPanel = new SkillLoadoutPanel();
         RelicLoadoutPanel = new RelicLoadoutPanel();
+        TempoSkillListPanel = new TempoSkillListPanel();
+        TempoSkillLoadoutPanel = new TempoSkillLoadoutPanel();
         ShopPanel = new ShopPanel();
         
         Kordor = new KordorLocation(this);

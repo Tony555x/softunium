@@ -113,7 +113,7 @@ public class StoyanovEvent : IPanel
         }
         else if (_state == ShopState.Talking2)
         {
-            Console.WriteLine("Стоянов: \"АЗ съм Стоянов.\"\nСтоянов: \"Аре в лафката!\"");
+            Console.WriteLine("Стоянов: \"Аре в лафката!\"");
         }
         else if (_state == ShopState.Talking3)
         {

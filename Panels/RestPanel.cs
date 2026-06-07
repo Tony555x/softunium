@@ -20,21 +20,30 @@ public class RestPanel : IPanel
     private void BuildOptions(GameEngine engine)
     {
         _options.Clear();
-        _options.Add(new Option(1, "Пълно възстановяване", "Възстановява напълно Живота и Айряна.", (eng) => 
+        int id = 1;
+        _options.Add(new Option(id++, "Пълно възстановяване", "Възстановява напълно Живота и Айряна.", (eng) => 
         {
             eng.State.Player.Hp = eng.State.Player.MaxHp;
             eng.State.Player.Mp = eng.State.Player.MaxMp;
             _message = "Починахте си добре. Всички показатели са възстановени!";
         }));
-        _options.Add(new Option(2, "Умения (Loadout)", "Екипирайте или сменете вашите умения.", (eng) => 
+        _options.Add(new Option(id++, "Умения (Loadout)", "Екипирайте или сменете вашите умения.", (eng) => 
         {
             engine.State.World.Kordor.SetSubPanel(engine.State.World.SkillLoadoutPanel);
             engine.State.World.SkillLoadoutPanel.OnOpen(engine);
         }));
+        if (engine.State.Flags.ContainsKey("tempo_unlocked"))
+        {
+            _options.Add(new Option(id++, "Темпо Умения (Loadout)", "Екипирайте или сменете вашите темпо умения.", (eng) => 
+            {
+                engine.State.World.Kordor.SetSubPanel(engine.State.World.TempoSkillLoadoutPanel);
+                engine.State.World.TempoSkillLoadoutPanel.OnOpen(engine);
+            }));
+        }
         bool isRelicUnlocked = engine.State.Flags.ContainsKey("relics_unlocked");
         if (isRelicUnlocked)
         {
-            _options.Add(new Option(3, "Реликви (Loadout)", "Екипирайте или сменете вашите реликви.", (eng) => 
+            _options.Add(new Option(id++, "Реликви (Loadout)", "Екипирайте или сменете вашите реликви.", (eng) => 
             {
                 engine.State.World.Kordor.SetSubPanel(engine.State.World.RelicLoadoutPanel);
                 engine.State.World.RelicLoadoutPanel.OnOpen(engine);

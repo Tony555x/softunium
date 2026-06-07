@@ -25,6 +25,11 @@ public class StatsPanel : IPanel
         
         _options.Add(new Option(id++, "Умения", "Вижте своите умения.", (eng) => { CurrentSubPanel = eng.State.World.SkillListPanel; CurrentSubPanel.OnOpen(eng); }));
 
+        if (engine.State.Flags.ContainsKey("tempo_unlocked"))
+        {
+            _options.Add(new Option(id++, "Темпо умения", "Вижте своите темпо умения.", (eng) => { CurrentSubPanel = eng.State.World.TempoSkillListPanel; CurrentSubPanel.OnOpen(eng); }));
+        }
+
         if (!inBattle)
         {
             _options.Add(new Option(id++, "Запис", "Запишете играта в някой от слотовете.", (eng) => { CurrentSubPanel = new SaveSlotPanel(true); CurrentSubPanel.OnOpen(eng); }));
@@ -57,6 +62,10 @@ public class StatsPanel : IPanel
         Console.WriteLine("=== ХАРАКТЕРИСТИКИ И УМЕНИЯ ===");
         Console.WriteLine($"Име: {p.Name} ({p.BattleName})");
         Console.WriteLine($"Ниво: {p.Level}");
+        if (engine.State.Flags.ContainsKey("tempo_unlocked"))
+        {
+            Console.WriteLine("Степен: БАСТУН");
+        }
         Console.WriteLine($"Пари: {p.Money} Лева");
         
         DrawBar("Живот ", p.Hp, p.MaxHp);
@@ -125,6 +134,15 @@ public class StatsPanel : IPanel
             CurrentSubPanel = engine.State.World.SkillListPanel;
             CurrentSubPanel.OnOpen(engine);
             return;
+        }
+        if (engine.State.Flags.ContainsKey("tempo_unlocked"))
+        {
+            if (input.Equals("т", StringComparison.OrdinalIgnoreCase) || input.Equals("T", StringComparison.OrdinalIgnoreCase))
+            {
+                CurrentSubPanel = engine.State.World.TempoSkillListPanel;
+                CurrentSubPanel.OnOpen(engine);
+                return;
+            }
         }
 
         if (!InputHandler.Handle(input, _options, out Option selectedOption))

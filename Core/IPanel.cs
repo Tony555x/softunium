@@ -6,4 +6,5 @@ public interface IPanel
     void Render(GameEngine engine);
     void ProcessInput(string input, GameEngine engine);
     void OnOpen(GameEngine engine) { }
+    bool HideChoicePrompt => false;
 }

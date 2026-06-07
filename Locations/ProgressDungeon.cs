@@ -27,141 +27,92 @@ public class ProgressDungeon : Dungeon
         data.CurrentRoomIndex = 0;
         data.IsEventActive = false;
 
-        var rooms = new List<Room>();
-
-        for (int i = 0; i < 27; i++)
+        var rooms = new List<Room>
         {
-            Room room = null;
+            // Room 0: Entrance Event
+            new Room(0, null, new ProgressEntranceEvent()),
 
-            if (i == 0 || i == 1) // Combat 1, 2
-            {
-                room = new Room(1, new List<Enemy> { i % 2 == 0 ? new Programmer() : new SmellyProgrammer() });
-            }
-            else if (i == 2) // Mushroom Event
-            {
-                room = new Room(0, null, new MushroomEvent());
-            }
-            else if (i == 3) // Combat 3
-            {
-                room = new Room(1, new List<Enemy> { new SmellyProgrammer() });
-            }
-            else if (i == 4) // Combat 4
-            {
-                room = new Room(1, new List<Enemy> { new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer() });
-            }
-            else if (i == 5) // Combat 5
-            {
-                room = new Room(1, new List<Enemy> { new Programmer(), new Beta(), new WeakProgrammer() });
-            }
-            else if (i == 6) // AI Temple Event
-            {
-                room = new Room(0, null, new AIShrineEvent());
-            }
-            else if (i == 7) // Combat 6
-            {
-                room = new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer() });
-                room.LootMultiplier = 1.5f;
-            }
-            else if (i == 8) // Combat 7
-            {
-                room = new Room(1, new List<Enemy> { new Programmer(), new Programmer() });
-                room.LootMultiplier = 1.5f;
-            }
-            else if (i == 9) // Combat 8
-            {
-                room = new Room(1, new List<Enemy> { new SmellyProgrammer(), new SmellyProgrammer() });
-                room.LootMultiplier = 1.5f;
-            }
-            else if (i == 10) // Flavor Event 1
-            {
-                room = new Room(0, null, new OldLibraryEvent());
-            }
-            else if (i == 11) // Combat 9
-            {
-                room = new Room(1, new List<Enemy> { new Programmer(), new Programmer(), new Programmer() });
-                room.LootMultiplier = 2f;
-            }
-            else if (i == 12) // Combat 10
-            {
-                room = new Room(1, new List<Enemy> { new SmellyProgrammer(), new SmellyProgrammer(), new SmellyProgrammer() });
-                room.LootMultiplier = 2f;
-            }
-            else if (i == 13) // Combat 11
-            {
-                room = new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer(), new SmellyProgrammer() });
-                room.LootMultiplier = 2f;
-            }
-            else if (i == 14) // Tempo / Break
-            {
-                if (engine.State.Flags.ContainsKey("tempo_unlocked"))
-                {
-                    room = new Room(0, null, new BreakEvent());
-                }
-                else
-                {
-                    room = new Room(0, null, new TempoUnlockEvent());
-                }
-            }
-            else if (i == 15) // Combat 12
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer() });
-            }
-            else if (i == 16) // DEBUFF EVENT
-            {
-                room = new Room(0, null, new AfterShopRestEvent());
-            }
-            else if (i == 17) // Combat 13
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer() });
-            }
-            else if (i == 18) // Combat 14
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer() });
-                room.LootMultiplier = 1.5f;
-            }
-            else if (i == 19) // Flavor Event 3
-            {
-                room = new Room(0, null, new BrokenTerminalEvent());
-            }
-            else if (i == 20) // Combat 15
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer(), new SmellyProgrammer() });
-                room.LootMultiplier = 1.5f;
-            }
-            else if (i == 21) // Combat 16
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer(), new SmellyProgrammer() });
-                room.LootMultiplier = 2f;
-            }
-            else if (i == 22) // Combat 17
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer(), new SmellyProgrammer() });
-                room.LootMultiplier = 2f;
-            }
-            else if (i == 23) // Flavor Event 4
-            {
-                room = new Room(0, null, new DarkEchoEvent());
-            }
-            else if (i == 24) // Combat 18
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer(), new StuckProgrammer() });
-                room.LootMultiplier = 2f;
-            }
-            else if (i == 25) // Combat 19
-            {
-                room = new Room(1, new List<Enemy> { new StuckProgrammer(), new StuckProgrammer(), new Programmer(), new SmellyProgrammer() });
-                room.LootMultiplier = 2.5f;
-            }
-            else if (i == 26) // Boss Combat
-            {
-                room = new Room(3, new List<Enemy> { new OligofrenBoss(), new StuckProgrammer() });
-            }
+            // Room 1: Combat 1
+            new Room(1, new List<Enemy> { new Programmer() }),
 
-            if (room != null)
-            {
-                rooms.Add(room);
-            }
-        }
+            // Room 2: Combat 2
+            new Room(1, new List<Enemy> { new SmellyProgrammer() }),
+
+            // Room 3: Mushroom Event
+            new Room(0, null, new MushroomEvent()),
+
+            // Room 4: Combat 3
+            new Room(1, new List<Enemy> { new SmellyProgrammer() }),
+
+            // Room 5: Combat 4
+            new Room(1, new List<Enemy> { new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer() }),
+
+            // Room 6: Combat 5
+            new Room(1, new List<Enemy> { new Programmer(), new Beta(), new WeakProgrammer() }),
+
+            // Room 7: AI Temple Event
+            new Room(0, null, new AIShrineEvent()),
+
+            // Room 8: Combat 6
+            new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer() }) { LootMultiplier = 1.5f },
+
+            // Room 9: Combat 7
+            new Room(1, new List<Enemy> { new Programmer(), new Programmer() }) { LootMultiplier = 1.5f },
+
+            // Room 10: Combat 8
+            new Room(1, new List<Enemy> { new SmellyProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 1.5f },
+
+            // Room 11: Poison Stream Event (after fight 8)
+            new Room(0, null, new PoisonStreamEvent()),
+
+            // Room 12: Combat 9
+            new Room(1, new List<Enemy> { new Programmer(), new Programmer(), new Programmer() }) { LootMultiplier = 2f },
+
+            // Room 13: Combat 10
+            new Room(1, new List<Enemy> { new SmellyProgrammer(), new SmellyProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 2f },
+
+            // Room 14: Combat 11
+            new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 2f },
+
+            // Room 15: Bridge Warning Event (before combat 12)
+            new Room(0, null, new BridgeWarningEvent()),
+
+            // Room 16: Tempo Event
+            new Room(0, null, new TempoUnlockEvent()),
+
+            // Room 17: Combat 12
+            new Room(1, new List<Enemy> { new StuckProgrammer() }),
+
+            // Room 18: Poison Air Debuff Event
+            new Room(0, null, new PoisonAirDebuffEvent()),
+
+            // Room 19: Combat 13
+            new Room(1, new List<Enemy> { new StuckProgrammer() }),
+
+            // Room 20: Combat 14
+            new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer() }) { LootMultiplier = 1.5f },
+
+            // Room 21: Combat 15
+            new Room(1, new List<Enemy> { new StuckProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 1.5f },
+
+            // Room 22: Clean Room / Laptop Event
+            new Room(0, null, new CleanRoomLaptopEvent()),
+
+            // Room 23: Combat 16
+            new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer(), new SmellyProgrammer() }) { LootMultiplier = 2f },
+
+            // Room 24: Combat 17
+            new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer(), new SmellyProgrammer() }) { LootMultiplier = 2f },
+
+            // Room 25: Combat 18
+            new Room(1, new List<Enemy> { new StuckProgrammer(), new StuckProgrammer() }) { LootMultiplier = 2f },
+
+            // Room 26: Combat 19
+            new Room(1, new List<Enemy> { new StuckProgrammer(), new StuckProgrammer(), new Programmer(), new SmellyProgrammer() }) { LootMultiplier = 2.5f },
+
+            // Room 27: Boss Combat
+            new Room(3, new List<Enemy> { new OligofrenBoss(), new StuckProgrammer() })
+        };
 
         data.Rooms = rooms;
         engine.ChangeRootPanel(this);

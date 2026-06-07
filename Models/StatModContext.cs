@@ -29,6 +29,8 @@ public class StatModContext : EventContext
     public int SkillSlotsAdd { get; set; } = 0;
     public int MaxWeightAdd { get; set; } = 0;
     public int MaxRelicsAdd { get; set; } = 0;
+    public int MaxTempoAdd { get; set; } = 0;
+    public int MaxTempoSkillSlotsAdd { get; set; } = 0;
 
     public float GetMultiplier(float sum)
     {

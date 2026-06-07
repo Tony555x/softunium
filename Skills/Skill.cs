@@ -18,6 +18,8 @@ public abstract class Skill
     public virtual string AccurateDescription { get; set; } = "";
     public virtual TargetType Target { get; set; } = TargetType.Enemy;
     public virtual int MpCost { get; set; } = 0;
+    public virtual int TempoCost { get; set; } = 0;
+    public virtual bool IsTempoSkill { get; set; } = false;
     public virtual bool UsableInBattle { get; set; } = true;
     public virtual bool UsableOutsideBattle { get; set; } = false;
     public List<string> Keywords { get; set; } = new();

@@ -34,6 +34,14 @@ public class Player : Entity
     public int BaseMaxRelics { get; set; } = 2;
     public int MaxRelics { get; set; }
 
+    public int Tempo { get; set; }
+    public int BaseMaxTempo { get; set; } = 5;
+    public int MaxTempo { get; set; }
+    public List<Skill> TempoSkills { get; set; } = new();
+    public List<Skill> EquippedTempoSkills { get; set; } = new();
+    public int BaseMaxTempoSkillSlots { get; set; } = 4;
+    public int MaxTempoSkillSlots { get; set; }
+
     public Player() : base(
         name: "Бойомир Шамтката (БКПто)", 
         battleName: "Шамтка", 
@@ -149,6 +157,8 @@ public class Player : Entity
         CheckAndAddSkill(16, new MagicAffinity(), messages);
         CheckAndAddSkill(17, new VampiricStrike(), messages);
 
+        CheckAndAddTempoSkills(messages);
+
         return messages;
     }
 
@@ -179,7 +189,43 @@ public class Player : Entity
         MaxSkillSlots = BaseMaxSkillSlots + ctx.SkillSlotsAdd;
         MaxWeight = BaseMaxWeight + ctx.MaxWeightAdd;
         MaxRelics = BaseMaxRelics + ctx.MaxRelicsAdd;
+        MaxTempo = BaseMaxTempo + ctx.MaxTempoAdd;
+        MaxTempoSkillSlots = BaseMaxTempoSkillSlots + ctx.MaxTempoSkillSlotsAdd;
         return ctx;
+    }
+
+    public void CheckAndAddTempoSkills(List<string> messages)
+    {
+        if (GameState != null && GameState.Flags.ContainsKey("tempo_unlocked"))
+        {
+            CheckAndAddTempoSkill(3, new Combo(), messages);
+            CheckAndAddTempoSkill(6, new HolyLight(), messages);
+            CheckAndAddTempoSkill(9, new Rot(), messages);
+            CheckAndAddTempoSkill(12, new Accel(), messages);
+            CheckAndAddTempoSkill(15, new Nigredo(), messages);
+            CheckAndAddTempoSkill(18, new Rhythm(), messages);
+        }
+    }
+
+    private void CheckAndAddTempoSkill(int minLevel, Skill skill, List<string> messages)
+    {
+        if (Level >= minLevel && !TempoSkills.Exists(s => s.Name == skill.Name))
+        {
+            TempoSkills.Add(skill);
+            
+            if (EquippedTempoSkills.Count < MaxTempoSkillSlots)
+            {
+                EquippedTempoSkills.Add(skill);
+                messages.Add($"+++ НАУЧИХТЕ НОВО ТЕМПО УМЕНИЕ: {skill.Name} +++");
+            }
+            else
+            {
+                messages.Add($"+++ НАУЧИХТЕ НОВО ТЕМПО УМЕНИЕ: {skill.Name} +++");
+                messages.Add($"(Може да го екипирате от Кордор, тъй като слотовете ви за темпо умения са пълни.)");
+            }
+            
+            RecalcStats();
+        }
     }
 
     public override void TriggerEvent(GameEvent ev, EventContext ctx)
@@ -196,6 +242,12 @@ public class Player : Entity
         for (int i = EquippedSkills.Count - 1; i >= 0; i--)
         {
             EquippedSkills[i].ProcessEvent(this, ev, ctx);
+        }
+
+        // Trigger all equipped tempo skills
+        for (int i = EquippedTempoSkills.Count - 1; i >= 0; i--)
+        {
+            EquippedTempoSkills[i].ProcessEvent(this, ev, ctx);
         }
         
         base.TriggerEvent(ev, ctx);
@@ -216,6 +268,10 @@ public class Player : Entity
             if (GameState?.Flags.ContainsKey("andrew_tate_atk_bonus") == true)
             {
                 smc.AtkAdd += 4;
+            }
+            if (GameState?.Flags.ContainsKey("laptop_skill_slot_bonus") == true)
+            {
+                smc.SkillSlotsAdd += 1;
             }
         }
     }

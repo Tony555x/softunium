@@ -58,7 +58,10 @@ public class GameEngine
             
             CurrentPanel.Render(this);
             
-            Console.WriteLine("\nИзбор: " + _inputBuffer.ToString() + new string(' ', Console.WindowWidth - _inputBuffer.Length - 8)); 
+            if (CurrentPanel != null && !CurrentPanel.HideChoicePrompt)
+            {
+                Console.WriteLine("\nИзбор: " + _inputBuffer.ToString() + new string(' ', Console.WindowWidth - _inputBuffer.Length - 8)); 
+            }
             
             // Limit to ~60 FPS
             int elapsedMs = (int)(stopwatch.Elapsed.TotalMilliseconds - (currentTime * 1000));

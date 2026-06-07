@@ -60,6 +60,12 @@ public class KordorLocation : Location
             _confirmExit = true;
             BuildOptions(eng);
         }));
+
+        Options.Add(new Option(99, "Тест Анимация Око (Debug)", "Тества анимацията на окото.", (eng) => 
+        {
+            var animPanel = new Harduni.Events.BlinkingEyeAnimationPanel((e) => e.ChangeRootPanel(this));
+            eng.ChangeRootPanel(animPanel);
+        }));
     }
 
     public override void Update(float deltaTime, GameEngine engine)

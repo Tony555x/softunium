@@ -15,11 +15,21 @@ public class BattlePanel : IPanel
     public BattlePanel()
     {
         _options = new List<Option>();
-        _options.Add(new Option(1, "Атака", "Извършва основната атака.", OpenAttackTargeting));
-        _options.Add(new Option(2, "Умения", "Списък с вашите умения.", OpenSkills));
-        _options.Add(new Option(3, "Инвентар", "Отваря инвентара с предмети.", OpenInventory));
-        _options.Add(new Option(4, "Анализ", "Прегледайте статистиките и ефектите на целта.", OpenAnalysis));
-        _options.Add(new Option(5, "Бягство", "Бягство от битката.", Escape));
+    }
+
+    private void BuildOptions(GameEngine engine)
+    {
+        _options.Clear();
+        int id = 1;
+        _options.Add(new Option(id++, "Атака", "Извършва основната атака.", OpenAttackTargeting));
+        _options.Add(new Option(id++, "Умения", "Списък с вашите умения.", OpenSkills));
+        if (engine.State.Flags.ContainsKey("tempo_unlocked"))
+        {
+            _options.Add(new Option(id++, "Темпо умения", "Списък с вашите темпо умения.", OpenTempoSkills));
+        }
+        _options.Add(new Option(id++, "Инвентар", "Отваря инвентара с предмети.", OpenInventory));
+        _options.Add(new Option(id++, "Анализ", "Прегледайте статистиките и ефектите на целта.", OpenAnalysis));
+        _options.Add(new Option(id++, "Бягство", "Бягство от битката.", Escape));
     }
 
     public void Update(float deltaTime, GameEngine engine)
@@ -69,6 +79,10 @@ public class BattlePanel : IPanel
                 {
                     if (skill.Cooldown > 0) skill.Cooldown--;
                 }
+                foreach (var skill in p.TempoSkills)
+                {
+                    if (skill.Cooldown > 0) skill.Cooldown--;
+                }
 
                 p.RecalcStats();
 
@@ -111,7 +125,8 @@ public class BattlePanel : IPanel
         
         var p = engine.State.Player;
         string pStatusStr = p.Status.GetCombinedDisplayString();
-        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} | Енергия: {GetEnergyBar(p.Energy, p.EnergyBarSize)} {pStatusStr}";
+        string tempoStr = engine.State.Flags.ContainsKey("tempo_unlocked") ? $" | Темпо: {p.Tempo}/{p.MaxTempo}" : "";
+        string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp}{tempoStr} | Енергия: {GetEnergyBar(p.Energy, p.EnergyBarSize)} {pStatusStr}";
         
         if (p.Hp <= 0)
         {
@@ -152,6 +167,7 @@ public class BattlePanel : IPanel
         }
         else if (data.IsPlayerTurn)
         {
+            BuildOptions(engine);
             Console.WriteLine("\nВъзможни действия:");
             foreach (var option in _options)
             {
@@ -176,6 +192,7 @@ public class BattlePanel : IPanel
             return;
         }
 
+        BuildOptions(engine);
         if (!InputHandler.Handle(input, _options, out Option selectedOption))
         {
             selectedOption.OnSelect?.Invoke(engine);
@@ -195,6 +212,12 @@ public class BattlePanel : IPanel
     {
         engine.State.BattleData.CurrentSubPanel = engine.State.World.SkillListPanel;
         engine.State.World.SkillListPanel.OnOpen(engine);
+    }
+
+    private void OpenTempoSkills(GameEngine engine)
+    {
+        engine.State.BattleData.CurrentSubPanel = engine.State.World.TempoSkillListPanel;
+        engine.State.World.TempoSkillListPanel.OnOpen(engine);
     }
 
     private void OpenInventory(GameEngine engine)

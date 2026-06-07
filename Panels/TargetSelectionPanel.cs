@@ -60,13 +60,32 @@ public class TargetSelectionPanel : IPanel
             return;
         }
 
-        p.Mp -= skill.MpCost;
-        skill.Cooldown = skill.BaseCooldown + 1;
+        if (p.Tempo < skill.TempoCost)
+        {
+            data.Log($"Нямате достатъчно Темпо за {skill.Name}!");
+            data.CurrentSubPanel = null;
+            return;
+        }
 
+        p.Mp -= skill.MpCost;
+        p.Tempo -= skill.TempoCost;
+        skill.Cooldown = skill.BaseCooldown + 1;
 
         string resultMsg = skill.Execute(p, data.Enemies, target);
         
         data.Log($"Използвахте {skill.Name}. {resultMsg}");
+
+        if (!skill.IsTempoSkill)
+        {
+            int oldTempo = p.Tempo;
+            p.Tempo = System.Math.Min(p.MaxTempo, p.Tempo + 1);
+            if (p.Tempo > oldTempo)
+            {
+                data.Log($"Спечелихте 1 темпо! ({p.Tempo}/{p.MaxTempo})");
+            }
+        }
+
+        p.RecalcStats();
         
         p.TriggerEvent(GameEvent.EndTurn, new TurnContext(engine));
         data.IsPlayerTurn = false; // END PLAYER TURN

@@ -2,4 +2,4 @@
 trigger: always_on
 ---
 
-do not run dotnet build.
+do not run dotnet build, unless specifically asked to.

@@ -33,6 +33,12 @@ public static class BattleManager
             skill.Cooldown = skill.BaseCooldown + 1;
         }
 
+        p.Tempo = 0;
+        foreach (var skill in p.TempoSkills)
+        {
+            skill.Cooldown = skill.BaseCooldown + 1;
+        }
+
 
 
 
