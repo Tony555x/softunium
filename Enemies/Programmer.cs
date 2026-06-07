@@ -27,14 +27,16 @@ public class Programmer : Enemy
         
         if (_turnCount % 3 == 1)
         {
-            var ctx = this.PerformAttack(p, this.Attack - 3); // weaker hit
+            var ctx = new DamageContext(this, p, this.Attack - 3, DamageType.Attack); // weaker hit
+            p.TakeDamage(ctx);
             p.Status.ApplyStatus(new AtkDownStatus(3, 0.5f));
             p.RecalcStats();
             engine.State.BattleData.Log($"{Name} изпрати объркващ код! Нанесе {ctx.DamageTaken} щети и намали атаката ви!");
         }
         else
         {
-            var ctx = this.PerformAttack(p, this.Attack);
+            var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
+            p.TakeDamage(ctx);
             engine.State.BattleData.Log($"{Name} нанесе {ctx.DamageTaken} щети с основна атака!");
         }
     }

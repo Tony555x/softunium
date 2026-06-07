@@ -29,7 +29,8 @@ public class Combo : Skill
         {
             if (target.Hp <= 0) break;
             
-            var ctx = player.PerformAttack(target, (int)(player.Attack * 0.75));
+            var ctx = new DamageContext(player, target, (int)(player.Attack * 0.75), DamageType.Attack);
+            target.TakeDamage(ctx);
             totalDamage += ctx.DamageTaken;
             hits++;
 

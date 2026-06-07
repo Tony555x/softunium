@@ -52,7 +52,7 @@ public class PersistentPoisonousStatus : Status
                 Destroy();
             }
         }
-        else if (ev == GameEvent.OnAttack && ctx is AttackContext aCtx)
+        else if (ev == GameEvent.OnDamageDealt && ctx is DamageContext aCtx && aCtx.Type == DamageType.Attack)
         {
             if (aCtx.Attacker == Owner)
             {

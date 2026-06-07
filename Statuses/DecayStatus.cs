@@ -38,10 +38,10 @@ public class DecayStatus : Status
             var battleData = tCtx.Engine.State.BattleData;
             
             int dmg = Stacks;
-            Owner.Hp -= dmg;
-            if (Owner.Hp <= 0) Owner.Hp = 0;
+            var dmgCtx = new DamageContext(null, Owner, dmg, DamageType.Decay);
+            Owner.TakeDamage(dmgCtx);
 
-            battleData.Log($"{Owner.Name} поема {dmg} щети от разграждане.");
+            battleData.Log($"{Owner.Name} поема {dmgCtx.DamageTaken} щети от разграждане.");
         }
     }
 }

@@ -28,12 +28,14 @@ public class OligofrenBoss : Enemy
             engine.State.BattleData.Log($"{Name} подготвя силна атака...");
         }
         else if(_turnCount % 4 == 0){
-            var ctx = this.PerformAttack(p, this.Attack * 2);
+            var ctx = new DamageContext(this, p, this.Attack * 2, DamageType.Attack);
+            p.TakeDamage(ctx);
             engine.State.BattleData.Log($"{Name} избухна и ти нанесе {ctx.DamageTaken} щети!");
         }
         else
         {
-            var ctx = this.PerformAttack(p, this.Attack);
+            var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
+            p.TakeDamage(ctx);
             engine.State.BattleData.Log($"{Name} ви атакува и нанесе {ctx.DamageTaken} щети!");
         }
     }

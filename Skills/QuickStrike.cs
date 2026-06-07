@@ -20,7 +20,8 @@ public class QuickStrike : Skill
     {
         if (target == null) return "Няма цел.";
         
-        var ctx = player.PerformAttack(target, (int)(player.Attack * 0.8));
+        var ctx = new DamageContext(player, target, (int)(player.Attack * 0.8), DamageType.Attack);
+        target.TakeDamage(ctx);
         
         var skillToReduce = player.EquippedSkills
             .Where(s => s.Cooldown > 0)

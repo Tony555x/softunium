@@ -27,7 +27,7 @@ public class PassiveDamageBonus : Skill
 
     public override void ProcessEvent(Entity owner, GameEvent ev, EventContext ctx)
     {
-        if (ev == GameEvent.OnAttack && ctx is AttackContext aCtx)
+        if (ev == GameEvent.OnDamageDealt && ctx is DamageContext aCtx && aCtx.Type == DamageType.Attack)
         {
             aCtx.DamageMult += 0.20f;
         }

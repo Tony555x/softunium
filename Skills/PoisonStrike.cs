@@ -25,7 +25,8 @@ public class PoisonStrike : Skill
     {
         if (target == null) return "Няма цел.";
         
-        var ctx = player.PerformAttack(target, player.Attack);
+        var ctx = new DamageContext(player, target, player.Attack, DamageType.Attack);
+        target.TakeDamage(ctx);
         
         int poisonAmount = player.Magic / 2;
         target.Status.ApplyStatus(new PoisonStatus(poisonAmount));

@@ -90,25 +90,23 @@ public abstract class Entity
         return ctx;
     }
 
-    public AttackContext PerformAttack(Entity target, int baseDamage)
+    public void TakeDamage(DamageContext ctx)
     {
-        var ctx = new AttackContext(this, target, baseDamage);
-        TriggerEvent(GameEvent.OnAttack, ctx);
-        target.TakeAttack(ctx);
-        return ctx;
-    }
+        ctx.Attacker?.TriggerEvent(GameEvent.OnDamageDealt, ctx);
+        TriggerEvent(GameEvent.OnDamageTaken, ctx);
 
-    public void TakeAttack(AttackContext ctx)
-    {
-        TriggerEvent(GameEvent.OnAttacked, ctx);
-        int incomingDamage = (int)((System.Math.Max(1, ctx.BaseDamage + ctx.DamageAdd - (this.Defence / 2)) ) * ctx.GetMultiplier(ctx.DamageMult));
-        TakeDamage(ctx, incomingDamage);
-    }
+        int incomingDamage = ctx.BaseDamage;
+        if (ctx.Type == DamageType.Attack)
+        {
+            incomingDamage = (int)((System.Math.Max(1, ctx.BaseDamage + ctx.DamageAdd - (this.Defence / 2))) * ctx.GetMultiplier(ctx.DamageMult));
+        }
+        else
+        {
+            incomingDamage = (int)((System.Math.Max(1, ctx.BaseDamage + ctx.DamageAdd)) * ctx.GetMultiplier(ctx.DamageMult));
+        }
 
-    public void TakeDamage(AttackContext ctx, int damage)
-    {
-        ctx.DamageTaken = damage;
-        this.Hp -= damage;
+        ctx.DamageTaken = incomingDamage;
+        this.Hp -= incomingDamage;
         if (this.Hp <= 0)
         {
             this.Hp = 0;

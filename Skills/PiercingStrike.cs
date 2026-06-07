@@ -20,7 +20,8 @@ public class PiercingStrike : Skill
     {
         if (target == null) return "Няма цел.";
         
-        var ctx = player.PerformAttack(target, (int)(player.Attack * 1.5));
+        var ctx = new DamageContext(player, target, (int)(player.Attack * 1.5), DamageType.Attack);
+        target.TakeDamage(ctx);
         target.Status.ApplyStatus(new DefDownStatus(3, 0.5f));
         
         string msg = $"Нанесохте {ctx.DamageTaken} щети на {target.Name} и пробихте защитата му.";

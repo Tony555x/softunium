@@ -23,7 +23,8 @@ public class AlexTempoEventEnemy : Enemy
         int totalDamage = 0;
         for (int i = 0; i < 3; i++)
         {
-            var ctx = this.PerformAttack(p, 1);
+            var ctx = new DamageContext(this, p, 1, DamageType.Attack);
+            p.TakeDamage(ctx);
             totalDamage += ctx.DamageTaken;
         }
         engine.State.BattleData.Log($"{Name} атакува бързо 3 пъти и нанесе общо {totalDamage} щети!");

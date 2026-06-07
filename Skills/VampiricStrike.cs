@@ -17,7 +17,8 @@ public class VampiricStrike : Skill
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
-        var ctx = player.PerformAttack(target, player.Attack * 2);
+        var ctx = new DamageContext(player, target, player.Attack * 2, DamageType.Attack);
+        target.TakeDamage(ctx);
         int baseHealAmount = ctx.DamageTaken / 2;
         var healCtx = player.Heal(baseHealAmount);
 

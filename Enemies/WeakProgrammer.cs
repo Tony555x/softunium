@@ -19,7 +19,8 @@ public class WeakProgrammer : Enemy
     public override void TakeAction(GameEngine engine)
     {
         var p = engine.State.Player;
-        var ctx = this.PerformAttack(p, this.Attack);
+        var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
+        p.TakeDamage(ctx);
         engine.State.BattleData.Log($"{Name} ви атакува с бавен код и нанесе {ctx.DamageTaken} щети!");
     }
 }

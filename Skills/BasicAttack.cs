@@ -17,7 +17,8 @@ public class BasicAttack : Skill
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
-        var ctx = player.PerformAttack(target, player.Attack);
+        var ctx = new DamageContext(player, target, player.Attack, DamageType.Attack);
+        target.TakeDamage(ctx);
         if (ctx.IsLethal)
         {
             return $"Нанесохте фатален удар от {ctx.DamageTaken} щети на {target.Name}!";

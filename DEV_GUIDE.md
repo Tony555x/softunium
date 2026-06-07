@@ -40,13 +40,13 @@ We use a specific formula for stacking percentage bonuses to avoid exponential g
 - **Negative S**: `Multiplier = 1.0 / (1.0 - S)`
   - Example: -100% (S = -1.0) results in `1.0 / 2.0 = 0.5` (Half effect).
   - Example: -200% (S = -2.0) results in `1.0 / 3.0 = 0.33` (One-third effect).
-- **Rule**: Never hardcode multipliers. Always modify the `Mult` fields in `StatModContext` or `AttackContext`.
+- **Rule**: Never hardcode multipliers. Always modify the `Mult` fields in `StatModContext` or `DamageContext`.
 
 ## 3. Combat Mechanics
 ### Attack & Damage
-- Damage calculation happens in `Entity.TakeAttack(AttackContext ctx)`.
-- Use `AttackContext` to modify incoming damage via `DamageAdd` and `DamageMult` before it's finalized.
-- **Base Formula**: `(BaseDamage + DamageAdd - Defense/2) * Multiplier`
+- Damage calculation happens in `Entity.TakeDamage(DamageContext ctx)`.
+- Use `DamageContext` to modify incoming damage via `DamageAdd` and `DamageMult` before it's finalized.
+- **Base Formula**: `(BaseDamage + DamageAdd - Defense/2) * Multiplier` (Note: Defense reduction only applies if `ctx.Type == DamageType.Attack`).
 
 ### Status Effects
 - Statuses must implement `OnStack(Status newStatus)`.

@@ -6,8 +6,8 @@ public enum GameEvent
     EndTurn,
     StatAdd,
     StatMult,
-    OnAttack,
-    OnAttacked,
+    OnDamageDealt,
+    OnDamageTaken,
     OnHeal,
     OnHealMp,
     CombatEnd

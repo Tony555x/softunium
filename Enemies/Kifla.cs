@@ -46,7 +46,8 @@ public class Kifla : Enemy
             }
         }
         
-        var ctx = this.PerformAttack(p, this.Attack);
+        var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
+        p.TakeDamage(ctx);
         engine.State.BattleData.Log($"{Name} удари шамар и нанесе {ctx.DamageTaken} щети!");
     }
 }

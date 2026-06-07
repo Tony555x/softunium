@@ -33,7 +33,8 @@ public class SmellyProgrammer : Enemy
         }
         else
         {
-            var ctx = this.PerformAttack(p, this.Attack);
+            var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
+            p.TakeDamage(ctx);
             engine.State.BattleData.Log($"{Name} ви замери с клавиатура и нанесе {ctx.DamageTaken} щети!");
         }
     }

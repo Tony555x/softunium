@@ -30,7 +30,7 @@ public class GuardStatus : Status
 
     public override void ProcessEvent(GameEvent ev, EventContext ctx)
     {
-        if (ev == GameEvent.OnAttacked && ctx is AttackContext aCtx)
+        if (ev == GameEvent.OnDamageTaken && ctx is DamageContext aCtx && aCtx.Type == DamageType.Attack)
         {
             aCtx.DamageMult -= 1.5f; 
             _hitsLeft--;

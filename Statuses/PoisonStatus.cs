@@ -38,11 +38,11 @@ public class PoisonStatus : Status
             
             // Take damage
             int dmg = Stacks;
-            Owner.Hp -= dmg;
-            if (Owner.Hp <= 0) Owner.Hp = 0; // Prevent death, or let it kill? Poison usually kills or leaves at 1 HP, let's let it kill.
+            var dmgCtx = new DamageContext(null, Owner, dmg, DamageType.Poison);
+            Owner.TakeDamage(dmgCtx);
 
             // Print to battle log
-            battleData.Log($"{Owner.Name} поема {dmg} щети от отрова.");
+            battleData.Log($"{Owner.Name} поема {dmgCtx.DamageTaken} щети от отрова.");
 
             // Reduce stacks by 1/3, rounded down, min 1
             int reduction = Math.Max(Stacks / 3, 1);

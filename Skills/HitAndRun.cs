@@ -20,7 +20,8 @@ public class HitAndRun : Skill
     {
         if (target == null) return "Няма цел.";
         
-        var ctx = player.PerformAttack(target, player.Attack);
+        var ctx = new DamageContext(player, target, player.Attack, DamageType.Attack);
+        target.TakeDamage(ctx);
         player.Status.ApplyStatus(new DefUpStatus(3, 0.25f), DelayedTurn.Next);
         
         string msg = $"Нанесохте {ctx.DamageTaken} щети на {target.Name} и засилихте защитата си.";

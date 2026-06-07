@@ -18,7 +18,8 @@ public class HeavyAttack : Skill
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
-        var ctx = player.PerformAttack(target, player.Attack + 15);
+        var ctx = new DamageContext(player, target, player.Attack + 15, DamageType.Attack);
+        target.TakeDamage(ctx);
         if (ctx.IsLethal)
         {
             return $"Нанесохте тежък фатален удар от {ctx.DamageTaken} щети на {target.Name}!";

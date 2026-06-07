@@ -25,7 +25,8 @@ public class Cleave : Skill
         {
             if (e.Hp > 0)
             {
-                var ctx = player.PerformAttack(e, baseAoeDamage);
+                var ctx = new DamageContext(player, e, baseAoeDamage, DamageType.Attack);
+                e.TakeDamage(ctx);
                 totalDamage += ctx.DamageTaken;
             }
         }

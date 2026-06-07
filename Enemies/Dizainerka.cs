@@ -47,7 +47,8 @@ public class Dizainerka : Enemy
         }
         else // Turn 2 and 3
         {
-            var ctx = this.PerformAttack(p, this.Attack);
+            var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
+            p.TakeDamage(ctx);
             p.Status.ApplyStatus(new DefDownStatus(20, 0.05f));
             p.RecalcStats();
             engine.State.BattleData.Log($"{Name} те застреля с молив, нанесе ти {ctx.DamageTaken} щети и намали защитата ти!");
