@@ -41,7 +41,7 @@ public class Player : Entity
     public int MaxTempo { get; set; }
     public List<Skill> TempoSkills { get; set; } = new();
     public List<Skill> EquippedTempoSkills { get; set; } = new();
-    public int BaseMaxTempoSkillSlots { get; set; } = 4;
+    public int BaseMaxTempoSkillSlots { get; set; } = 1;
     public int MaxTempoSkillSlots { get; set; }
 
     public Player() : base(
@@ -107,14 +107,14 @@ public class Player : Entity
         int oldLuck = BaseLuck;
         int oldWis = BaseWisdom;
 
-        BaseMaxHp = (int)(20 + L * 5 + System.Math.Pow(L, 2) * 0.2);
-        BaseMaxMp = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.05);
-        BaseAttack = (int)(10 + L * 2 + System.Math.Pow(L, 2) * 0.08);
-        BaseDefence = (int)(6 + L * 1.5 + System.Math.Pow(L, 2) * 0.04);
-        BaseMagic = (int)(8 + L * 1.8 + System.Math.Pow(L, 2) * 0.06);
-        BaseSpeed = (int)(5 + (double)L / 2 + System.Math.Pow(L, 2) * 0.01);
-        BaseLuck = (int)(1 + (double)L / 10 + System.Math.Pow(L, 2) / 500);
-        BaseWisdom = (int)(0 + (double)L / 40);
+        BaseMaxHp = (int)(20 + L * 5);
+        BaseMaxMp = (int)(10 + L * 2);
+        BaseAttack = (int)(10 + L * 2);
+        BaseDefence = (int)(6 + L * 1.2);
+        BaseMagic = (int)(8 + L * 1.6);
+        BaseSpeed = (int)(5 + (double)L / 2);
+        BaseLuck = (int)(1);
+        BaseWisdom = (int)(0);
 
         RecalcStats();
 
