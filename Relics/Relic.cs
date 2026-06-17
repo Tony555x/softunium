@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Harduni.Models;
 
-namespace Harduni.Items;
+namespace Harduni.Relics;
 
 public abstract class Relic
 {

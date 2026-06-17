@@ -58,3 +58,14 @@ We use a specific formula for stacking percentage bonuses to avoid exponential g
 - **Localization**: All user-facing text should be in Bulgarian.
 - **Dungeon Flow**: Rooms in `Dungeon.cs` are sequential. Additions to the dungeon should follow the sorted index pattern to maintain readability.
 - **Keywords**: Use the `Keywords` system in `Skill` to provide mechanical explanations to the player without duplicating text.
+- **Skill Tags**: Every skill must define its categories by overriding the `Tags` property using `SkillTag` values (e.g., `public override List<SkillTag> Tags { get; } = new() { SkillTag.Attack };`). These tags are automatically displayed in the detailed description and can be queried using `HasTag(SkillTag)`.
+  The defined tags are:
+  - `SkillTag.Attack` -> `[Атака]` (any skill that deals direct attack damage)
+  - `SkillTag.Poison` -> `[Отрова]` (skills related to poison)
+  - `SkillTag.Healing` -> `[Лечение]` (any skill that heals)
+  - `SkillTag.Defense` -> `[Защита]` (any skill related to reducing damage taken; healing is not defense)
+  - `SkillTag.Buff` -> `[Усилване]` (skills that generate status effect buffs)
+  - `SkillTag.Debuff` -> `[Отслабване]` (stat debuff skills)
+  - `SkillTag.Passive` -> `[Пасивно]` (passive skills)
+
+

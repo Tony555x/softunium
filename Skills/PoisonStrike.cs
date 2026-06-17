@@ -15,6 +15,7 @@ public class PoisonStrike : Skill
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 0;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Attack, SkillTag.Poison };
 
     public PoisonStrike()
     {

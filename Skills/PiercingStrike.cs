@@ -15,6 +15,7 @@ public class PiercingStrike : Skill
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 1;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Attack, SkillTag.Debuff };
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

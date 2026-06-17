@@ -15,6 +15,7 @@ public class Heal : Skill
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => true;
     public override int BaseCooldown => 1; // Example cooldown
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Healing };
 
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)

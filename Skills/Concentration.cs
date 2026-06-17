@@ -15,6 +15,7 @@ public class Concentration : Skill
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 1;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Buff, SkillTag.Healing };
 
     public Concentration()
     {

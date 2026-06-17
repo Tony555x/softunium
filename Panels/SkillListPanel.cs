@@ -51,17 +51,8 @@ public class SkillListPanel : IPanel
                 cdText = skill.BaseCooldown > 0 ? $" [(~) {skill.BaseCooldown}]" : "";
             }
 
-            string info = skill.AccurateDescription;
+            string info = skill.GetDetailedDescription();
             if (skill.BaseCooldown > 0) info += $"\nИзчакване: {skill.BaseCooldown} хода.";
-
-            foreach (var kw in skill.Keywords)
-            {
-                string explanation = SkillKeywords.GetExplanation(kw);
-                if (!string.IsNullOrEmpty(explanation))
-                {
-                    info += "\n" + explanation;
-                }
-            }
 
             _options.Add(new Option(_options.Count + 1, $"{prefix}{skill.Name}{cdText}{currentCdText} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
             {

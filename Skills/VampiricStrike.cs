@@ -14,6 +14,7 @@ public class VampiricStrike : Skill
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 4;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Attack, SkillTag.Healing };
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

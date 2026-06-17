@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Harduni.Core;
 using Harduni.Models;
 using Harduni.Items;
+using Harduni.Relics;
+
 
 namespace Harduni.Panels;
 

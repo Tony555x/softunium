@@ -13,6 +13,7 @@ public class PassiveDamageBonus : Skill
     public override int MpCost => 0;
     public override bool UsableInBattle => false;
     public override bool UsableOutsideBattle => false;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Passive };
 
     public PassiveDamageBonus()
     {

@@ -90,14 +90,7 @@ public class LeadershipDungeon : Dungeon
             }
             else if (i == 14) // Relic Unlock Event
             {
-                if (engine.State.Flags.ContainsKey("relics_unlocked"))
-                {
-                    room = new Room(0, null, new BreakEvent());
-                }
-                else
-                {
-                    room = new Room(0, null, new RelicUnlockEvent());
-                }
+                room = new Room(0, null, new PeshoNpcEvent());
             }
             else if (i == 15) // Combat 12
             {

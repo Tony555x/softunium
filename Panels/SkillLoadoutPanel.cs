@@ -39,15 +39,7 @@ public class SkillLoadoutPanel : IPanel
             bool isEquipped = p.EquippedSkills.Contains(skill);
             string status = isEquipped ? "[ЕКИПИРАНО]" : "[НЕЕКИПИРАНО]";
             
-            string info = skill.AccurateDescription;
-            foreach (var kw in skill.Keywords)
-            {
-                string explanation = SkillKeywords.GetExplanation(kw);
-                if (!string.IsNullOrEmpty(explanation))
-                {
-                    info += "\n" + explanation;
-                }
-            }
+            string info = skill.GetDetailedDescription();
 
             string cdStr = skill.BaseCooldown > 0 ? $" [(~) {skill.BaseCooldown}]" : "";
             _options.Add(new Option(i + 1, $"{status} {skill.Name}{cdStr} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) => 

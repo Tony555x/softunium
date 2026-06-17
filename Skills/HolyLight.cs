@@ -17,6 +17,7 @@ public class HolyLight : Skill
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 0;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Healing };
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

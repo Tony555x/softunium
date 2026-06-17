@@ -14,6 +14,7 @@ public class MagicAffinity : Skill
     public override bool UsableInBattle => false;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 0;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Passive };
 
     public MagicAffinity()
     {

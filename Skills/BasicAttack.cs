@@ -13,6 +13,7 @@ public class BasicAttack : Skill
     public override int MpCost => 0;
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
+    public override List<SkillTag> Tags { get; } = new() { SkillTag.Attack };
 
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)

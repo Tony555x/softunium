@@ -1,6 +1,6 @@
 using Harduni.Models;
 
-namespace Harduni.Items;
+namespace Harduni.Relics;
 
 public class Deodorant : Relic
 {

@@ -39,15 +39,7 @@ public class TempoSkillLoadoutPanel : IPanel
             bool isEquipped = p.EquippedTempoSkills.Contains(skill);
             string status = isEquipped ? "[ЕКИПИРАНО]" : "[НЕЕКИПИРАНО]";
             
-            string info = skill.AccurateDescription;
-            foreach (var kw in skill.Keywords)
-            {
-                string explanation = SkillKeywords.GetExplanation(kw);
-                if (!string.IsNullOrEmpty(explanation))
-                {
-                    info += "\n" + explanation;
-                }
-            }
+            string info = skill.GetDetailedDescription();
 
             string cdStr = skill.BaseCooldown > 0 ? $" [(~) {skill.BaseCooldown}]" : "";
             

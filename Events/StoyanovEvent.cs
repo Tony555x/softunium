@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Harduni.Core;
 using Harduni.Items;
+using Harduni.Relics;
+
 
 namespace Harduni.Events;
 
