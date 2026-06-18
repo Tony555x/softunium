@@ -55,23 +55,23 @@ public class InventoryPanel : IPanel
     public void Render(GameEngine engine)
     {
         var p = engine.State.Player;
-        Console.WriteLine($"=== ИНВЕНТАР (Тегло: {p.Inventory.TotalWeight}/{p.MaxWeight}) ===");
-        if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
+        VConsole.WriteLine($"=== ИНВЕНТАР (Тегло: {p.Inventory.TotalWeight}/{p.MaxWeight}) ===");
+        if (!string.IsNullOrEmpty(_message)) VConsole.WriteLine($"\n{_message}");
         
         if (_options.Count == 0)
         {
-            Console.WriteLine("Инвентарът ви е празен.");
+            VConsole.WriteLine("Инвентарът ви е празен.");
         }
         else
         {
             foreach (var opt in _options)
             {
-                if (opt.IsDisabled) Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($" {opt.Id}. {opt.Text}");
-                Console.ResetColor();
+                if (opt.IsDisabled) VConsole.ForegroundColor = ConsoleColor.DarkGray;
+                VConsole.WriteLine($" {opt.Id}. {opt.Text}");
+                VConsole.ResetColor();
             }
         }
-        Console.WriteLine("\n[Въведете номер за използване, ? номер за инфо, или Enter за затваряне]");
+        VConsole.WriteLine("\n[Въведете номер за използване, ? номер за инфо, или Enter за затваряне]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

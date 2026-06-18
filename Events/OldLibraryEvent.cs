@@ -9,9 +9,9 @@ public class OldLibraryEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== Стара Библиотека ===");
-        Console.WriteLine("Намирате прашна секция с книги за Fortran. Усещате тежестта на миналото.");
-        Console.WriteLine("\n[Натиснете Enter за продължаване]");
+        VConsole.WriteLine("=== Стара Библиотека ===");
+        VConsole.WriteLine("Намирате прашна секция с книги за Fortran. Усещате тежестта на миналото.");
+        VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

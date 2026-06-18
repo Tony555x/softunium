@@ -52,21 +52,21 @@ public class StatsPanel : IPanel
             {
                 DrawBar("Живот ", player.Hp, player.MaxHp);
                 DrawBar("Айрян ", player.Mp, player.MaxMp);
-                Console.WriteLine();
+                VConsole.WriteLine();
             }
             CurrentSubPanel.Render(engine);
             return;
         }
 
         var p = engine.State.Player;
-        Console.WriteLine("=== ХАРАКТЕРИСТИКИ И УМЕНИЯ ===");
-        Console.WriteLine($"Име: {p.Name} ({p.BattleName})");
-        Console.WriteLine($"Ниво: {p.Level}");
+        VConsole.WriteLine("=== ХАРАКТЕРИСТИКИ И УМЕНИЯ ===");
+        VConsole.WriteLine($"Име: {p.Name} ({p.BattleName})");
+        VConsole.WriteLine($"Ниво: {p.Level}");
         if (engine.State.Flags.ContainsKey("tempo_unlocked"))
         {
-            Console.WriteLine("Степен: БАСТУН");
+            VConsole.WriteLine("Степен: БАСТУН");
         }
-        Console.WriteLine($"Пари: {p.Money} Лева");
+        VConsole.WriteLine($"Пари: {p.Money} Лева");
         
         DrawBar("Живот ", p.Hp, p.MaxHp);
         DrawBar("Айрян ", p.Mp, p.MaxMp);
@@ -75,22 +75,22 @@ public class StatsPanel : IPanel
         string alignmentTitle = p.Alignment == 0 ? "Неутрален (0)" : 
                                  p.Alignment > 0 ? $"Петуриум ({p.Alignment})" : 
                                  $"Гамениум ({p.Alignment})";
-        Console.WriteLine($"\nСклонност: {alignmentTitle}");
+        VConsole.WriteLine($"\nСклонност: {alignmentTitle}");
 
-        Console.WriteLine("\n--- Атрибути ---");
-        Console.WriteLine($"Атака    : {p.Attack}");
-        Console.WriteLine($"Защита   : {p.Defence}");
-        Console.WriteLine($"Скорост  : {p.Speed}");
-        Console.WriteLine($"Магия    : {p.Magic}");
-        Console.WriteLine($"Мъдрост  : {p.Wisdom}");
-        Console.WriteLine($"Късмет   : {p.Luck}");
+        VConsole.WriteLine("\n--- Атрибути ---");
+        VConsole.WriteLine($"Атака    : {p.Attack}");
+        VConsole.WriteLine($"Защита   : {p.Defence}");
+        VConsole.WriteLine($"Скорост  : {p.Speed}");
+        VConsole.WriteLine($"Магия    : {p.Magic}");
+        VConsole.WriteLine($"Мъдрост  : {p.Wisdom}");
+        VConsole.WriteLine($"Късмет   : {p.Luck}");
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" [{opt.Id}] {opt.Text}");
+            VConsole.WriteLine($" [{opt.Id}] {opt.Text}");
         }
-        Console.WriteLine("\n[Enter - Затваряне]");
+        VConsole.WriteLine("\n[Enter - Затваряне]");
     }
 
     private void DrawBar(string label, int current, int max)
@@ -100,7 +100,7 @@ public class StatsPanel : IPanel
         filled = Math.Clamp(filled, 0, barLength);
         
         string bar = new string('█', filled) + new string('-', barLength - filled);
-        Console.WriteLine($"{label}: [{bar}] {current}/{max}");
+        VConsole.WriteLine($"{label}: [{bar}] {current}/{max}");
     }
 
     public void ProcessInput(string input, GameEngine engine)

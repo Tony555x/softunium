@@ -77,7 +77,7 @@ public static class SaveManager
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error saving: {ex.Message}");
+            VConsole.WriteLine($"Error saving: {ex.Message}");
         }
     }
 
@@ -151,7 +151,7 @@ public static class SaveManager
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error loading: {ex.Message}");
+            VConsole.WriteLine($"Error loading: {ex.Message}");
         }
     }
 

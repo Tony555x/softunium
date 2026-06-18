@@ -41,18 +41,18 @@ public abstract class Location : IPanel
             return;
         }
 
-        Console.WriteLine($"=== {Name} ===");
-        Console.WriteLine(Description);
+        VConsole.WriteLine($"=== {Name} ===");
+        VConsole.WriteLine(Description);
         
         if (!string.IsNullOrEmpty(LocationMessage))
         {
-            Console.WriteLine($"\n[ {LocationMessage} ]");
+            VConsole.WriteLine($"\n[ {LocationMessage} ]");
         }
         
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var option in Options)
         {
-            Console.WriteLine($" {option.Id}. {option.Text}");
+            VConsole.WriteLine($" {option.Id}. {option.Text}");
         }
     }
 

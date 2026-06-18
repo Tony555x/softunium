@@ -18,12 +18,12 @@ public class TargetSelectionPanel : IPanel
     public void Render(GameEngine engine)
     {
         var data = engine.State.BattleData;
-        Console.WriteLine($"\nИзберете цел за {data.SelectedSkill.Name} (или натиснете Enter за връщане):");
+        VConsole.WriteLine($"\nИзберете цел за {data.SelectedSkill.Name} (или натиснете Enter за връщане):");
         
         var livingEnemies = data.Enemies.Where(e => e.Hp > 0).ToList();
         for (int i = 0; i < livingEnemies.Count; i++)
         {
-            Console.WriteLine($" {i + 1}. {livingEnemies[i].Name}");
+            VConsole.WriteLine($" {i + 1}. {livingEnemies[i].Name}");
         }
     }
 

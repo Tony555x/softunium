@@ -10,8 +10,8 @@ class Program
 
     static void Main(string[] args)
     {
-        Console.OutputEncoding = Encoding.UTF8;
-        Console.InputEncoding = Encoding.UTF8;
+        VConsole.OutputEncoding = Encoding.UTF8;
+        VConsole.InputEncoding = Encoding.UTF8;
 
         Engine = new GameEngine();
 

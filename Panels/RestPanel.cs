@@ -53,15 +53,15 @@ public class RestPanel : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== ПОЧИВКА В КОРДОР ===");
-        if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
-        Console.WriteLine("\nКакво ще правите?");
+        VConsole.WriteLine("\n=== ПОЧИВКА В КОРДОР ===");
+        if (!string.IsNullOrEmpty(_message)) VConsole.WriteLine($"\n{_message}");
+        VConsole.WriteLine("\nКакво ще правите?");
         
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
-        Console.WriteLine("\n[Натиснете Enter за връщане]");
+        VConsole.WriteLine("\n[Натиснете Enter за връщане]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

@@ -94,41 +94,41 @@ public class RelicLoadoutPanel : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("\n=== ЕКИПИРОВКА НА РЕЛИКВИ ===");
-        Console.WriteLine(_slotStatus);
+        VConsole.WriteLine("\n=== ЕКИПИРОВКА НА РЕЛИКВИ ===");
+        VConsole.WriteLine(_slotStatus);
         if (!string.IsNullOrEmpty(_message)) 
         {
-            Console.WriteLine();
-            Console.WriteLine(_message);
+            VConsole.WriteLine();
+            VConsole.WriteLine(_message);
         }
-        Console.WriteLine($"\nСтраница: {_page + 1}");
-        Console.WriteLine("\nИзберете реликва за екипиране/премахване:");
+        VConsole.WriteLine($"\nСтраница: {_page + 1}");
+        VConsole.WriteLine("\nИзберете реликва за екипиране/премахване:");
         
         foreach (var opt in _options)
         {
             if (opt.Id == -1 || opt.Id == -2 || opt.Id == 0)
             {
-                Console.WriteLine($" { (opt.Id <= 0 ? (opt.Id == 0 ? "0" : (opt.Id == -1 ? "P" : "N")) : opt.Id.ToString()) }. {opt.Text}");
+                VConsole.WriteLine($" { (opt.Id <= 0 ? (opt.Id == 0 ? "0" : (opt.Id == -1 ? "P" : "N")) : opt.Id.ToString()) }. {opt.Text}");
                 continue;
             }
 
             if (opt.Text.StartsWith("[ЕКИПИРАНО]"))
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($" {opt.Id}. [ЕКИПИРАНО]");
-                Console.ResetColor();
-                Console.WriteLine($" {opt.Text.Substring(11)}");
+                VConsole.ForegroundColor = ConsoleColor.Green;
+                VConsole.Write($" {opt.Id}. [ЕКИПИРАНО]");
+                VConsole.ResetColor();
+                VConsole.WriteLine($" {opt.Text.Substring(11)}");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write($" {opt.Id}. [НЕЕКИПИРАНО]");
-                Console.ResetColor();
-                Console.WriteLine($" {opt.Text.Substring(14)}");
+                VConsole.ForegroundColor = ConsoleColor.Red;
+                VConsole.Write($" {opt.Id}. [НЕЕКИПИРАНО]");
+                VConsole.ResetColor();
+                VConsole.WriteLine($" {opt.Text.Substring(14)}");
             }
         }
-        Console.WriteLine("\n[P - Предишна | N - Следваща | 0 - Изчисти]");
-        Console.WriteLine("[Натиснете Enter за връщане]");
+        VConsole.WriteLine("\n[P - Предишна | N - Следваща | 0 - Изчисти]");
+        VConsole.WriteLine("[Натиснете Enter за връщане]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

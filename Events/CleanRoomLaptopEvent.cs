@@ -73,29 +73,29 @@ public class CleanRoomLaptopEvent : IPanel
 
         if (_state == State.Initial)
         {
-            Console.WriteLine("=== ЧИСТА СТАЯ ===");
-            Console.WriteLine("Намирате странна структура от чинове. Когато влизате, усещате че въздухът вътре е чист! Също, има отворен лаптоп на пода?");
+            VConsole.WriteLine("=== ЧИСТА СТАЯ ===");
+            VConsole.WriteLine("Намирате странна структура от чинове. Когато влизате, усещате че въздухът вътре е чист! Също, има отворен лаптоп на пода?");
         }
         else if (_state == State.LaptopRead)
         {
-            Console.WriteLine("=== ЛАПТОП ===");
-            Console.WriteLine("Успявате да прочетете само една дума.");
-            Console.WriteLine("\n\"УТАЙКА\"");
-            Console.WriteLine("\nЛаптопът веднага се самозапалва след това.");
-            Console.WriteLine("Не знаете какво е това, но думата събужда неясни спомени и ярост в вас.");
-            Console.WriteLine("\n(+1 Слот за умения!)");
+            VConsole.WriteLine("=== ЛАПТОП ===");
+            VConsole.WriteLine("Успявате да прочетете само една дума.");
+            VConsole.WriteLine("\n\"УТАЙКА\"");
+            VConsole.WriteLine("\nЛаптопът веднага се самозапалва след това.");
+            VConsole.WriteLine("Не знаете какво е това, но думата събужда неясни спомени и ярост в вас.");
+            VConsole.WriteLine("\n(+1 Слот за умения!)");
         }
         else if (_state == State.BurntLaptop)
         {
-            Console.WriteLine("=== ИЗГОРЯЛ ЛАПТОП ===");
-            Console.WriteLine("Намирате стаята с изгорелия лаптоп. Тук е чисто и тихо, което ви позволява да си починете за момент.");
-            Console.WriteLine("(Възстановихте 20 Живот.)");
+            VConsole.WriteLine("=== ИЗГОРЯЛ ЛАПТОП ===");
+            VConsole.WriteLine("Намирате стаята с изгорелия лаптоп. Тук е чисто и тихо, което ви позволява да си починете за момент.");
+            VConsole.WriteLine("(Възстановихте 20 Живот.)");
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

@@ -27,7 +27,7 @@ public class BlinkingEyeAnimationPanel : IPanel
     public void OnOpen(GameEngine engine)
     {
         _time = 0f;
-        Console.Clear();
+        VConsole.Clear();
     }
 
     public void Render(GameEngine engine)
@@ -36,8 +36,8 @@ public class BlinkingEyeAnimationPanel : IPanel
         int height = 24;
         try
         {
-            width = Console.WindowWidth;
-            height = Console.WindowHeight;
+            width = VConsole.WindowWidth;
+            height = VConsole.WindowHeight;
         }
         catch { }
 
@@ -106,7 +106,7 @@ public class BlinkingEyeAnimationPanel : IPanel
         }
 
         // Output buffer in Red color
-        Console.ForegroundColor = ConsoleColor.Red;
+        VConsole.ForegroundColor = ConsoleColor.Red;
         
         System.Text.StringBuilder sb = new System.Text.StringBuilder();
         for (int y = 0; y < height - 1; y++)
@@ -117,9 +117,9 @@ public class BlinkingEyeAnimationPanel : IPanel
             }
             sb.AppendLine();
         }
-        Console.SetCursorPosition(0, 0);
-        Console.Write(sb.ToString());
-        Console.ResetColor();
+        VConsole.SetCursorPosition(0, 0);
+        VConsole.Write(sb.ToString());
+        VConsole.ResetColor();
     }
 
     public void ProcessInput(string input, GameEngine engine)

@@ -18,13 +18,13 @@ public class ProgressEntranceEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== ВЛИЗАНЕ В ПРОГРЕС ===");
-        Console.WriteLine("Вие влизате в Прогрес. Веднага усещата ужасна миризма. Пред вас се разпростира голямо блато, земята е преплетена с кабели и e осеяна от локви и езера от отровни вещества.");
+        VConsole.WriteLine("=== ВЛИЗАНЕ В ПРОГРЕС ===");
+        VConsole.WriteLine("Вие влизате в Прогрес. Веднага усещата ужасна миризма. Пред вас се разпростира голямо блато, земята е преплетена с кабели и e осеяна от локви и езера от отровни вещества.");
         
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

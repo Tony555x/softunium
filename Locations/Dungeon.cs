@@ -37,28 +37,28 @@ public abstract class Dungeon : Location
         var p = engine.State.Player;
         
         int width = 80;
-        try { width = Console.WindowWidth - 1; } catch { }
+        try { width = VConsole.WindowWidth - 1; } catch { }
 
-        Console.WriteLine($"=== {Name} ===".PadRight(width));
+        VConsole.WriteLine($"=== {Name} ===".PadRight(width));
         string pStatusStr = p.Status.GetCombinedDisplayString();
         string playerStats = $"{p.BattleName} | Живот: {p.Hp}/{p.MaxHp} | Айрян: {p.Mp}/{p.MaxMp} {pStatusStr}";
         
         if (p.Hp <= 0)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
-            Console.ResetColor();
+            VConsole.ForegroundColor = ConsoleColor.Red;
+            VConsole.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+            VConsole.ResetColor();
         }
         else
         {
-            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+            VConsole.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
         }
-        Console.WriteLine();
+        VConsole.WriteLine();
         
         if (data.Rooms.Count > 0)
         {
             string progress = new string('-', data.CurrentRoomIndex) + "o" + new string('-', Math.Max(0, data.Rooms.Count - data.CurrentRoomIndex - 1));
-            Console.WriteLine($"Напредък: [{progress}] (Стая {data.CurrentRoomIndex + 1}/{data.Rooms.Count})");
+            VConsole.WriteLine($"Напредък: [{progress}] (Стая {data.CurrentRoomIndex + 1}/{data.Rooms.Count})");
             
             if (data.CurrentRoomIndex < data.Rooms.Count)
             {
@@ -66,38 +66,38 @@ public abstract class Dungeon : Location
                 
                 if (data.IsEventActive && currentRoom.EventInstance != null)
                 {
-                    Console.WriteLine();
+                    VConsole.WriteLine();
                     currentRoom.EventInstance.Render(engine);
                     return; // Stop rendering dungeon options
                 }
 
                 if (currentRoom.IsCleared)
                 {
-                    Console.WriteLine("\nСтаята е изчистена.");
+                    VConsole.WriteLine("\nСтаята е изчистена.");
                 }
                 else if (currentRoom.EventType == 0 && currentRoom.EventInstance != null)
                 {
-                    Console.WriteLine("\nПредстои събитие!");
+                    VConsole.WriteLine("\nПредстои събитие!");
                 }
                 else if (currentRoom.EventType == 0)
                 {
-                    Console.WriteLine("\nСтаята изглежда празна.");
+                    VConsole.WriteLine("\nСтаята изглежда празна.");
                 }
                 else if (currentRoom.EventType == 3)
                 {
-                    Console.WriteLine("\nПредстои битка с БОС!");
+                    VConsole.WriteLine("\nПредстои битка с БОС!");
                 }
                 else
                 {
-                    Console.WriteLine("\nПредстои битка!");
+                    VConsole.WriteLine("\nПредстои битка!");
                 }
             }
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var option in Options)
         {
-            Console.WriteLine($" {option.Id}. {option.Text}");
+            VConsole.WriteLine($" {option.Id}. {option.Text}");
         }
     }
 

@@ -101,47 +101,47 @@ public class StoyanovEvent : IPanel
     {
         if (!string.IsNullOrEmpty(_message))
         {
-            Console.WriteLine($"\n{_message}");
+            VConsole.WriteLine($"\n{_message}");
             _message = "";
         }
 
         if (_state == ShopState.Initial)
         {
-            Console.WriteLine("Намираш Стоянов да яде пица в стаята на един от чиновете на улицата.");
+            VConsole.WriteLine("Намираш Стоянов да яде пица в стаята на един от чиновете на улицата.");
         }
         else if (_state == ShopState.Talking1)
         {
-            Console.WriteLine("Стоянов: \"Ейййй здрасти!\"");
+            VConsole.WriteLine("Стоянов: \"Ейййй здрасти!\"");
         }
         else if (_state == ShopState.Talking2)
         {
-            Console.WriteLine("Стоянов: \"Аре в лафката!\"");
+            VConsole.WriteLine("Стоянов: \"Аре в лафката!\"");
         }
         else if (_state == ShopState.Talking3)
         {
-            Console.WriteLine("Стоянов: \"Айдее!\"\nВ следващият миг се оказваш в лафката!\nЛавката е отключена! Можеш да купуваш предмети до лимита си на тежест. Предметите могат да се използват от менюто с характеристики или по време на битка.");
+            VConsole.WriteLine("Стоянов: \"Айдее!\"\nВ следващият миг се оказваш в лафката!\nЛавката е отключена! Можеш да купуваш предмети до лимита си на тежест. Предметите могат да се използват от менюто с характеристики или по време на битка.");
         }
         else if (_state == ShopState.Repeated)
         {
-            Console.WriteLine("Стоянов: \"Еййй мой човек!\"\n\"Аре лафчос.\"");
+            VConsole.WriteLine("Стоянов: \"Еййй мой човек!\"\n\"Аре лафчос.\"");
         }
         else if (_state == ShopState.Repeated2)
         {
-            Console.WriteLine("Стоянов: \"Ееее РАЗвалиха я тая държава!\"");
+            VConsole.WriteLine("Стоянов: \"Ееее РАЗвалиха я тая държава!\"");
             if (engine.State.Flags.ContainsKey("relics_unlocked") && !engine.State.Flags.ContainsKey("obtained_deodorant"))
             {
-                Console.WriteLine("Стоянов: \"а да вземи това нещо\"");
+                VConsole.WriteLine("Стоянов: \"а да вземи това нещо\"");
             }
         }
         else if (_state == ShopState.Repeated3)
         {
-            Console.WriteLine("Стоянов стои и яде пица.");
+            VConsole.WriteLine("Стоянов стои и яде пица.");
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

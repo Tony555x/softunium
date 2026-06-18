@@ -119,9 +119,9 @@ public class BattlePanel : IPanel
     {
         var data = engine.State.BattleData;
         int width = 80;
-        try { width = Console.WindowWidth - 1; } catch { }
+        try { width = VConsole.WindowWidth - 1; } catch { }
 
-        Console.WriteLine("=== БИТКА ===".PadRight(width));
+        VConsole.WriteLine("=== БИТКА ===".PadRight(width));
         
         var p = engine.State.Player;
         string pStatusStr = p.Status.GetCombinedDisplayString();
@@ -130,16 +130,16 @@ public class BattlePanel : IPanel
         
         if (p.Hp <= 0)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
-            Console.ResetColor();
+            VConsole.ForegroundColor = ConsoleColor.Red;
+            VConsole.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+            VConsole.ResetColor();
         }
         else
         {
-            Console.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
+            VConsole.WriteLine(playerStats.PadRight(System.Math.Max(playerStats.Length, width)));
         }
         
-        Console.WriteLine();
+        VConsole.WriteLine();
         
         
         // Render last 4 log messages
@@ -147,36 +147,36 @@ public class BattlePanel : IPanel
         {
             int logIndex = data.BattleLog.Count - 4 + i;
             string logLine = logIndex >= 0 ? data.BattleLog[logIndex] : "-";
-            Console.WriteLine(logLine.PadRight(width));
+            VConsole.WriteLine(logLine.PadRight(width));
         }
         
-        Console.WriteLine("\nВрагове:");
+        VConsole.WriteLine("\nВрагове:");
         for (int i = 0; i < data.Enemies.Count; i++)
         {
             var e = data.Enemies[i];
             string eStatusStr = e.Status.GetCombinedDisplayString();
             string status = e.Hp > 0 ? $"{e.Hp}/{e.MaxHp} HP | Енергия: {GetEnergyBar(e.Energy, e.EnergyBarSize)} {eStatusStr}" : "МЪРТЪВ".PadRight(25);
             string enemyLine = $"{i + 1}. {e.Name.PadRight(20)} - {status}";
-            Console.WriteLine(enemyLine.PadRight(System.Math.Max(enemyLine.Length, width)));
+            VConsole.WriteLine(enemyLine.PadRight(System.Math.Max(enemyLine.Length, width)));
         }
 
         if (data.CurrentSubPanel != null)
         {
-            Console.WriteLine();
+            VConsole.WriteLine();
             data.CurrentSubPanel.Render(engine);
         }
         else if (data.IsPlayerTurn)
         {
             BuildOptions(engine);
-            Console.WriteLine("\nВъзможни действия:");
+            VConsole.WriteLine("\nВъзможни действия:");
             foreach (var option in _options)
             {
-                Console.WriteLine($" {option.Id}. {option.Text}");
+                VConsole.WriteLine($" {option.Id}. {option.Text}");
             }
         }
         else
         {
-            Console.WriteLine("\nИзчаква се ред...");
+            VConsole.WriteLine("\nИзчаква се ред...");
         }
     }
 

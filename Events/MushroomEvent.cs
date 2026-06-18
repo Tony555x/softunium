@@ -72,19 +72,19 @@ public class MushroomEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== Странни Гъби ===");
-        Console.WriteLine(_message);
+        VConsole.WriteLine("=== Странни Гъби ===");
+        VConsole.WriteLine(_message);
         
         if (_done)
         {
-            Console.WriteLine("\n[Натиснете Enter за продължаване]");
+            VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
             return;
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

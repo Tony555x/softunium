@@ -54,10 +54,10 @@ public static class InputHandler
                 }
                 else
                 {
-                    Console.WriteLine();
-                    Console.WriteLine($"Информация за [{displayName}]: {matchedOption.Info}");
-                    Console.WriteLine("Натиснете Enter за продължаване...");
-                    Console.ReadLine();
+                    VConsole.WriteLine();
+                    VConsole.WriteLine($"Информация за [{displayName}]: {matchedOption.Info}");
+                    VConsole.WriteLine("Натиснете Enter за продължаване...");
+                    VConsole.ReadLine();
                 }
                 return true; // Handled info request
             }

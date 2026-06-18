@@ -58,20 +58,20 @@ public class TikTokShrineEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== Странен Олтар ===");
-        Console.WriteLine(_message);
+        VConsole.WriteLine("=== Странен Олтар ===");
+        VConsole.WriteLine(_message);
 
         if (_state == EventState.Initial)
         {
-            Console.WriteLine("\nВъзможни действия:");
+            VConsole.WriteLine("\nВъзможни действия:");
             foreach (var opt in _options)
             {
-                Console.WriteLine($" {opt.Id}. {opt.Text}");
+                VConsole.WriteLine($" {opt.Id}. {opt.Text}");
             }
         }
         else
         {
-            Console.WriteLine("\n[Натиснете Enter за продължаване]");
+            VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
         }
     }
 

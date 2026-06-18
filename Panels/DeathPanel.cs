@@ -17,23 +17,23 @@ public class DeathPanel : IPanel
     {
         if (_timer < 2f)
         {
-            Console.Clear();
+            VConsole.Clear();
             once=true;
             return;
         }
         if(once)
         {
-            Console.Clear();
+            VConsole.Clear();
             once=false;
         }
 
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("\n\n");
-        Console.WriteLine("          ========================================          ");
-        Console.WriteLine("                       В И Е   У М Р Я Х Т Е                ");
-        Console.WriteLine("          ========================================          ");
-        Console.ResetColor();
-        Console.WriteLine("\n\n          Натиснете Enter, за да се върнете в Кордор...");
+        VConsole.ForegroundColor = ConsoleColor.Red;
+        VConsole.WriteLine("\n\n");
+        VConsole.WriteLine("          ========================================          ");
+        VConsole.WriteLine("                       В И Е   У М Р Я Х Т Е                ");
+        VConsole.WriteLine("          ========================================          ");
+        VConsole.ResetColor();
+        VConsole.WriteLine("\n\n          Натиснете Enter, за да се върнете в Кордор...");
     }
 
     public void ProcessInput(string input, GameEngine engine)

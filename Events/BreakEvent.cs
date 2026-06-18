@@ -18,29 +18,29 @@ public class BreakEvent : IPanel
     {
         if (_id == 1)
         {
-            Console.WriteLine("=== Табела: Щети ===");
-            Console.WriteLine("На табелата пише:");
-            Console.WriteLine("Щетите от атаки се намаляват от защитата на целта разделена на две (Защита / 2).");
+            VConsole.WriteLine("=== Табела: Щети ===");
+            VConsole.WriteLine("На табелата пише:");
+            VConsole.WriteLine("Щетите от атаки се намаляват от защитата на целта разделена на две (Защита / 2).");
         }
         else if (_id == 2)
         {
-            Console.WriteLine("=== Табела: Инвентар ===");
-            Console.WriteLine("На табелата пише:");
-            Console.WriteLine("Можете да отворите своите характеристики с '@'. От там можете да използвате умения като 'Лечение', да запазвате играта и други.");
+            VConsole.WriteLine("=== Табела: Инвентар ===");
+            VConsole.WriteLine("На табелата пише:");
+            VConsole.WriteLine("Можете да отворите своите характеристики с '@'. От там можете да използвате умения като 'Лечение', да запазвате играта и други.");
         }
         else if (_id == 3)
         {
-            Console.WriteLine("=== Табела: Изчакване ===");
-            Console.WriteLine("На табелата пише:");
-            Console.WriteLine("Някои умения имат изчакване, отбелязано с (~). Трябва да изчакате този брой ходове в началото на всяка битка и след всяко използване. Извън битка няма изчаквания.");
+            VConsole.WriteLine("=== Табела: Изчакване ===");
+            VConsole.WriteLine("На табелата пише:");
+            VConsole.WriteLine("Някои умения имат изчакване, отбелязано с (~). Трябва да изчакате този брой ходове в началото на всяка битка и след всяко използване. Извън битка няма изчаквания.");
         }
         else
         {
-            Console.WriteLine("=== Междучасие ===");
-            Console.WriteLine("Стаята е празна и тиха.");
+            VConsole.WriteLine("=== Междучасие ===");
+            VConsole.WriteLine("Стаята е празна и тиха.");
         }
 
-        Console.WriteLine("\n[Натиснете Enter за продължаване]");
+        VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

@@ -103,47 +103,47 @@ public class PeshoNpcEvent : IPanel
 
         if (!string.IsNullOrEmpty(_message))
         {
-            Console.WriteLine($"\n{_message}");
+            VConsole.WriteLine($"\n{_message}");
             _message = "";
         }
 
         if (_state == State.Initial)
         {
-            Console.WriteLine("Намирате Пешо с случайни боклуци левитиращи около него?!");
+            VConsole.WriteLine("Намирате Пешо с случайни боклуци левитиращи около него?!");
         }
         else if (_state == State.Talking1)
         {
-            Console.WriteLine("Пешо: Здравей!");
+            VConsole.WriteLine("Пешо: Здравей!");
         }
         else if (_state == State.Talking2)
         {
-            Console.WriteLine("Пешо: Взех ги от ТЕМУ. Ето дръж това");
-            Console.WriteLine("Той вади странен обект от въздуха и ти го хвърля");
+            VConsole.WriteLine("Пешо: Взех ги от ТЕМУ. Ето дръж това");
+            VConsole.WriteLine("Той вади странен обект от въздуха и ти го хвърля");
         }
         else if (_state == State.Talking3)
         {
-            Console.WriteLine("Пешо: Това е пистолет за балончета! Струваше някво 10 стотинки преди да го изтъргувам да 2 и половина, имам 10 от тези");
+            VConsole.WriteLine("Пешо: Това е пистолет за балончета! Струваше някво 10 стотинки преди да го изтъргувам да 2 и половина, имам 10 от тези");
         }
         else if (_state == State.Talking4)
         {
-            Console.WriteLine("Пешо: айде");
-            Console.WriteLine("Обурудвай се с реликви от кордор.");
-            Console.WriteLine("Те имат пасивни умения.");
-            Console.WriteLine("Можеш да получаваш нови реликви от всякакви места, главно от това да говориш с герои.");
+            VConsole.WriteLine("Пешо: айде");
+            VConsole.WriteLine("Обурудвай се с реликви от кордор.");
+            VConsole.WriteLine("Те имат пасивни умения.");
+            VConsole.WriteLine("Можеш да получаваш нови реликви от всякакви места, главно от това да говориш с герои.");
         }
         else if (_state == State.AftermathInitial)
         {
-            Console.WriteLine("Намирате Пешо да разглежда нови оферти в ТЕМУ на 4 ТЕМУ телефона едновременно.");
+            VConsole.WriteLine("Намирате Пешо да разглежда нови оферти в ТЕМУ на 4 ТЕМУ телефона едновременно.");
         }
         else if (_state == State.AftermathTalking)
         {
-            Console.WriteLine("Изглежда зает... Фокусирал се е на играчка на странно куче с резачка на него.");
+            VConsole.WriteLine("Изглежда зает... Фокусирал се е на играчка на странно куче с резачка на него.");
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

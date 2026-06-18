@@ -21,17 +21,17 @@ public class AnalysisResultPanel : IPanel
     {
         if (_target == null) return;
         
-        Console.WriteLine($"\n=== АНАЛИЗ: {_target.Name} ===");
-        Console.WriteLine($"Живот: {_target.Hp}/{_target.MaxHp} | Айрян: {_target.Mp}/{_target.MaxMp}");
-        Console.WriteLine($"Атака: {_target.Attack} | Защита: {_target.Defence}");
-        Console.WriteLine($"Скорост: {_target.Speed} | Магия: {_target.Magic}");
-        Console.WriteLine($"Мъдрост: {_target.Wisdom} | Късмет: {_target.Luck}");
+        VConsole.WriteLine($"\n=== АНАЛИЗ: {_target.Name} ===");
+        VConsole.WriteLine($"Живот: {_target.Hp}/{_target.MaxHp} | Айрян: {_target.Mp}/{_target.MaxMp}");
+        VConsole.WriteLine($"Атака: {_target.Attack} | Защита: {_target.Defence}");
+        VConsole.WriteLine($"Скорост: {_target.Speed} | Магия: {_target.Magic}");
+        VConsole.WriteLine($"Мъдрост: {_target.Wisdom} | Късмет: {_target.Luck}");
         
-        Console.WriteLine("\nЕфекти:");
+        VConsole.WriteLine("\nЕфекти:");
         var statuses = _target.Status.Statuses;
         if (statuses.Count == 0)
         {
-            Console.WriteLine(" Няма активни ефекти.");
+            VConsole.WriteLine(" Няма активни ефекти.");
         }
         else
         {
@@ -46,10 +46,10 @@ public class AnalysisResultPanel : IPanel
                         line += "\n   > " + explanation;
                     }
                 }
-                Console.WriteLine(line);
+                VConsole.WriteLine(line);
             }
         }
-        Console.WriteLine("\n[Натиснете Enter за връщане]");
+        VConsole.WriteLine("\n[Натиснете Enter за връщане]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

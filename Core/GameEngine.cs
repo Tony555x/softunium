@@ -27,7 +27,7 @@ public class GameEngine
 
         try 
         {
-            Console.CursorVisible = false;
+            VConsole.CursorVisible = false;
         } 
         catch { } // Ignore on unsupported terminals
 
@@ -35,7 +35,7 @@ public class GameEngine
         stopwatch.Start();
         float lastTime = 0f;
 
-        Console.Clear();
+        VConsole.Clear();
 
         while (IsRunning)
         {
@@ -53,16 +53,18 @@ public class GameEngine
 
             ProcessInputNonBlocking();
 
-            // Reset cursor to 0,0 instead of Console.Clear() to minimize flicker
-            Console.SetCursorPosition(0, 0); 
+            // Reset cursor to 0,0 instead of VConsole.Clear() to minimize flicker
+            VConsole.SetCursorPosition(0, 0); 
             
             CurrentPanel.Render(this);
             
             if (CurrentPanel != null && !CurrentPanel.HideChoicePrompt)
             {
-                Console.WriteLine("\nИзбор: " + _inputBuffer.ToString() + new string(' ', Console.WindowWidth - _inputBuffer.Length - 8)); 
+                VConsole.WriteLine("\nИзбор: " + _inputBuffer.ToString() + new string(' ', VConsole.WindowWidth - _inputBuffer.Length - 8)); 
             }
             
+            VConsole.Flush();
+
             // Limit to ~60 FPS
             int elapsedMs = (int)(stopwatch.Elapsed.TotalMilliseconds - (currentTime * 1000));
             int sleepTime = 16 - elapsedMs;
@@ -75,15 +77,15 @@ public class GameEngine
 
     private void ProcessInputNonBlocking()
     {
-        while (Console.KeyAvailable)
+        while (VConsole.KeyAvailable)
         {
-            var keyInfo = Console.ReadKey(true);
+            var keyInfo = VConsole.ReadKey(true);
             
             if (keyInfo.Key == ConsoleKey.Enter)
             {
                 string input = _inputBuffer.ToString().Trim();
                 _inputBuffer.Clear();
-                Console.Clear(); // Clear safely upon submission to refresh screen geometry
+                VConsole.Clear(); // Clear safely upon submission to refresh screen geometry
                 
                 string lowerInput = input.ToLower();
                 if (lowerInput == "х" || lowerInput == "хар" || lowerInput == "@")
@@ -118,7 +120,7 @@ public class GameEngine
     public void ChangeRootPanel(IPanel panel)
     {
         CurrentPanel = panel;
-        Console.Clear();
+        VConsole.Clear();
         CurrentPanel?.OnOpen(this);
     }
 
@@ -128,7 +130,7 @@ public class GameEngine
         {
             CurrentPanel = PreviousRootPanel;
             PreviousRootPanel = null;
-            Console.Clear();
+            VConsole.Clear();
             CurrentPanel?.OnOpen(this);
         }
     }
@@ -138,7 +140,7 @@ public class GameEngine
         IsRunning = false;
         try 
         {
-            Console.CursorVisible = true;
+            VConsole.CursorVisible = true;
         } 
         catch { }
     }

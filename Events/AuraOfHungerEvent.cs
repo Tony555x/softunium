@@ -18,11 +18,11 @@ public class AuraOfHungerEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== АУРА НА ГЛАДА ===");
-        Console.WriteLine("Усещате неистовия глад на обитателите на тази стая...");
-        Console.WriteLine("Той ви заразява! Чувствате жажда за кръв, но сте много по-уязвими.");
-        Console.WriteLine("\n(Получихте +25% Атака и -100% Защита персистентно!)");
-        Console.WriteLine("\n[Натиснете Enter за продължаване]");
+        VConsole.WriteLine("=== АУРА НА ГЛАДА ===");
+        VConsole.WriteLine("Усещате неистовия глад на обитателите на тази стая...");
+        VConsole.WriteLine("Той ви заразява! Чувствате жажда за кръв, но сте много по-уязвими.");
+        VConsole.WriteLine("\n(Получихте +25% Атака и -100% Защита персистентно!)");
+        VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

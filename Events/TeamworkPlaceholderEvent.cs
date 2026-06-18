@@ -11,9 +11,9 @@ public class TeamworkPlaceholderEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== ПРАЗНА ЗАЛА ===");
-        Console.WriteLine("Тази част от подземието изглежда странно тиха...");
-        Console.WriteLine("\n[Натиснете Enter за продължаване]");
+        VConsole.WriteLine("=== ПРАЗНА ЗАЛА ===");
+        VConsole.WriteLine("Тази част от подземието изглежда странно тиха...");
+        VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

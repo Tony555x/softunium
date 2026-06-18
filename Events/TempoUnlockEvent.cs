@@ -125,72 +125,72 @@ public class TempoUnlockEvent : IPanel
 
         if (_state == State.Initial)
         {
-            Console.WriteLine("Намираш Алекс да гледа в далечината...");
+            VConsole.WriteLine("Намираш Алекс да гледа в далечината...");
         }
         else if (_state == State.AlexIntro)
         {
-            Console.WriteLine("Алекс: \"...\"");
+            VConsole.WriteLine("Алекс: \"...\"");
         }
         else if (_state == State.AlexQuestion)
         {
-            Console.WriteLine("Алекс: \"...Ходиш ли?\"");
+            VConsole.WriteLine("Алекс: \"...Ходиш ли?\"");
         }
         else if (_state == State.AlexAnswerYes)
         {
-            Console.WriteLine("Алекс те поглежда разочаровано.");
-            Console.WriteLine("Алекс: \"Не достатъчно...\"");
+            VConsole.WriteLine("Алекс те поглежда разочаровано.");
+            VConsole.WriteLine("Алекс: \"Не достатъчно...\"");
         }
         else if (_state == State.AlexAnswerNo)
         {
-            Console.WriteLine("Алекс те поглежда разочаровано.");
-            Console.WriteLine("Алекс: \"Това е видимо...\"");
+            VConsole.WriteLine("Алекс те поглежда разочаровано.");
+            VConsole.WriteLine("Алекс: \"Това е видимо...\"");
         }
         else if (_state == State.AlexWhat)
         {
-            Console.WriteLine("Алекс: \"Но може би имаш потенциал? Да преминеш отвъд границите на БАСТУН.\"");
+            VConsole.WriteLine("Алекс: \"Но може би имаш потенциал? Да преминеш отвъд границите на БАСТУН.\"");
         }
         else if (_state == State.AlexChallenge)
         {
-            Console.WriteLine("Алекс: \"Но трябва да го докажеш!\".");
-            Console.WriteLine("Алекс те атакува!");
+            VConsole.WriteLine("Алекс: \"Но трябва да го докажеш!\".");
+            VConsole.WriteLine("Алекс те атакува!");
         }
         else if (_state == State.FightWon)
         {
-            Console.WriteLine("Алекс: \"...Добре. Може би ти ще си този който ще победи ██?██?███\"");
-            Console.WriteLine("Получаваш силно главоболие когато чуваш името!");
+            VConsole.WriteLine("Алекс: \"...Добре. Може би ти ще си този който ще победи ██?██?███\"");
+            VConsole.WriteLine("Получаваш силно главоболие когато чуваш името!");
         }
         else if (_state == State.AlexDisappear)
         {
-            Console.WriteLine("Алекс се обръща без да те изчаква. С първата стъпка кято взима, той изчезва от стаята!");
+            VConsole.WriteLine("Алекс се обръща без да те изчаква. С първата стъпка кято взима, той изчезва от стаята!");
         }
         else if (_state == State.TempoUnlocked)
         {
-            Console.WriteLine("Какво се случи..?");
-            Console.WriteLine("Ти отключи ТЕМПО!");
+            VConsole.WriteLine("Какво се случи..?");
+            VConsole.WriteLine("Ти отключи ТЕМПО!");
             if (_unlockMessages.Count > 0)
             {
-                Console.WriteLine();
+                VConsole.WriteLine();
                 foreach (var msg in _unlockMessages)
                 {
-                    Console.WriteLine(msg);
+                    VConsole.WriteLine(msg);
                 }
             }
-            Console.WriteLine("\nПолучаваш едно темпо всеки път когато използваш атака или нормално умение.");
-            Console.WriteLine("Използвай темпо за да активираш специални умения!");
-            Console.WriteLine("Екипирай си специалните умения от кордор.");
-            Console.WriteLine("Вече можеш да виждаш степента си...");
-            Console.WriteLine("Степен: БАСТУН");
+            VConsole.WriteLine("\nПолучаваш едно темпо всеки път когато използваш атака или нормално умение.");
+            VConsole.WriteLine("Използвай темпо за да активираш специални умения!");
+            VConsole.WriteLine("Екипирай си специалните умения от кордор.");
+            VConsole.WriteLine("Вече можеш да виждаш степента си...");
+            VConsole.WriteLine("Степен: БАСТУН");
         }
         else if (_state == State.QuietRoom)
         {
-            Console.WriteLine("Стаята е напълно тиха. Алекс вече го няма тук.");
-            Console.WriteLine("Чуваш единствено собственото си дишане сред празното пространство.");
+            VConsole.WriteLine("Стаята е напълно тиха. Алекс вече го няма тук.");
+            VConsole.WriteLine("Чуваш единствено собственото си дишане сред празното пространство.");
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

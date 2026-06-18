@@ -24,13 +24,13 @@ public class PoisonAirDebuffEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== ОТРОВНА МЪГЛА ===");
-        Console.WriteLine("От другата страна на моста всичко е по-тъмно и въздухът е отровен. Не знаете колко време можете да оцелеете. (Получавате 10 разграждане).");
+        VConsole.WriteLine("=== ОТРОВНА МЪГЛА ===");
+        VConsole.WriteLine("От другата страна на моста всичко е по-тъмно и въздухът е отровен. Не знаете колко време можете да оцелеете. (Получавате 10 разграждане).");
         
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

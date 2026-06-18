@@ -106,21 +106,21 @@ public class TempoSkillListPanel : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== ТЕМПО УМЕНИЯ ===");
-        if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
-        Console.WriteLine("\nИзберете темпо умение (или натиснете Enter за връщане):");
+        VConsole.WriteLine("=== ТЕМПО УМЕНИЯ ===");
+        if (!string.IsNullOrEmpty(_message)) VConsole.WriteLine($"\n{_message}");
+        VConsole.WriteLine("\nИзберете темпо умение (или натиснете Enter за връщане):");
         
         if (_options.Count == 0)
         {
-            Console.WriteLine(" Нямате темпо умения.");
+            VConsole.WriteLine(" Нямате темпо умения.");
             return;
         }
 
         foreach (var opt in _options)
         {
-            if (opt.IsDisabled) Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
-            Console.ResetColor();
+            if (opt.IsDisabled) VConsole.ForegroundColor = ConsoleColor.DarkGray;
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.ResetColor();
         }
     }
 

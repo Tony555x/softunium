@@ -69,22 +69,22 @@ public class SaveSlotPanel : IPanel
     {
         BuildOptions(engine);
         string title = _isSaving ? "ЗАПИС НА ИГРА" : "ЗАРЕЖДАНЕ НА ИГРА";
-        Console.WriteLine($"=== {title} ===");
+        VConsole.WriteLine($"=== {title} ===");
         if (!string.IsNullOrEmpty(_message))
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"\n{_message}");
-            Console.ResetColor();
+            VConsole.ForegroundColor = ConsoleColor.Green;
+            VConsole.WriteLine($"\n{_message}");
+            VConsole.ResetColor();
         }
         
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
 
-        Console.WriteLine($"\n--- Страница {_currentPage} (Слотове {(_currentPage - 1) * 9 + 1} - {_currentPage * 9}) ---");
-        Console.WriteLine("[ < ] Предишна страница  |  [ > ] Следваща страница");
-        Console.WriteLine("\n[Въведете номер на слот 1-9, < или > за навигация, или Enter за връщане]");
+        VConsole.WriteLine($"\n--- Страница {_currentPage} (Слотове {(_currentPage - 1) * 9 + 1} - {_currentPage * 9}) ---");
+        VConsole.WriteLine("[ < ] Предишна страница  |  [ > ] Следваща страница");
+        VConsole.WriteLine("\n[Въведете номер на слот 1-9, < или > за навигация, или Enter за връщане]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

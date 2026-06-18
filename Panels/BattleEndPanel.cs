@@ -35,17 +35,17 @@ public class BattleEndPanel : IPanel
             _evaluated = true;
         }
 
-        Console.WriteLine("=== БИТКАТА ПРИКЛЮЧИ ===");
+        VConsole.WriteLine("=== БИТКАТА ПРИКЛЮЧИ ===");
         
-        Console.WriteLine($"\nОпит: +{data.XpGained} (Общо: {engine.State.Player.Xp}/{engine.State.Player.MaxXp})");
-        Console.WriteLine($"Пари: +{data.MoneyGained} Лв. (Общо: {engine.State.Player.Money})");
+        VConsole.WriteLine($"\nОпит: +{data.XpGained} (Общо: {engine.State.Player.Xp}/{engine.State.Player.MaxXp})");
+        VConsole.WriteLine($"Пари: +{data.MoneyGained} Лв. (Общо: {engine.State.Player.Money})");
         
         foreach (var msg in _levelUpMessages)
         {
-            Console.WriteLine(msg);
+            VConsole.WriteLine(msg);
         }
         
-        Console.WriteLine("\n[Натиснете Enter за продължаване]");
+        VConsole.WriteLine("\n[Натиснете Enter за продължаване]");
     }
 
     public void ProcessInput(string input, GameEngine engine)

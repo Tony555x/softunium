@@ -106,14 +106,14 @@ public class ShopPanel : IPanel
     {
         var p = engine.State.Player;
         string modeText = _isSellMode ? "ПРОДАВАНЕ" : "КУПУВАНЕ";
-        Console.WriteLine($"=== ЛАФКА - {modeText} (Пари: {p.Money} Лева | Тегло: {p.Inventory.TotalWeight}/{p.MaxWeight}) ===");
-        if (!string.IsNullOrEmpty(_message)) Console.WriteLine($"\n{_message}");
+        VConsole.WriteLine($"=== ЛАФКА - {modeText} (Пари: {p.Money} Лева | Тегло: {p.Inventory.TotalWeight}/{p.MaxWeight}) ===");
+        if (!string.IsNullOrEmpty(_message)) VConsole.WriteLine($"\n{_message}");
         
-        Console.WriteLine(_isSellMode ? "\nКакво ще продадете?" : "\nКакво ще купите?");
+        VConsole.WriteLine(_isSellMode ? "\nКакво ще продадете?" : "\nКакво ще купите?");
         foreach (var opt in _options)
         {
             string baseValueDisplay = string.IsNullOrEmpty(opt.BaseValue) ? "" : $" [{opt.BaseValue}]";
-            Console.WriteLine($" {(opt.Id == 0 ? "0" : opt.Id.ToString())}. {opt.Text}{baseValueDisplay}");
+            VConsole.WriteLine($" {(opt.Id == 0 ? "0" : opt.Id.ToString())}. {opt.Text}{baseValueDisplay}");
         }
     }
 

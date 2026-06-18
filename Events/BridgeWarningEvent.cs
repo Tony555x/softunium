@@ -18,13 +18,13 @@ public class BridgeWarningEvent : IPanel
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== МОСТЪТ НАД ОТРОВАТА ===");
-        Console.WriteLine("Пътеката пред вас е блокирана от езеро от отрова. Докато заобикаляте, намирате че островът ви е напълно заобиколен, освен дълъг мост водещ до другата страна на стаята. Мостът е охраняван от силен противник!");
+        VConsole.WriteLine("=== МОСТЪТ НАД ОТРОВАТА ===");
+        VConsole.WriteLine("Пътеката пред вас е блокирана от езеро от отрова. Докато заобикаляте, намирате че островът ви е напълно заобиколен, освен дълъг мост водещ до другата страна на стаята. Мостът е охраняван от силен противник!");
         
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 

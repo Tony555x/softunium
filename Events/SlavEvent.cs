@@ -83,33 +83,33 @@ public class SlavEvent : IPanel
     {
         if (!string.IsNullOrEmpty(_message))
         {
-            Console.WriteLine($"\n{_message}");
+            VConsole.WriteLine($"\n{_message}");
             return;
         }
 
-        //Console.WriteLine("<=- СЛАВ -=>");
+        //VConsole.WriteLine("<=- СЛАВ -=>");
         if (_state == SlavState.Initial)
         {
-            Console.WriteLine("Виждате Слав да стои спокойно в края на залата.");
+            VConsole.WriteLine("Виждате Слав да стои спокойно в края на залата.");
         }
         else if (_state == SlavState.Talking1)
         {
-            Console.WriteLine("Слав: Здрасти.");
+            VConsole.WriteLine("Слав: Здрасти.");
         }
         else if (_state == SlavState.Talking2)
         {
-            Console.WriteLine("Слав: Защо си тук?");
+            VConsole.WriteLine("Слав: Защо си тук?");
         }
         else if (_state == SlavState.Talking3)
         {
-            Console.WriteLine("Слав: Там.");
-            Console.WriteLine("Отключени са стаите: 'Стая Прогрес', 'Стая Тимуърк' и 'Стая Интегрити'.");
+            VConsole.WriteLine("Слав: Там.");
+            VConsole.WriteLine("Отключени са стаите: 'Стая Прогрес', 'Стая Тимуърк' и 'Стая Интегрити'.");
         }
 
-        Console.WriteLine("\nВъзможни действия:");
+        VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)
         {
-            Console.WriteLine($" {opt.Id}. {opt.Text}");
+            VConsole.WriteLine($" {opt.Id}. {opt.Text}");
         }
     }
 
