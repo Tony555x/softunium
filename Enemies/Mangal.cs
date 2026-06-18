@@ -1,4 +1,6 @@
 using Harduni.Core;
+using Harduni.Models;
+
 
 namespace Harduni.Enemies;
 

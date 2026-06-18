@@ -28,21 +28,6 @@ public class BlinkingEyeAnimationPanel : IPanel
     {
         _time = 0f;
         Console.Clear();
-
-        System.Threading.Tasks.Task.Run(() =>
-        {
-            try
-            {
-                Console.Beep(180, 150);
-                System.Threading.Thread.Sleep(50);
-                Console.Beep(900, 100);
-                System.Threading.Thread.Sleep(50);
-                Console.Beep(120, 200);
-                System.Threading.Thread.Sleep(50);
-                Console.Beep(1300, 120);
-            }
-            catch { }
-        });
     }
 
     public void Render(GameEngine engine)

@@ -29,6 +29,8 @@ public class WisdomDungeon : Dungeon
         var rooms = new List<Room>();
         int[] layout = { 1, 1, 0, 1, 2, 0, 2, 2, 0, 3, 0 }; // Added 0 at the end for Slav
 
+        int signCounter = 1;
+
         for (int i = 0; i < layout.Length; i++)
         {
             int eventType = layout[i];
@@ -39,7 +41,7 @@ public class WisdomDungeon : Dungeon
                 // Using flags to track if slav is defeated
                 if (engine.State.Flags.ContainsKey("slav_defeated"))
                 {
-                    rooms.Add(new Room(0, null, new BreakEvent())); // Placeholder for empty room
+                    rooms.Add(new Room(0, null, new BreakEvent(0))); // Placeholder for empty room
                 }
                 else
                 {
@@ -72,7 +74,7 @@ public class WisdomDungeon : Dungeon
             }
             else
             {
-                rooms.Add(new Room(0, null, new BreakEvent()));
+                rooms.Add(new Room(0, null, new BreakEvent(signCounter++)));
             }
         }
 

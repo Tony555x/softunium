@@ -1,5 +1,7 @@
 using Harduni.Core;
 using Harduni.Statuses;
+using Harduni.Models;
+
 
 namespace Harduni.Enemies;
 

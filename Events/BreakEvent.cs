@@ -5,30 +5,46 @@ namespace Harduni.Events;
 
 public class BreakEvent : IPanel
 {
+    private readonly int _id;
+
+    public BreakEvent(int id = 0)
+    {
+        _id = id;
+    }
+
     public void Update(float deltaTime, GameEngine engine) { }
 
     public void Render(GameEngine engine)
     {
-        Console.WriteLine("=== Междучасие ===");
-        Console.WriteLine("Настъпва междучасие в стаята. Усещаш как духът ти се възстановява!");
-        Console.WriteLine(" 1. Ядене (+5 Живот)");
-        Console.WriteLine(" 2. Спане (+2 Айрян)");
+        if (_id == 1)
+        {
+            Console.WriteLine("=== Табела: Щети ===");
+            Console.WriteLine("На табелата пише:");
+            Console.WriteLine("Щетите от атаки се намаляват от защитата на целта разделена на две (Защита / 2).");
+        }
+        else if (_id == 2)
+        {
+            Console.WriteLine("=== Табела: Инвентар ===");
+            Console.WriteLine("На табелата пише:");
+            Console.WriteLine("Можете да отворите своите характеристики с '@'. От там можете да използвате умения като 'Лечение', да запазвате играта и други.");
+        }
+        else if (_id == 3)
+        {
+            Console.WriteLine("=== Табела: Изчакване ===");
+            Console.WriteLine("На табелата пише:");
+            Console.WriteLine("Някои умения имат изчакване, отбелязано с (~). Трябва да изчакате този брой ходове в началото на всяка битка и след всяко използване. Извън битка няма изчаквания.");
+        }
+        else
+        {
+            Console.WriteLine("=== Междучасие ===");
+            Console.WriteLine("Стаята е празна и тиха.");
+        }
+
+        Console.WriteLine("\n[Натиснете Enter за продължаване]");
     }
 
     public void ProcessInput(string input, GameEngine engine)
     {
-        var data = engine.State.DungeonData;
-        var p = engine.State.Player;
-
-        if (input == "1")
-        {
-            p.Heal(5);
-            data.IsEventActive = false;
-        }
-        else if (input == "2")
-        {
-            p.Mp = Math.Min(p.MaxMp, p.Mp + 2);
-            data.IsEventActive = false;
-        }
+        engine.State.DungeonData.IsEventActive = false;
     }
 }

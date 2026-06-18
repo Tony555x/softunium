@@ -77,12 +77,7 @@ public class TargetSelectionPanel : IPanel
 
         if (!skill.IsTempoSkill)
         {
-            int oldTempo = p.Tempo;
             p.Tempo = System.Math.Min(p.MaxTempo, p.Tempo + 1);
-            if (p.Tempo > oldTempo)
-            {
-                data.Log($"Спечелихте 1 темпо! ({p.Tempo}/{p.MaxTempo})");
-            }
         }
 
         p.RecalcStats();
