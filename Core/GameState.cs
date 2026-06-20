@@ -38,6 +38,7 @@ public class GameState
     public DungeonData DungeonData { get; set; }
     public Dictionary<string, string> Flags { get; set; } = new();
     public IPanel? LastLocationPanel { get; set; }
+    public GameEngine Engine { get; set; }
 
     public GameState()
     {

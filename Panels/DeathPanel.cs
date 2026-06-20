@@ -8,6 +8,12 @@ public class DeathPanel : IPanel
     private float _timer = 0f;
     bool once=false;
 
+    public void OnOpen(GameEngine engine)
+    {
+        _timer = 0f;
+        once = false;
+    }
+
     public void Update(float deltaTime, GameEngine engine)
     {
         _timer += deltaTime;

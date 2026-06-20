@@ -17,6 +17,7 @@ public class GameEngine
     public GameEngine()
     {
         State = new GameState();
+        State.Engine = this;
     }
 
     public void Start(IPanel initialPanel)

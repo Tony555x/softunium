@@ -2,14 +2,15 @@ using System.Collections.Generic;
 using Harduni.Models;
 using Harduni.Enemies;
 using Harduni.Statuses;
+using Harduni.Core;
 
 namespace Harduni.Skills;
 
 public class Rot : Skill
 {
     public override string Name => "Гниене";
-    public override string ShortDescription => "Отрови всички врагове и активира отровата им два пъти.";
-    public override string AccurateDescription => "Налага (Магия / 2) Отрова на всички врагове и веднага активира техните отровни стакове два пъти.";
+    public override string ShortDescription => "Отравя всички врагове и активира отровата им два пъти.";
+    public override string AccurateDescription => "Налага (Магия / 2) Отрова на всички врагове и активира отровата им два пъти.";
     public override TargetType Target => TargetType.Aoe;
     public override int MpCost => 0;
     public override int TempoCost => 5;
@@ -22,6 +23,7 @@ public class Rot : Skill
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
         int poisonPotency = System.Math.Max(1, player.Magic / 2);
+        var engine = player.GameState?.Engine;
         
         foreach (var enemy in allEnemies)
         {
@@ -30,19 +32,19 @@ public class Rot : Skill
                 enemy.Status.ApplyStatus(new PoisonStatus(poisonPotency));
                 
                 var poison = enemy.Status.GetStatus<PoisonStatus>();
-                if (poison != null && poison.Stacks > 0)
+                if (poison != null && poison.Stacks > 0 && engine != null)
                 {
-                    int dmg = poison.Stacks;
-                    
                     // Trigger 1st time
-                    enemy.Hp = System.Math.Max(0, enemy.Hp - dmg);
-                    player.GameState?.BattleData.Log($"Отровата на {enemy.Name} се активира за {dmg} щети.");
+                    poison.Trigger(engine);
                     
-                    // Trigger 2nd time (if still alive)
+                    // Trigger 2nd time (if still alive and poison still active)
                     if (enemy.Hp > 0)
                     {
-                        enemy.Hp = System.Math.Max(0, enemy.Hp - dmg);
-                        player.GameState?.BattleData.Log($"Отровата на {enemy.Name} се активира за втори път за {dmg} щети.");
+                        var poison2 = enemy.Status.GetStatus<PoisonStatus>();
+                        if (poison2 != null && poison2.Stacks > 0)
+                        {
+                            poison2.Trigger(engine);
+                        }
                     }
                 }
             }

@@ -39,7 +39,7 @@ public class MushroomEvent : IPanel
     {
         engine.State.Flags["mushroom_green_seen"] = "true";
         engine.State.Player.Status.ApplyStatus(new PersistentPoisonousStatus(3, 4));
-        _message = "Изяждате зелената гъба. Усещате как пръстите ви започват да изпускат отровни изпарения.";
+        _message = "Изяждате зелената гъба. Усещате как пръстите ви започват да изпускат отровни изпарения.\n(Получавате статус 'Отровен' за 3 битки - атаките ви нанасят 4 отрова.)";
         _done = true;
         EnsureOptions(engine);
     }
@@ -48,7 +48,7 @@ public class MushroomEvent : IPanel
     {
         engine.State.Flags["mushroom_red_seen"] = "true";
         engine.State.Player.Heal(30);
-        _message = "Изяждате червената гъба. Усещате прилив на свежест.";
+        _message = "Изяждате червената гъба. Усещате прилив на свежест.\n(Възстановявате 30 точки живот.)";
         _done = true;
         EnsureOptions(engine);
     }
@@ -58,7 +58,7 @@ public class MushroomEvent : IPanel
         engine.State.Flags["mushroom_both_seen"] = "true";
         engine.State.Player.Hp = 1;
         engine.State.Player.Status.ApplyStatus(new PersistentRegenStatus(3, 2));
-        _message = "Изяждате и двете гъби. Тялото ви се свива от болка, но усещате странна регенеративна сила.";
+        _message = "Изяждате и двете гъби. Тялото ви се свива от болка, но усещате странна регенеративна сила.\n(Животът ви спада до 1, но получавате статус 'Регенерация' за 3 битки, който възстановява по 2 живот на всеки ваш ход.)";
         _done = true;
         EnsureOptions(engine);
     }

@@ -35,6 +35,7 @@ public class World
     
     public LeadershipRoomLocation LeadershipRoom { get; private set; }
     public LeadershipDungeon LeadershipDungeon { get; private set; }
+    public DebugLocation DebugLocation { get; private set; }
 
 
     public World()
@@ -68,7 +69,7 @@ public class World
         
         LeadershipRoom = new LeadershipRoomLocation(this);
         LeadershipDungeon = new LeadershipDungeon(this);
-
+        DebugLocation = new DebugLocation(this);
     }
 
 

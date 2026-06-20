@@ -13,7 +13,7 @@ public class ProgressEntranceEvent : IPanel
     public void OnOpen(GameEngine engine)
     {
         _options.Clear();
-        _options.Add(new Option(1, "продължи", "Навлезте в блатото.", (eng) => eng.State.DungeonData.IsEventActive = false));
+        _options.Add(new Option(1, "Продължи", "Навлезте в блатото.", (eng) => eng.State.DungeonData.IsEventActive = false));
     }
 
     public void Render(GameEngine engine)

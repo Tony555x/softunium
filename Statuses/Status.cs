@@ -33,4 +33,8 @@ public abstract class Status
     {
         Owner?.Status.RemoveStatus(this);
     }
+
+    public virtual void Trigger(GameEngine engine)
+    {
+    }
 }

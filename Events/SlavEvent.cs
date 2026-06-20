@@ -44,7 +44,6 @@ public class SlavEvent : IPanel
         if (_state == SlavState.Initial)
         {
             _options.Add(new Option(1, "Говори", "Опитайте се да говорите със Слав.", (eng) => _state = SlavState.Talking1));
-            _options.Add(new Option(2, "Бий се", "Предизвикайте Слав на двубой.", (eng) => StartFight(eng)));
         }
         else if (_state == SlavState.Talking1)
         {

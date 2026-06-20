@@ -9,7 +9,7 @@ public class Nigredo : Skill
 {
     public override string Name => "Нигредо";
     public override string ShortDescription => "Намалява Атаката, Защитата и Магията на всички врагове с 50% за 5 хода.";
-    public override string AccurateDescription => "Намалява Атаката, Защитата и Магията на всички врагове с 50% за 5 хода. Всички деления се наслагват адитивно.";
+    public override string AccurateDescription => "Намалява Атаката, Защитата и Магията на всички врагове с 50% за 5 хода.";
     public override TargetType Target => TargetType.Aoe;
     public override int MpCost => 0;
     public override int TempoCost => 5;

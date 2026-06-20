@@ -18,7 +18,7 @@ public class OligofrenBoss : Enemy
         wisdom: 0,
         luck: 1,
         xpReward: 40,
-        moneyReward: 100) { }
+        moneyReward: 20) { }
 
     public override void TakeAction(GameEngine engine)
     {

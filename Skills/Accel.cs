@@ -9,7 +9,7 @@ public class Accel : Skill
 {
     public override string Name => "Ускорение";
     public override string ShortDescription => "Дава +50% Скорост, но -10% Атака, Защита и Магия за 10 хода.";
-    public override string AccurateDescription => "Увеличава Скоростта ви с 50%, но намалява Атаката, Защитата и Магията ви с 10%. Ефектът трае 10 хода и може да се наслагва адитивно.";
+    public override string AccurateDescription => "Увеличава Скоростта ви с 50%, но намалява Атаката, Защитата и Магията ви с 10%.";
     public override TargetType Target => TargetType.Self;
     public override int MpCost => 5;
     public override int TempoCost => 5;

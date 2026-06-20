@@ -30,7 +30,8 @@ public class PoisonStreamEvent : IPanel
     private void CrossWade(GameEngine engine)
     {
         var p = engine.State.Player;
-        p.Hp = Math.Max(1, p.Hp - 20);
+        p.LoseHp(20);
+        if (p.CheckLoss(engine)) return;
         _message = "Прегазихте през потока. Отровата разяжда краката ви и губите 20 Живот.";
         _done = true;
         EnsureOptions(engine);
@@ -46,7 +47,8 @@ public class PoisonStreamEvent : IPanel
         }
         else // Failure
         {
-            p.Hp = Math.Max(1, p.Hp - 40);
+            p.LoseHp(40);
+            if (p.CheckLoss(engine)) return;
             _message = "Не успяхте да прескочите потока и паднахте вътре! Изгарянията ви костват 40 Живот.";
         }
         _done = true;

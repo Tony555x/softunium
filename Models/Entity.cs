@@ -106,10 +106,9 @@ public abstract class Entity
         }
 
         ctx.DamageTaken = incomingDamage;
-        this.Hp -= incomingDamage;
+        this.LoseHp(incomingDamage);
         if (this.Hp <= 0)
         {
-            this.Hp = 0;
             ctx.IsLethal = true;
         }
     }
@@ -134,5 +133,10 @@ public abstract class Entity
         this.Mp = System.Math.Min(this.MaxMp, this.Mp + ctx.HealAmount);
         ctx.ActualHealed = this.Mp - oldMp;
         return ctx;
+    }
+
+    public void LoseHp(int amount)
+    {
+        this.Hp = System.Math.Max(0, this.Hp - amount);
     }
 }

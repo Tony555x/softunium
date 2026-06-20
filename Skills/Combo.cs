@@ -8,7 +8,7 @@ public class Combo : Skill
 {
     public override string Name => "Комбо";
     public override string ShortDescription => "Атакува една цел 6 пъти.";
-    public override string AccurateDescription => "Атакува една цел 6 пъти, всяка атака нанася щети равни на (Атака * 0.75). Защитата се прилага на всеки удар.";
+    public override string AccurateDescription => "Атакува една цел за (Атака * 0.75) щети 6 пъти.";
     public override TargetType Target => TargetType.Enemy;
     public override int MpCost => 0;
     public override int TempoCost => 5;

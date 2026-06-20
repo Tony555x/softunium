@@ -61,10 +61,9 @@ public class KordorLocation : Location
             BuildOptions(eng);
         }));
 
-        Options.Add(new Option(99, "Тест Анимация Око (Debug)", "Тества анимацията на окото.", (eng) => 
+        Options.Add(new Option(99, "Дебъг локация (Debug)", "Отидете в тайната дебъг зона.", (eng) => 
         {
-            var animPanel = new Harduni.Events.BlinkingEyeAnimationPanel((e) => e.ChangeRootPanel(this));
-            eng.ChangeRootPanel(animPanel);
+            eng.ChangeRootPanel(World.DebugLocation);
         }));
     }
 

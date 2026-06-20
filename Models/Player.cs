@@ -277,4 +277,15 @@ public class Player : Entity
             }
         }
     }
+
+    public bool CheckLoss(GameEngine engine)
+    {
+        if (Hp <= 0)
+        {
+            engine.State.DungeonData.IsEventActive = false;
+            engine.ChangeRootPanel(engine.State.World.DeathPanel);
+            return true;
+        }
+        return false;
+    }
 }
