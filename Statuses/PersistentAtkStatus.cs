@@ -19,19 +19,48 @@ public class PersistentAtkStatus : Status
     }
     internal override StatusCategory Category => StatusCategory.Stats;
 
-    private class Instance
+    public class AtkInstance
     {
-        public int Fights;
-        public float Amount;
-        public Instance(int fights, float amount) { Fights = fights; Amount = amount; }
+        public int Fights { get; set; }
+        public float Amount { get; set; }
+        public AtkInstance(int fights, float amount) { Fights = fights; Amount = amount; }
     }
 
-    private readonly List<Instance> _instances = new();
+    private readonly List<AtkInstance> _instances = new();
+    public List<AtkInstance> Instances => _instances;
+
+    public PersistentAtkStatus()
+    {
+        IsPersistent = true;
+    }
 
     public PersistentAtkStatus(int fights, float amount)
     {
         IsPersistent = true;
-        _instances.Add(new Instance(fights, amount));
+        _instances.Add(new AtkInstance(fights, amount));
+    }
+
+    public override StatusSaveData Save()
+    {
+        var data = base.Save();
+        data.Instances = _instances.Select(i => new StatusInstanceSaveData
+        {
+            Fights = i.Fights,
+            Amount = i.Amount
+        }).ToList();
+        return data;
+    }
+
+    public override void Load(StatusSaveData data)
+    {
+        _instances.Clear();
+        if (data.Instances != null)
+        {
+            foreach (var inst in data.Instances)
+            {
+                _instances.Add(new AtkInstance(inst.Fights, inst.Amount ?? 0f));
+            }
+        }
     }
 
     public override void OnStack(Status newStatus)

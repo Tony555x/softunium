@@ -54,6 +54,21 @@ public class StatusComponent
         }
     }
 
+    public void LoadStatus(Status status)
+    {
+        status.Owner = this.Owner;
+        var existingType = status.GetType();
+        var existingStatus = _statuses.FirstOrDefault(s => s.GetType() == existingType);
+        if (existingStatus != null)
+        {
+            existingStatus.OnStack(status);
+        }
+        else
+        {
+            _statuses.Add(status);
+        }
+    }
+
     public void ApplyStatus(Status newStatus, DelayedTurn delay)
     {
         if (delay == DelayedTurn.This)

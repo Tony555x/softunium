@@ -19,19 +19,48 @@ public class PersistentDefStatus : Status
     }
     internal override StatusCategory Category => StatusCategory.Stats;
 
-    private class Instance
+    public class DefInstance
     {
-        public int Fights;
-        public float Amount;
-        public Instance(int fights, float amount) { Fights = fights; Amount = amount; }
+        public int Fights { get; set; }
+        public float Amount { get; set; }
+        public DefInstance(int fights, float amount) { Fights = fights; Amount = amount; }
     }
 
-    private readonly List<Instance> _instances = new();
+    private readonly List<DefInstance> _instances = new();
+    public List<DefInstance> Instances => _instances;
+
+    public PersistentDefStatus()
+    {
+        IsPersistent = true;
+    }
 
     public PersistentDefStatus(int fights, float amount)
     {
         IsPersistent = true;
-        _instances.Add(new Instance(fights, amount));
+        _instances.Add(new DefInstance(fights, amount));
+    }
+
+    public override StatusSaveData Save()
+    {
+        var data = base.Save();
+        data.Instances = _instances.Select(i => new StatusInstanceSaveData
+        {
+            Fights = i.Fights,
+            Amount = i.Amount
+        }).ToList();
+        return data;
+    }
+
+    public override void Load(StatusSaveData data)
+    {
+        _instances.Clear();
+        if (data.Instances != null)
+        {
+            foreach (var inst in data.Instances)
+            {
+                _instances.Add(new DefInstance(inst.Fights, inst.Amount ?? 0f));
+            }
+        }
     }
 
     public override void OnStack(Status newStatus)

@@ -10,10 +10,27 @@ public class DecayStatus : Status
 
     public int Stacks { get; set; }
 
+    public DecayStatus()
+    {
+        IsPersistent = true;
+    }
+
     public DecayStatus(int stacks)
     {
         IsPersistent = true;
         Stacks = stacks;
+    }
+
+    public override StatusSaveData Save()
+    {
+        var data = base.Save();
+        data.Stacks = Stacks;
+        return data;
+    }
+
+    public override void Load(StatusSaveData data)
+    {
+        Stacks = data.Stacks ?? 0;
     }
 
     public override void OnStack(Status newStatus)

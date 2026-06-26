@@ -37,6 +37,7 @@ public class PlayerSaveData
     public List<ItemSaveData> Inventory { get; set; }
     public List<string> Skills { get; set; }
     public List<string> EquippedSkills { get; set; }
+    public List<StatusSaveData> PersistentStatuses { get; set; } = new();
 }
 
 public class DungeonSaveData
@@ -45,4 +46,18 @@ public class DungeonSaveData
     public int CurrentRoomIndex { get; set; }
     public List<bool> ClearedRooms { get; set; }
     public bool IsInDungeon { get; set; }
+}
+
+public class StatusSaveData
+{
+    public string Type { get; set; } = "";
+    public int? Stacks { get; set; }
+    public List<StatusInstanceSaveData>? Instances { get; set; }
+}
+
+public class StatusInstanceSaveData
+{
+    public int Fights { get; set; }
+    public int? Potency { get; set; }
+    public float? Amount { get; set; }
 }

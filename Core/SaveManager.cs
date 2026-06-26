@@ -6,6 +6,7 @@ using System.Text.Json;
 using Harduni.Models;
 using Harduni.Skills;
 using Harduni.Locations;
+using Harduni.Statuses;
 
 namespace Harduni.Core;
 
@@ -60,7 +61,8 @@ public static class SaveManager
                 Money = p.Money,
                 Inventory = p.Inventory.Items.Select(i => new ItemSaveData { Name = i.Name, Amount = i.Amount }).ToList(),
                 Skills = p.Skills.Select(s => s.Name).ToList(),
-                EquippedSkills = p.EquippedSkills.Select(s => s.Name).ToList()
+                EquippedSkills = p.EquippedSkills.Select(s => s.Name).ToList(),
+                PersistentStatuses = p.Status.Statuses.Where(s => s.IsPersistent).Select(s => s.Save()).ToList()
             },
             Dungeon = new DungeonSaveData
             {
@@ -146,6 +148,20 @@ public static class SaveManager
                 for (int i = 0; i < data.Dungeon.ClearedRooms.Count && i < engine.State.DungeonData.Rooms.Count; i++)
                 {
                     engine.State.DungeonData.Rooms[i].IsCleared = data.Dungeon.ClearedRooms[i];
+                }
+            }
+
+            p.Status.ClearAll();
+            if (data.Player.PersistentStatuses != null)
+            {
+                foreach (var sData in data.Player.PersistentStatuses)
+                {
+                    var status = StatusRouter.CreateStatus(sData.Type);
+                    if (status != null)
+                    {
+                        status.Load(sData);
+                        p.Status.LoadStatus(status);
+                    }
                 }
             }
 

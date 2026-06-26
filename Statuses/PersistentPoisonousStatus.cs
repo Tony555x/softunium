@@ -10,11 +10,40 @@ public class PersistentPoisonousStatus : Status
     internal override StatusCategory Category => StatusCategory.None;
 
     private readonly List<PersistentStatusInstance> _instances = new();
+    public List<PersistentStatusInstance> Instances => _instances;
+
+    public PersistentPoisonousStatus()
+    {
+        IsPersistent = true;
+    }
 
     public PersistentPoisonousStatus(int fights, int potency)
     {
         IsPersistent = true;
         _instances.Add(new PersistentStatusInstance(fights, potency));
+    }
+
+    public override StatusSaveData Save()
+    {
+        var data = base.Save();
+        data.Instances = _instances.Select(i => new StatusInstanceSaveData
+        {
+            Fights = i.Fights,
+            Potency = i.Potency
+        }).ToList();
+        return data;
+    }
+
+    public override void Load(StatusSaveData data)
+    {
+        _instances.Clear();
+        if (data.Instances != null)
+        {
+            foreach (var inst in data.Instances)
+            {
+                _instances.Add(new PersistentStatusInstance(inst.Fights, inst.Potency ?? 0));
+            }
+        }
     }
 
     public override void OnStack(Status newStatus)

@@ -56,4 +56,13 @@ public abstract class Status
     public virtual void Trigger(GameEngine engine)
     {
     }
+
+    public virtual StatusSaveData Save()
+    {
+        return new StatusSaveData { Type = GetType().Name };
+    }
+
+    public virtual void Load(StatusSaveData data)
+    {
+    }
 }
