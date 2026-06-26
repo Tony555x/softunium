@@ -18,6 +18,9 @@ public class PersistentStatusInstance
 
 public class PersistentRegenStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Positive;
+    internal override StatusCategory Category => StatusCategory.Healing;
+
     private readonly List<PersistentStatusInstance> _instances = new();
 
     public PersistentRegenStatus(int fights, int potency)

@@ -166,6 +166,7 @@ public abstract class Dungeon : Location
 
     protected void PerformEscape(GameEngine engine)
     {
+        engine.State.DungeonData.IsInDungeon = false;
         engine.State.Player.Status.ClearAll();
         engine.State.Player.RecalcStats();
         Escape(engine);

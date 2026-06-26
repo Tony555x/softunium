@@ -6,6 +6,9 @@ namespace Harduni.Statuses;
 
 public class DefDownStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Negative;
+    internal override StatusCategory Category => StatusCategory.Stats;
+
     private readonly List<DebuffInstance> _instances = new();
 
     public DefDownStatus(int duration, float amount)

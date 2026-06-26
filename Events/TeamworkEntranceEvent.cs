@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Harduni.Core;
 
 namespace Harduni.Events;
 
-public class ProgressEntranceEvent : IPanel
+public class TeamworkEntranceEvent : IPanel
 {
     private readonly List<Option> _options = new();
 
@@ -13,13 +12,13 @@ public class ProgressEntranceEvent : IPanel
     public void OnOpen(GameEngine engine)
     {
         _options.Clear();
-        _options.Add(new Option(1, "Продължи", "Навлезте в блатото.", (eng) => eng.State.DungeonData.IsEventActive = false));
+        _options.Add(new Option(1, "Продължи", "Продължете напред.", (eng) => eng.State.DungeonData.IsEventActive = false));
     }
 
     public void Render(GameEngine engine)
     {
-        VConsole.WriteLine("=== ВЛИЗАНЕ В ПРОГРЕС ===");
-        VConsole.WriteLine("Вие влизате в Прогрес. Веднага усещате ужасна миризма. Пред вас се разпростира голямо блато, земята е преплетена с кабели и e осеяна от локви и езера от отровни вещества.");
+        VConsole.WriteLine("=== ВЛИЗАНЕ В ТИЙМУЪРК ===");
+        VConsole.WriteLine("Влизайки в стаята се озовавате в град от панелки. Има нацепени пичове с тояги наоколо.");
         
         VConsole.WriteLine("\nВъзможни действия:");
         foreach (var opt in _options)

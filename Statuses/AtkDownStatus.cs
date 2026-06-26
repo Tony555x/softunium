@@ -6,6 +6,9 @@ namespace Harduni.Statuses;
 
 public class AtkDownStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Negative;
+    internal override StatusCategory Category => StatusCategory.Stats;
+
     private readonly List<DebuffInstance> _instances = new();
 
     public AtkDownStatus(int duration, float amount)

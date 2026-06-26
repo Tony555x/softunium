@@ -5,6 +5,9 @@ namespace Harduni.Statuses;
 
 public class DecayStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Negative;
+    internal override StatusCategory Category => StatusCategory.Damaging;
+
     public int Stacks { get; set; }
 
     public DecayStatus(int stacks)

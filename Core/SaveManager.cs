@@ -66,7 +66,8 @@ public static class SaveManager
             {
                 CurrentLocationName = engine.State.LastLocationPanel?.GetType().Name ?? "",
                 CurrentRoomIndex = dungeon.CurrentRoomIndex,
-                ClearedRooms = dungeon.Rooms.Select(r => r.IsCleared).ToList()
+                ClearedRooms = dungeon.Rooms.Select(r => r.IsCleared).ToList(),
+                IsInDungeon = dungeon.IsInDungeon
             }
         };
 
@@ -139,6 +140,7 @@ public static class SaveManager
             RestoreLocation(data.Dungeon.CurrentLocationName, engine);
             
             engine.State.DungeonData.CurrentRoomIndex = data.Dungeon.CurrentRoomIndex;
+            engine.State.DungeonData.IsInDungeon = data.Dungeon.IsInDungeon;
             if (data.Dungeon.ClearedRooms != null)
             {
                 for (int i = 0; i < data.Dungeon.ClearedRooms.Count && i < engine.State.DungeonData.Rooms.Count; i++)
@@ -190,7 +192,7 @@ public static class SaveManager
     {
         return name switch
         {
-            "Тежък Удар" => new HeavyAttack(),
+            "Тежък Удар" => new HeavyStrike(),
             "Лечение" => new Heal(),
             "Разсичане" => new Cleave(),
             "Фокус" => new Warcry(),
@@ -198,15 +200,15 @@ public static class SaveManager
             "Сила на духа" => new PassiveDamageBonus(),
             "Мръсотия" => new Filth(),
             "Гадост" => new Filth(),
-            "Защита" => new GuardSkill(),
-            "Блок" => new GuardSkill(),
-            "Удар и отстъп" => new HitAndRun(),
-            "Бърз удар" => new QuickStrike(),
             "Концентрация" => new Concentration(),
             "Желязна кожа" => new IronSkin(),
             "Отровен удар" => new PoisonStrike(),
             "Пулс" => new Pulse(),
             "Пробиващ удар" => new PiercingStrike(),
+            "Потискане" => new Suppress(),
+            "Завършващ удар" => new FinalStrike(),
+            "Напрежение" => new Exertion(),
+            "Стъпка" => new Step(),
             _ => null
         };
     }

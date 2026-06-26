@@ -7,6 +7,18 @@ namespace Harduni.Statuses;
 
 public class PersistentDefStatus : Status
 {
+    internal override StatusPolarity Polarity
+    {
+        get
+        {
+            float total = _instances.Sum(i => i.Amount);
+            if (total > 0) return StatusPolarity.Positive;
+            if (total < 0) return StatusPolarity.Negative;
+            return StatusPolarity.None;
+        }
+    }
+    internal override StatusCategory Category => StatusCategory.Stats;
+
     private class Instance
     {
         public int Fights;

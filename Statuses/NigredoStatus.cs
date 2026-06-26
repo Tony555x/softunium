@@ -6,6 +6,9 @@ namespace Harduni.Statuses;
 
 public class NigredoStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Negative;
+    internal override StatusCategory Category => StatusCategory.Stats;
+
     private readonly List<DebuffInstance> _instances = new();
 
     public NigredoStatus(int duration)
@@ -31,7 +34,7 @@ public class NigredoStatus : Status
     public override string GetDescription()
     {
         int stacks = _instances.Count;
-        return $"Намалява Атаката, Защитата и Магията с {stacks * 50}% (редуцирано чрез делене).";
+        return $"Намалява Атаката, Защитата и Магията с {stacks * 50}%.";
     }
 
     public override void ProcessEvent(GameEvent ev, EventContext ctx)

@@ -13,14 +13,9 @@ public class Concentration : Skill
     public override TargetType Target => TargetType.Self;
     public override int MpCost => 4;
     public override bool UsableInBattle => true;
-    public override bool UsableOutsideBattle => false;
+    public override bool UsableOutsideBattle => true;
     public override int BaseCooldown => 1;
     public override List<SkillTag> Tags { get; } = new() { SkillTag.Buff, SkillTag.Healing };
-
-    public Concentration()
-    {
-        Keywords.Add("percent");
-    }
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

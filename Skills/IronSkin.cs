@@ -16,11 +16,6 @@ public class IronSkin : Skill
     public override int BaseCooldown => 0;
     public override List<SkillTag> Tags { get; } = new() { SkillTag.Defense, SkillTag.Passive };
 
-    public IronSkin()
-    {
-        Keywords.Add("percent");
-    }
-
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
         return "";

@@ -11,10 +11,10 @@ public class PoisonStrike : Skill
     public override string ShortDescription => "Атакува и нанася отрова.";
     public override string AccurateDescription => "Атакува за (Атака) щети и нанася отрова със сила (Магия / 2).";
     public override TargetType Target => TargetType.Enemy;
-    public override int MpCost => 5;
+    public override int MpCost => 3;
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
-    public override int BaseCooldown => 0;
+    public override int BaseCooldown => 1;
     public override List<SkillTag> Tags { get; } = new() { SkillTag.Attack, SkillTag.Poison };
 
     public PoisonStrike()

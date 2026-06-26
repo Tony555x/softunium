@@ -11,7 +11,7 @@ public class Filth : Skill
     public override string ShortDescription => "Нанася отрова.";
     public override string AccurateDescription => "Нанася отрова със сила (Магия).";
     public override TargetType Target => TargetType.Enemy;
-    public override int MpCost => 5;
+    public override int MpCost => 4;
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 2;

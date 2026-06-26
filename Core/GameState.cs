@@ -28,6 +28,7 @@ public class DungeonData
     public List<Room> Rooms { get; set; } = new List<Room>();
     public int CurrentRoomIndex { get; set; } = 0;
     public bool IsEventActive { get; set; } = false;
+    public bool IsInDungeon { get; set; } = false;
 }
 
 public class GameState

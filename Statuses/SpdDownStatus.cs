@@ -6,6 +6,9 @@ namespace Harduni.Statuses;
 
 public class SpdDownStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Negative;
+    internal override StatusCategory Category => StatusCategory.Stats;
+
     private readonly List<DebuffInstance> _instances = new();
 
     public SpdDownStatus(int duration, float amount)

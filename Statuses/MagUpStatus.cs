@@ -6,6 +6,9 @@ namespace Harduni.Statuses;
 
 public class MagUpStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Positive;
+    internal override StatusCategory Category => StatusCategory.Stats;
+
     private readonly List<DebuffInstance> _instances = new();
 
     public MagUpStatus(int duration, float amount)

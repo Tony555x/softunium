@@ -6,6 +6,9 @@ namespace Harduni.Statuses;
 
 public class PersistentPoisonousStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Positive;
+    internal override StatusCategory Category => StatusCategory.None;
+
     private readonly List<PersistentStatusInstance> _instances = new();
 
     public PersistentPoisonousStatus(int fights, int potency)

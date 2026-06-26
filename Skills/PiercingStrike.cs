@@ -11,7 +11,7 @@ public class PiercingStrike : Skill
     public override string ShortDescription => "Силна атака, която намалява защитата.";
     public override string AccurateDescription => "Атакува за (Атака * 1.5) щети и намалява Защитата на врага с 50% за 3 хода.";
     public override TargetType Target => TargetType.Enemy;
-    public override int MpCost => 6;
+    public override int MpCost => 3;
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 1;

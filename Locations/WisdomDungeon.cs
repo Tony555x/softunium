@@ -22,61 +22,51 @@ public class WisdomDungeon : Dungeon
 
     public override void Enter(GameEngine engine)
     {
+        engine.State.DungeonData.IsInDungeon = true;
         var data = engine.State.DungeonData;
         data.CurrentRoomIndex = 0;
         data.IsEventActive = false;
 
-        var rooms = new List<Room>();
-        int[] layout = { 1, 1, 0, 1, 2, 0, 2, 2, 0, 3, 0 }; // Added 0 at the end for Slav
-
-        int signCounter = 1;
-
-        for (int i = 0; i < layout.Length; i++)
+        var rooms = new List<Room>
         {
-            int eventType = layout[i];
-            
-            if (i == layout.Length - 1)
-            {
-                // Last room is Slav
-                // Using flags to track if slav is defeated
-                if (engine.State.Flags.ContainsKey("slav_defeated"))
-                {
-                    rooms.Add(new Room(0, null, new BreakEvent(0))); // Placeholder for empty room
-                }
-                else
-                {
-                    rooms.Add(new Room(0, null, new SlavEvent()));
-                }
-                continue;
-            }
+            // Room 0: Combat 1
+            new Room(1, new List<Enemy> { new WeakProgrammer() }),
 
-            if (eventType > 0)
-            {
-                int roomIndex = i;
-                var enemies = new List<Enemy>();
-                if (eventType == 1)
-                {
-                    enemies.Add(roomIndex % 2 == 0 ? new WeakProgrammer() : new Beta());
-                }
-                else if (eventType == 2)
-                {
-                    enemies.Add(new WeakProgrammer());
-                    enemies.Add(new Beta());
-                }
-                else if (eventType == 3)
-                {
-                    enemies.Add(new OligofrenBoss());
-                }
-                
-                var room = new Room(eventType, enemies);
-                if (eventType == 2) room.LootMultiplier = 1.5f;
-                rooms.Add(room);
-            }
-            else
-            {
-                rooms.Add(new Room(0, null, new BreakEvent(signCounter++)));
-            }
-        }
+            // Room 1: Combat 2
+            new Room(1, new List<Enemy> { new Beta() }),
+
+            // Room 2: Sign 1
+            new Room(0, null, new BreakEvent(1)),
+
+            // Room 3: Combat 3
+            new Room(1, new List<Enemy> { new Beta() }),
+
+            // Room 4: Combat 4
+            new Room(2, new List<Enemy> { new WeakProgrammer(), new Beta() }) { LootMultiplier = 1.5f },
+
+            // Room 5: Sign 2
+            new Room(0, null, new BreakEvent(2)),
+
+            // Room 6: Combat 5
+            new Room(2, new List<Enemy> { new WeakProgrammer(), new Beta() }) { LootMultiplier = 1.5f },
+
+            // Room 7: Combat 6
+            new Room(2, new List<Enemy> { new WeakProgrammer(), new Beta() }) { LootMultiplier = 1.5f },
+
+            // Room 8: Sign 3
+            new Room(0, null, new BreakEvent(3)),
+
+            // Room 9: Combat 7 (Boss)
+            new Room(3, new List<Enemy> { new OligofrenBoss() }),
+
+            // Room 10: Sign 4
+            new Room(0, null, new BreakEvent(4)),
+
+            // Room 11: Slav Event
+            engine.State.Flags.ContainsKey("slav_defeated") 
+                ? new Room(0, null, new BreakEvent(0)) 
+                : new Room(0, null, new SlavEvent())
+        };
 
         data.Rooms = rooms;
         engine.ChangeRootPanel(this);

@@ -13,8 +13,8 @@ public class Pulse : Skill
     public override TargetType Target => TargetType.Self; // Effectively AoE debuff + self heal
     public override int MpCost => 8;
     public override bool UsableInBattle => true;
-    public override bool UsableOutsideBattle => false;
-    public override int BaseCooldown => 3;
+    public override bool UsableOutsideBattle => true;
+    public override int BaseCooldown => 2;
     public override List<SkillTag> Tags { get; } = new() { SkillTag.Healing, SkillTag.Debuff };
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)

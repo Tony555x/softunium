@@ -23,6 +23,7 @@ public class ProgressDungeon : Dungeon
 
     public override void Enter(GameEngine engine)
     {
+        engine.State.DungeonData.IsInDungeon = true;
         var data = engine.State.DungeonData;
         data.CurrentRoomIndex = 0;
         data.IsEventActive = false;
@@ -74,11 +75,11 @@ public class ProgressDungeon : Dungeon
             // Room 14: Combat 11
             new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 2f },
 
-            // Room 15: Bridge Warning Event (before combat 12)
-            new Room(0, null, new BridgeWarningEvent()),
-
-            // Room 16: Tempo Event
+            // Room 15: Tempo Event
             new Room(0, null, new TempoUnlockEvent()),
+
+            // Room 16: Bridge Warning Event (before combat 12)
+            new Room(0, null, new BridgeWarningEvent()),
 
             // Room 17: Combat 12
             new Room(1, new List<Enemy> { new StuckProgrammer() }),

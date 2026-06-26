@@ -15,11 +15,6 @@ public class PassiveDamageBonus : Skill
     public override bool UsableOutsideBattle => false;
     public override List<SkillTag> Tags { get; } = new() { SkillTag.Passive };
 
-    public PassiveDamageBonus()
-    {
-        Keywords.Add("percent");
-    }
-
 
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {

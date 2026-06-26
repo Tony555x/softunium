@@ -1,7 +1,23 @@
 using Harduni.Models;
+using Harduni.Core;
 using System.Collections.Generic;
 
 namespace Harduni.Statuses;
+
+internal enum StatusPolarity
+{
+    None,
+    Positive,
+    Negative
+}
+
+internal enum StatusCategory
+{
+    None,
+    Stats,
+    Damaging,
+    Healing
+}
 
 public class DebuffInstance
 {
@@ -20,6 +36,9 @@ public abstract class Status
     public Entity Owner { get; set; }
     public bool IsPersistent { get; set; } = false;
     public List<string> Keywords { get; set; } = new();
+
+    internal virtual StatusPolarity Polarity => StatusPolarity.None;
+    internal virtual StatusCategory Category => StatusCategory.None;
 
     public abstract void ProcessEvent(GameEvent ev, EventContext ctx);
     

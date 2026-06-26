@@ -27,6 +27,18 @@ public class StatusComponent
 
     public void ApplyStatus(Status newStatus)
     {
+        bool isInDungeon = Harduni.Program.Engine?.State?.DungeonData?.IsInDungeon == true;
+        if (!isInDungeon)
+        {
+            return;
+        }
+
+        bool inBattle = Harduni.Program.Engine?.CurrentPanel == Harduni.Program.Engine?.State?.World?.BattlePanel;
+        if (!inBattle && !newStatus.IsPersistent)
+        {
+            return;
+        }
+
         newStatus.Owner = this.Owner;
         
         var existingType = newStatus.GetType();
@@ -50,6 +62,17 @@ public class StatusComponent
         }
         else
         {
+            bool isInDungeon = Harduni.Program.Engine?.State?.DungeonData?.IsInDungeon == true;
+            if (!isInDungeon)
+            {
+                return;
+            }
+
+            bool inBattle = Harduni.Program.Engine?.CurrentPanel == Harduni.Program.Engine?.State?.World?.BattlePanel;
+            if (!inBattle && !newStatus.IsPersistent)
+            {
+                return;
+            }
             _delayedStatuses[delay].Add(newStatus);
         }
     }

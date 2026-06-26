@@ -27,7 +27,10 @@ public class BattlePanel : IPanel
         {
             _options.Add(new Option(id++, "Темпо умения", "Списък с вашите темпо умения.", OpenTempoSkills));
         }
-        _options.Add(new Option(id++, "Инвентар", "Отваря инвентара с предмети.", OpenInventory));
+        if (engine.State.Flags.ContainsKey("shop_unlocked"))
+        {
+            _options.Add(new Option(id++, "Инвентар", "Отваря инвентара с предмети.", OpenInventory));
+        }
         _options.Add(new Option(id++, "Анализ", "Прегледайте статистиките и ефектите на целта.", OpenAnalysis));
         _options.Add(new Option(id++, "Бягство", "Бягство от битката.", Escape));
     }

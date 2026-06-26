@@ -44,4 +44,5 @@ public class DungeonSaveData
     public string CurrentLocationName { get; set; }
     public int CurrentRoomIndex { get; set; }
     public List<bool> ClearedRooms { get; set; }
+    public bool IsInDungeon { get; set; }
 }

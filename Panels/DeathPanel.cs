@@ -53,6 +53,7 @@ public class DeathPanel : IPanel
             once = false;
             engine.State.BattleData.PlayerDeathTimer = 0f; // clean up state
             
+            engine.State.DungeonData.IsInDungeon = false;
             engine.State.Player.Status.ClearAll();
             engine.State.Player.RecalcStats();
             

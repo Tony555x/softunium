@@ -8,9 +8,9 @@ public class Cleave : Skill
 {
     public override string Name => "Разсичане";
     public override string ShortDescription => "Атакува всички врагове.";
-    public override string AccurateDescription => "Атакува всички врагове за (Атака * 0.8) щети.";
+    public override string AccurateDescription => "Атакува всички врагове за (Атака) щети.";
     public override TargetType Target => TargetType.Aoe;
-    public override int MpCost => 4;
+    public override int MpCost => 2;
     public override bool UsableInBattle => true;
     public override bool UsableOutsideBattle => false;
     public override int BaseCooldown => 0;
@@ -20,7 +20,7 @@ public class Cleave : Skill
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
         int totalDamage = 0;
-        int baseAoeDamage = (int)(player.Attack * 0.8);
+        int baseAoeDamage = player.Attack;
         
         foreach(var e in allEnemies)
         {

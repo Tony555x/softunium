@@ -142,22 +142,23 @@ public class Player : Entity
             messages.Add(string.Join(", ", otherStatsList));
 
         // Skill checks
-        CheckAndAddSkill(2, new HeavyAttack(), messages);
+        CheckAndAddSkill(2, new HeavyStrike(), messages);
         CheckAndAddSkill(3, new Heal(), messages);
-        CheckAndAddSkill(4, new Cleave(), messages);
+        CheckAndAddSkill(4, new Suppress(), messages);
         CheckAndAddSkill(5, new Warcry(), messages);
         CheckAndAddSkill(6, new PassiveDamageBonus(), messages);
-        CheckAndAddSkill(7, new Filth(), messages);
-        CheckAndAddSkill(8, new GuardSkill(), messages);
-        CheckAndAddSkill(9, new HitAndRun(), messages);
-        CheckAndAddSkill(10, new QuickStrike(), messages);
-        CheckAndAddSkill(11, new Concentration(), messages);
-        CheckAndAddSkill(12, new IronSkin(), messages);
-        CheckAndAddSkill(13, new PoisonStrike(), messages);
-        CheckAndAddSkill(14, new Pulse(), messages);
-        CheckAndAddSkill(15, new PiercingStrike(), messages);
-        CheckAndAddSkill(16, new MagicAffinity(), messages);
+        CheckAndAddSkill(7, new PoisonStrike(), messages);
+        CheckAndAddSkill(8, new Concentration(), messages);
+        CheckAndAddSkill(9, new FinalStrike(), messages);
+        CheckAndAddSkill(10, new Exertion(), messages);
+        CheckAndAddSkill(11, new IronSkin(), messages);
+        CheckAndAddSkill(12, new Filth(), messages);
+        CheckAndAddSkill(13, new MagicAffinity(), messages);
+        CheckAndAddSkill(14, new PiercingStrike(), messages);
+        CheckAndAddSkill(15, new Pulse(), messages);
+        CheckAndAddSkill(16, new Cleave(), messages);
         CheckAndAddSkill(17, new VampiricStrike(), messages);
+        CheckAndAddSkill(18, new Step(), messages);
 
         CheckAndAddTempoSkills(messages);
 

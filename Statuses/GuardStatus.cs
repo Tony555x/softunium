@@ -4,6 +4,9 @@ namespace Harduni.Statuses;
 
 public class GuardStatus : Status
 {
+    internal override StatusPolarity Polarity => StatusPolarity.Positive;
+    internal override StatusCategory Category => StatusCategory.None;
+
     private int _hitsLeft;
 
     public GuardStatus(int hits)
