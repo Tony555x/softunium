@@ -8,7 +8,7 @@ public class FinalStrike : Skill
 {
     public override string Name => "Завършващ удар";
     public override string ShortDescription => "Атакува с допълнителни щети спрямо липсващия живот на целта.";
-    public override string AccurateDescription => "Атакува за (Атака) щети. Увеличава нанесените щети с процента на липсващия живот на врага.";
+    public override string AccurateDescription => "Атакува за (Атака) щети. +(Живот% липсващ на целта)% щети.";
     public override TargetType Target => TargetType.Enemy;
     public override int MpCost => 3;
     public override bool UsableInBattle => true;

@@ -78,10 +78,12 @@ public class TempoSkillListPanel : IPanel
             string info = skill.GetDetailedDescription();
             if (skill.BaseCooldown > 0) info += $"\nИзчакване: {skill.BaseCooldown} хода.";
 
+            int actualMpCost = skill.GetMpCost(p);
+            
             string costText = "";
             if (skill.TempoCost > 0) costText += $"{skill.TempoCost} Темпо";
-            if (skill.TempoCost > 0 && skill.MpCost > 0) costText += " и ";
-            if (skill.MpCost > 0) costText += $"{skill.MpCost} Айрян";
+            if (skill.TempoCost > 0 && actualMpCost > 0) costText += " и ";
+            if (actualMpCost > 0) costText += $"{actualMpCost} Айрян";
             if (string.IsNullOrEmpty(costText)) costText = "0 Темпо";
 
             int displayId = i - startIndex + 1;
@@ -99,7 +101,8 @@ public class TempoSkillListPanel : IPanel
                 else
                 {
                     // Tempo skills are not usable outside battle, but keep logic generic
-                    if (p.Mp < skill.MpCost)
+                    int currentMpCost = skill.GetMpCost(eng.State.Player);
+                    if (p.Mp < currentMpCost)
                     {
                         _message = $"Нямате достатъчно Айрян за {skill.Name}!";
                     }
@@ -109,7 +112,7 @@ public class TempoSkillListPanel : IPanel
                     }
                     else
                     {
-                        p.Mp -= skill.MpCost;
+                        p.Mp -= currentMpCost;
                         p.Tempo -= skill.TempoCost;
                         string msg = skill.Execute(p, new System.Collections.Generic.List<Harduni.Enemies.Enemy>(), null);
                         _message = msg;

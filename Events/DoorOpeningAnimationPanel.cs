@@ -33,16 +33,16 @@ public class DoorOpeningAnimationPanel : IPanel
 
     private readonly List<EyeAnimation> _eyes = new()
     {
-        new EyeAnimation(0.0f, 0.0f, 0.08f, 0.1f, 8.0f, 2.0f), // First eye
+        new EyeAnimation(0.0f, 0.0f, 0.05f, 0.06f, 8.0f, 2.0f), // First eye
         
         // Next 7 eyes starting from 11.0s with decreasing delays and prefixed locations
-        new EyeAnimation(-0.5f, -0.6f, 0.05f, 0.07f, 11.0f, 2.0f),
-        new EyeAnimation(0.6f, 0.5f, 0.06f, 0.08f, 11.7f, 2.0f),
-        new EyeAnimation(-0.6f, 0.4f, 0.04f, 0.06f, 12.3f, 2.0f),
-        new EyeAnimation(0.4f, -0.5f, 0.05f, 0.07f, 12.7f, 2.0f),
-        new EyeAnimation(-0.2f, 0.7f, 0.04f, 0.05f, 13.0f, 2.0f),
-        new EyeAnimation(0.5f, -0.1f, 0.05f, 0.07f, 13.2f, 2.0f),
-        new EyeAnimation(-0.7f, -0.2f, 0.03f, 0.04f, 13.3f, 2.0f)
+        new EyeAnimation(-0.5f, -0.6f, 0.03f, 0.04f, 11.0f, 2.0f),
+        new EyeAnimation(0.6f, 0.5f, 0.04f, 0.05f, 11.7f, 2.0f),
+        new EyeAnimation(-0.6f, 0.4f, 0.025f, 0.035f, 12.3f, 2.0f),
+        new EyeAnimation(0.4f, -0.5f, 0.03f, 0.04f, 12.7f, 2.0f),
+        new EyeAnimation(-0.2f, 0.7f, 0.025f, 0.03f, 13.0f, 2.0f),
+        new EyeAnimation(0.5f, -0.1f, 0.03f, 0.04f, 13.2f, 2.0f),
+        new EyeAnimation(-0.7f, -0.2f, 0.02f, 0.025f, 13.3f, 2.0f)
     };
 
     public DoorOpeningAnimationPanel(Action<GameEngine> onComplete)
@@ -128,8 +128,8 @@ public class DoorOpeningAnimationPanel : IPanel
 
             if (eyeWidth < 1.0 || h < 0.5) continue;
 
-            double cx = xc + eye.RelX * doorMaxHalfWidth;
-            double cy = yc + eye.RelY * doorHalfHeight;
+            int cx = (int)Math.Round(xc + eye.RelX * doorMaxHalfWidth);
+            int cy = (int)Math.Round(yc + eye.RelY * doorHalfHeight);
             double halfEye = eyeWidth / 2.0;
 
             for (int x = frameLeft + 1; x < frameRight; x++)
@@ -142,20 +142,20 @@ public class DoorOpeningAnimationPanel : IPanel
                     double eyeAngle = dx * (Math.PI / eyeWidth);
                     double cosVal = Math.Cos(eyeAngle);
                     
-                    double yTop = cy - h * cosVal;
-                    double yBottom = cy + h * cosVal;
+                    int yTop = (int)Math.Round(cy - h * cosVal);
+                    int yBottom = (int)Math.Round(cy + h * cosVal);
 
                     for (int y = frameTop + 1; y < frameBottom; y++)
                     {
                         if (y < 0 || y >= height) continue;
 
                         // Single char iris at the center
-                        if (x == (int)Math.Round(cx) && y == (int)Math.Round(cy) && progress > 0.1f)
+                        if (x == cx && y == cy && progress > 0.1f)
                         {
                             buffer[x, y] = 'O';
                         }
                         // Outline of the eye (top & bottom eyelids)
-                        else if (Math.Abs(y - yTop) < 0.55 || Math.Abs(y - yBottom) < 0.55)
+                        else if (y == yTop || y == yBottom)
                         {
                             buffer[x, y] = '@';
                         }
@@ -164,7 +164,7 @@ public class DoorOpeningAnimationPanel : IPanel
             }
         }
 
-        double maxAngle = Math.PI * 0.42; // approx 75.6 degrees, door remains plainly visible
+        double maxAngle = Math.PI * 0.46; // approx 82.8 degrees, door remains visible but open wider
         double angle = 0.0;
         if (_time >= 2f && _time < 6f)
         {

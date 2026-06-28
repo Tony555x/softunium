@@ -13,6 +13,7 @@ public static class StatusRouter
             nameof(PersistentDefStatus) => new PersistentDefStatus(),
             nameof(PersistentRegenStatus) => new PersistentRegenStatus(),
             nameof(PersistentPoisonousStatus) => new PersistentPoisonousStatus(),
+            nameof(PersistentObservedStatus) => new PersistentObservedStatus(),
             _ => null
         };
     }

@@ -76,7 +76,7 @@ public class LeadershipDungeon : Dungeon
             new Room(1, new List<Enemy> { new Dizainerka() }),
 
             // Room 16: DEBUFF EVENT
-            new Room(0, null, new BreakEvent()),
+            new Room(0, null, new ObservedCameraEvent()),
 
             // Room 17: Combat 13
             new Room(1, new List<Enemy> { new Dizainerka() }),
@@ -84,11 +84,13 @@ public class LeadershipDungeon : Dungeon
             // Room 18: Combat 14
             new Room(1, new List<Enemy> { new Dizainerka(), new Kifla() }) { LootMultiplier = 1.5f },
 
-            // Room 19: Flavor Event 3
-            new Room(0, null, new BreakEvent()),
+            // Room 19: (Removed BreakEvent)
 
             // Room 20: Combat 15
             new Room(1, new List<Enemy> { new Dizainerka(), new Zubarka() }) { LootMultiplier = 1.5f },
+            
+            // Room 20.5: Mirror Event
+            new Room(0, null, new MirrorEvent()),
 
             // Room 21: Combat 16
             new Room(1, new List<Enemy> { new Dizainerka(), new Kifla(), new Zubarka() }) { LootMultiplier = 2f },
@@ -96,8 +98,7 @@ public class LeadershipDungeon : Dungeon
             // Room 22: Combat 17
             new Room(1, new List<Enemy> { new Dizainerka(), new Kifla(), new Zubarka() }) { LootMultiplier = 2f },
 
-            // Room 23: Flavor Event 4
-            new Room(0, null, new BreakEvent()),
+            // Room 23: (Removed BreakEvent)
 
             // Room 24: Combat 18
             new Room(1, new List<Enemy> { new Dizainerka(), new Dizainerka() }) { LootMultiplier = 2f },

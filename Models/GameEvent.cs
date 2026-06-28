@@ -10,5 +10,6 @@ public enum GameEvent
     OnDamageTaken,
     OnHeal,
     OnHealMp,
-    CombatEnd
+    CombatEnd,
+    CalculateMpCost
 }

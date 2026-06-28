@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using Harduni.Locations;
 
 namespace Harduni.Core;
 
@@ -10,6 +11,7 @@ public class GameEngine
     public GameState State { get; private set; }
     public IPanel CurrentPanel { get; private set; }
     public IPanel PreviousRootPanel { get; private set; }
+    public IPanel? PreviousSubPanel { get; private set; }
     public bool IsRunning { get; private set; }
 
     private StringBuilder _inputBuffer = new StringBuilder();
@@ -54,8 +56,8 @@ public class GameEngine
 
             ProcessInputNonBlocking();
 
-            // Reset cursor to 0,0 instead of VConsole.Clear() to minimize flicker
-            VConsole.SetCursorPosition(0, 0); 
+            // Clear the buffer before rendering to ensure no leftover characters remain
+            VConsole.Clear(); 
             
             CurrentPanel.Render(this);
             
@@ -95,6 +97,14 @@ public class GameEngine
                     {
                         State.LastLocationPanel = CurrentPanel;
                         PreviousRootPanel = CurrentPanel;
+                        if (CurrentPanel is Location loc)
+                        {
+                            PreviousSubPanel = loc.CurrentSubPanel;
+                        }
+                        else
+                        {
+                            PreviousSubPanel = null;
+                        }
                         CurrentPanel = State.World.StatsPanel;
                         CurrentPanel?.OnOpen(this);
                     }
@@ -132,7 +142,17 @@ public class GameEngine
             CurrentPanel = PreviousRootPanel;
             PreviousRootPanel = null;
             VConsole.Clear();
+            
+            var subPanelToRestore = PreviousSubPanel;
+            PreviousSubPanel = null;
+            
             CurrentPanel?.OnOpen(this);
+            
+            if (CurrentPanel is Location loc && subPanelToRestore != null)
+            {
+                loc.SetSubPanel(subPanelToRestore);
+                subPanelToRestore.OnOpen(this);
+            }
         }
     }
 

@@ -44,7 +44,7 @@ public class ProgressDoorEvent : IPanel
         _options.Clear();
         if (_state == State.Initial)
         {
-            _options.Add(new Option(1, "Отвори", "Отвори шкафчето.", (eng) => _state = State.Opened));
+            _options.Add(new Option(1, "Вземи ключа", "Вземи ключа.", (eng) => TakeDoor(eng)));
         }
         else if (_state == State.Opened)
         {
@@ -73,6 +73,7 @@ public class ProgressDoorEvent : IPanel
 
     private void StartAnimation(GameEngine engine)
     {
+        /*
         var prevPanel = engine.CurrentPanel;
         var anim = new DoorOpeningAnimationPanel((eng) => 
         {
@@ -80,6 +81,9 @@ public class ProgressDoorEvent : IPanel
             eng.ChangeRootPanel(prevPanel);
         });
         engine.ChangeRootPanel(anim);
+        */
+        
+        _state = State.DoorTaken;
     }
 
     private void TakeDoor(GameEngine engine)
@@ -130,7 +134,7 @@ public class ProgressDoorEvent : IPanel
 
         if (_state == State.Initial)
         {
-            VConsole.WriteLine("Минавайки покрай една от панелките виждате шкафчета до нея. Едно от шкафчетата има ключ вътре.");
+            VConsole.WriteLine("Минавайки покрай една от панелките виждате шкафчета до нея. Едно от шкафчетата има ключ вътре. Това може да е полезно?");
         }
         else if (_state == State.Opened)
         {
@@ -146,11 +150,11 @@ public class ProgressDoorEvent : IPanel
         }
         else if (_state == State.StatsShown)
         {
-            VConsole.WriteLine("Чрез вратата можеш да \"отвориш\" шкафчето. +2 макс тежест на инвентар.");
+            VConsole.WriteLine("Чрез ключа можеш да 'отвориш' шкафчето. +2 Макс Тежест на инвентара.");
         }
         else if (_state == State.LockerMissing)
         {
-            VConsole.WriteLine("На това място би трябвало да има шкафче, но има само празно пространство. Можете да продължите напред.");
+            VConsole.WriteLine("В стената от шкафчета липсва едно..");
         }
 
         VConsole.WriteLine("\nВъзможни действия:");

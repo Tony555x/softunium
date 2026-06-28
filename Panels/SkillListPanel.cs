@@ -79,8 +79,9 @@ public class SkillListPanel : IPanel
             if (skill.BaseCooldown > 0) info += $"\nИзчакване: {skill.BaseCooldown} хода.";
 
             int displayId = i - startIndex + 1;
+            int actualMpCost = skill.GetMpCost(p);
 
-            _options.Add(new Option(displayId, $"{prefix}{skill.Name}{cdText}{currentCdText} ({skill.MpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
+            _options.Add(new Option(displayId, $"{prefix}{skill.Name}{cdText}{currentCdText} ({actualMpCost} Айрян): {skill.ShortDescription}", info, (eng) =>
             {
                 if (inBattle)
                 {
@@ -92,13 +93,14 @@ public class SkillListPanel : IPanel
                 }
                 else
                 {
-                    if (p.Mp < skill.MpCost)
+                    int currentMpCost = skill.GetMpCost(eng.State.Player);
+                    if (p.Mp < currentMpCost)
                     {
                         _message = $"Нямате достатъчно Айрян за {skill.Name}!";
                     }
                     else
                     {
-                        p.Mp -= skill.MpCost;
+                        p.Mp -= currentMpCost;
                         string msg = skill.Execute(p, new System.Collections.Generic.List<Harduni.Enemies.Enemy>(), null);
                         _message = msg;
                     }

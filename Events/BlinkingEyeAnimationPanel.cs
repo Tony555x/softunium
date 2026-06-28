@@ -86,13 +86,21 @@ public class BlinkingEyeAnimationPanel : IPanel
                         // Check if pupil (circle)
                         // Account for character aspect ratio
                         double dist = Math.Sqrt((dx / 2.0) * (dx / 2.0) + dy * dy);
-                        if (dist <= 3.0)
+                        if (dist <= 1.2)
+                        {
+                            buffer[x, y] = '@';
+                        }
+                        else if (dist > 1.2 && dist <= 2.5)
+                        {
+                            buffer[x, y] = ' ';
+                        }
+                        else if (dist > 2.5 && dist <= 4.2)
                         {
                             buffer[x, y] = '@';
                         }
                         else
                         {
-                            buffer[x, y] = '.';
+                            buffer[x, y] = ' ';
                         }
                     }
 
