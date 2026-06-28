@@ -276,6 +276,10 @@ public class Player : Entity
             {
                 smc.SkillSlotsAdd += 1;
             }
+            if (GameState?.Flags.ContainsKey("progress_door_weight_bonus") == true)
+            {
+                smc.MaxWeightAdd += 2;
+            }
         }
     }
 

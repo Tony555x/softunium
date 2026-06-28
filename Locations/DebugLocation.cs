@@ -58,6 +58,26 @@ public class DebugLocation : Location
             eng.ChangeRootPanel(animPanel);
         }));
 
+        Options.Add(new Option(id++, "Тест Шкафче Събитие (Debug)", "Тества новото събитие с вратата.", (eng) => 
+        {
+            var evt = new Harduni.Events.ProgressDoorEvent();
+            eng.ChangeRootPanel(evt);
+        }));
+
+        Options.Add(new Option(id++, "Премахване Флаг Шкафче (Debug)", "Премахва флага за взетата врата.", (eng) => 
+        {
+            if (eng.State.Flags.Remove("progress_door_weight_bonus"))
+            {
+                eng.State.Player.RecalcStats();
+                _message = "Флагът за шкафчето е премахнат!";
+            }
+            else
+            {
+                _message = "Флагът за шкафчето не съществува.";
+            }
+            BuildOptions(eng);
+        }));
+
         Options.Add(new Option(id++, "Назад към Кордор", "Връща ви в предходната локация.", (eng) => 
         {
             eng.ChangeRootPanel(World.Kordor);
