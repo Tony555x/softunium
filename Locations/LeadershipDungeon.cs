@@ -33,8 +33,7 @@ public class LeadershipDungeon : Dungeon
             // Room 1: Combat 2
             new Room(1, new List<Enemy> { new Zubarka() }),
 
-            // Room 2: Mushroom Event equivalent
-            new Room(0, null, new BreakEvent()),
+            // Room 2: (Removed BreakEvent)
 
             // Room 3: Combat 3
             new Room(1, new List<Enemy> { new Zubarka() }),
@@ -57,8 +56,7 @@ public class LeadershipDungeon : Dungeon
             // Room 9: Combat 8
             new Room(1, new List<Enemy> { new Zubarka(), new Zubarka() }) { LootMultiplier = 1.5f },
 
-            // Room 10: Flavor Event 1
-            new Room(0, null, new BreakEvent()),
+            // Room 10: (Removed BreakEvent)
 
             // Room 11: Combat 9
             new Room(1, new List<Enemy> { new Kifla(), new Kifla(), new Kifla() }) { LootMultiplier = 2f },
@@ -84,11 +82,14 @@ public class LeadershipDungeon : Dungeon
             // Room 18: Combat 14
             new Room(1, new List<Enemy> { new Dizainerka(), new Kifla() }) { LootMultiplier = 1.5f },
 
-            // Room 19: (Removed BreakEvent)
+            // Room 19: (Removed Event)
 
             // Room 20: Combat 15
             new Room(1, new List<Enemy> { new Dizainerka(), new Zubarka() }) { LootMultiplier = 1.5f },
             
+            // Room 20.4: Leadership Door Event
+            new Room(0, null, new LeadershipDoorEvent()),
+
             // Room 20.5: Mirror Event
             new Room(0, null, new MirrorEvent()),
 

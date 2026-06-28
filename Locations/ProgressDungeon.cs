@@ -39,7 +39,8 @@ public class ProgressDungeon : Dungeon
             // Room 2: Combat 2
             new Room(1, new List<Enemy> { new SmellyProgrammer() }),
 
-
+            // Room 3: Mushroom Event
+            new Room(0, null, new MushroomEvent()),
 
             // Room 4: Combat 3
             new Room(1, new List<Enemy> { new SmellyProgrammer() }),
@@ -50,7 +51,8 @@ public class ProgressDungeon : Dungeon
             // Room 6: Combat 5
             new Room(1, new List<Enemy> { new Programmer(), new Beta(), new WeakProgrammer() }),
 
-
+            // Room 7: AI Temple Event
+            new Room(0, null, new AIShrineEvent()),
 
             // Room 8: Combat 6
             new Room(1, new List<Enemy> { new Programmer(), new SmellyProgrammer() }) { LootMultiplier = 1.5f },
@@ -61,7 +63,8 @@ public class ProgressDungeon : Dungeon
             // Room 10: Combat 8
             new Room(1, new List<Enemy> { new SmellyProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 1.5f },
 
-
+            // Room 11: Poison Stream Event (after fight 8)
+            new Room(0, null, new PoisonStreamEvent()),
 
             // Room 12: Combat 9
             new Room(1, new List<Enemy> { new Programmer(), new Programmer(), new Programmer() }) { LootMultiplier = 2f },
@@ -75,12 +78,14 @@ public class ProgressDungeon : Dungeon
             // Room 15: Tempo Event
             new Room(0, null, new TempoUnlockEvent()),
 
-
+            // Room 16: Bridge Warning Event (before combat 12)
+            new Room(0, null, new BridgeWarningEvent()),
 
             // Room 17: Combat 12
             new Room(1, new List<Enemy> { new StuckProgrammer() }),
 
-
+            // Room 18: Poison Air Debuff Event
+            new Room(0, null, new PoisonAirDebuffEvent()),
 
             // Room 19: Combat 13
             new Room(1, new List<Enemy> { new StuckProgrammer() }),
@@ -91,8 +96,8 @@ public class ProgressDungeon : Dungeon
             // Room 21: Combat 15
             new Room(1, new List<Enemy> { new StuckProgrammer(), new SmellyProgrammer() }) { LootMultiplier = 1.5f },
 
-            // Room 22: Progress Door Event
-            new Room(0, null, new ProgressDoorEvent()),
+            // Room 22: Clean Room / Laptop Event
+            new Room(0, null, new CleanRoomLaptopEvent()),
 
             // Room 23: Combat 16
             new Room(1, new List<Enemy> { new StuckProgrammer(), new Programmer(), new SmellyProgrammer() }) { LootMultiplier = 2f },

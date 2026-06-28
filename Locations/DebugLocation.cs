@@ -60,7 +60,7 @@ public class DebugLocation : Location
 
         Options.Add(new Option(id++, "Тест Шкафче Събитие (Debug)", "Тества новото събитие с вратата.", (eng) => 
         {
-            var evt = new Harduni.Events.ProgressDoorEvent();
+            var evt = new Harduni.Events.LeadershipDoorEvent();
             eng.ChangeRootPanel(evt);
         }));
 

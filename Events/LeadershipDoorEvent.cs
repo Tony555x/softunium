@@ -4,7 +4,7 @@ using Harduni.Core;
 
 namespace Harduni.Events;
 
-public class ProgressDoorEvent : IPanel
+public class LeadershipDoorEvent : IPanel
 {
     private enum State { Initial, Opened, StaticFlash, EyeRevealed, DoorTaken, LockerMissing, StatsShown }
     private State _state = State.Initial;
