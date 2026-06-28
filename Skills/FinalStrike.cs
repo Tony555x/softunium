@@ -8,7 +8,7 @@ public class FinalStrike : Skill
 {
     public override string Name => "Завършващ удар";
     public override string ShortDescription => "Атакува с допълнителни щети спрямо липсващия живот на целта.";
-    public override string AccurateDescription => "Атакува за (Атака) щети. +(Живот% липсващ на целта)% щети.";
+    public override string AccurateDescription => "Атакува за (Атака * 1.5) щети. +(Живот% липсващ на целта)% щети.";
     public override TargetType Target => TargetType.Enemy;
     public override int MpCost => 3;
     public override bool UsableInBattle => true;
@@ -21,7 +21,7 @@ public class FinalStrike : Skill
         if (target == null) return "Няма цел.";
         float missingHpPercent = target.MaxHp > 0 ? (float)(target.MaxHp - target.Hp) / target.MaxHp : 0f;
         
-        var ctx = new DamageContext(player, target, player.Attack, DamageType.Attack);
+        var ctx = new DamageContext(player, target, player.Attack * 1.5f, DamageType.Attack);
         ctx.DamageMult += missingHpPercent;
         
         target.TakeDamage(ctx);
