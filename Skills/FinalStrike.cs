@@ -21,7 +21,7 @@ public class FinalStrike : Skill
         if (target == null) return "Няма цел.";
         float missingHpPercent = target.MaxHp > 0 ? (float)(target.MaxHp - target.Hp) / target.MaxHp : 0f;
         
-        var ctx = new DamageContext(player, target, player.Attack * 1.5f, DamageType.Attack);
+        var ctx = new DamageContext(player, target, (int)(player.Attack * 1.5f), DamageType.Attack);
         ctx.DamageMult += missingHpPercent;
         
         target.TakeDamage(ctx);

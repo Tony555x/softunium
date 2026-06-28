@@ -20,7 +20,7 @@ public class Suppress : Skill
     public override string Execute(Player player, List<Enemy> allEnemies, Enemy target)
     {
         if (target == null) return "Няма цел.";
-        var ctx = new DamageContext(player, target, player.Attack*1.5f, DamageType.Attack);
+        var ctx = new DamageContext(player, target, (int)(player.Attack*1.5f), DamageType.Attack);
         target.TakeDamage(ctx);
         target.Status.ApplyStatus(new AtkDownStatus(3, 0.5f));
         
