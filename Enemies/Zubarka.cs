@@ -13,7 +13,7 @@ public class Zubarka : Enemy
     public Zubarka() : base(
         name: "Зубърка",
         maxHp: 60, // 65 - 10% (6.5) -> ~58.5 -> round to mult of 5 -> 60
-        attack: 13, // 15 - 2
+        attack: 12, // 15 - 2
         defence: 14, // 12 + 20% (2.4) -> 14
         speed: 5, // 6 - 1
         magic: 10,
@@ -36,7 +36,9 @@ public class Zubarka : Enemy
         {
             var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
             p.TakeDamage(ctx);
-            engine.State.BattleData.Log($"{Name} хвърли книга и нанесе {ctx.DamageTaken} щети!");
+            p.Status.ApplyStatus(new DefDownStatus(10, 0.05f));
+            p.RecalcStats();
+            engine.State.BattleData.Log($"{Name} хвърли книга, нанесе {ctx.DamageTaken} щети и леко намали защитата ти!");
         }
     }
 }
