@@ -179,7 +179,7 @@ public class TempoSkillListPanel : IPanel
         {
             if (opt.Id == -1 || opt.Id == -2 || opt.Id == 0)
             {
-                VConsole.WriteLine($" { (opt.Id <= 0 ? (opt.Id == 0 ? "0" : (opt.Id == -1 ? "P" : "N")) : opt.Id.ToString()) }. {opt.Text}");
+                VConsole.WriteLine($" { (opt.Id <= 0 ? (opt.Id == 0 ? "0" : (opt.Id == -1 ? "<" : ">")) : opt.Id.ToString()) }. {opt.Text}");
                 continue;
             }
             if (opt.IsDisabled) VConsole.ForegroundColor = ConsoleColor.DarkGray;
@@ -189,7 +189,7 @@ public class TempoSkillListPanel : IPanel
 
         if (!inBattle)
         {
-            VConsole.WriteLine("\n[P - Предишна страница | N - Следваща страница]");
+            VConsole.WriteLine("\n[< - Предишна страница | > - Следваща страница]");
         }
     }
 
@@ -206,13 +206,13 @@ public class TempoSkillListPanel : IPanel
         }
 
         string normalizedInput = input.Trim().ToUpper();
-        if (!inBattle && normalizedInput == "P")
+        if (!inBattle && normalizedInput == "<")
         {
             var opt = _options.Find(o => o.Id == -1);
             opt?.OnSelect?.Invoke(engine);
             return;
         }
-        if (!inBattle && normalizedInput == "N")
+        if (!inBattle && normalizedInput == ">")
         {
             var opt = _options.Find(o => o.Id == -2);
             opt?.OnSelect?.Invoke(engine);

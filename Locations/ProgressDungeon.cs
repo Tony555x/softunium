@@ -46,7 +46,7 @@ public class ProgressDungeon : Dungeon
             new Room(1, new List<Enemy> { new SmellyProgrammer() }),
 
             // Room 5: Combat 4
-            new Room(1, new List<Enemy> { new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer() }),
+            new Room(1, new List<Enemy> { new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer(), new WeakProgrammer()}),
 
             // Room 6: Combat 5
             new Room(1, new List<Enemy> { new Programmer(), new Beta(), new WeakProgrammer() }),

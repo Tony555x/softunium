@@ -116,7 +116,7 @@ public class TempoSkillLoadoutPanel : IPanel
         {
             if (opt.Id == -1 || opt.Id == -2 || opt.Id == 0)
             {
-                VConsole.WriteLine($" { (opt.Id <= 0 ? (opt.Id == 0 ? "0" : (opt.Id == -1 ? "P" : "N")) : opt.Id.ToString()) }. {opt.Text}");
+                VConsole.WriteLine($" { (opt.Id <= 0 ? (opt.Id == 0 ? "0" : (opt.Id == -1 ? "<" : ">")) : opt.Id.ToString()) }. {opt.Text}");
                 continue;
             }
 
@@ -135,7 +135,7 @@ public class TempoSkillLoadoutPanel : IPanel
                 VConsole.WriteLine($" {opt.Text.Substring(14)}");
             }
         }
-        VConsole.WriteLine("\n[P - Предишна | N - Следваща | 0 - Изчисти]");
+        VConsole.WriteLine("\n[< - Предишна | > - Следваща | 0 - Изчисти]");
         VConsole.WriteLine("[Натиснете Enter за връщане]");
     }
 
@@ -149,13 +149,13 @@ public class TempoSkillLoadoutPanel : IPanel
         }
 
         string normalizedInput = input.Trim().ToUpper();
-        if (normalizedInput == "P")
+        if (normalizedInput == "<")
         {
             var opt = _options.Find(o => o.Id == -1);
             opt?.OnSelect?.Invoke(engine);
             return;
         }
-        if (normalizedInput == "N")
+        if (normalizedInput == ">")
         {
             var opt = _options.Find(o => o.Id == -2);
             opt?.OnSelect?.Invoke(engine);

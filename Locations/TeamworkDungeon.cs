@@ -44,7 +44,7 @@ public class TeamworkDungeon : Dungeon
             new Room(1, new List<Enemy> { new Mangal() }),
 
             // Room 5: Combat 4
-            new Room(1, new List<Enemy> { new Beta(), new Beta(), new Beta(), new Beta(), new Beta(), new Beta() }),
+            new Room(1, new List<Enemy> { new Beta(), new Beta(), new Beta(), new Beta(), new Beta()}),
 
             // Room 6: Combat 5
             new Room(1, new List<Enemy> { new Delta(), new Beta(), new Beta() }),

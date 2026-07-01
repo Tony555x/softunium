@@ -36,7 +36,7 @@ public class Zubarka : Enemy
         {
             var ctx = new DamageContext(this, p, this.Attack, DamageType.Attack);
             p.TakeDamage(ctx);
-            p.Status.ApplyStatus(new DefDownStatus(10, 0.05f));
+            p.Status.ApplyStatus(new DefDownStatus(25, 0.05f));
             p.RecalcStats();
             engine.State.BattleData.Log($"{Name} хвърли книга, нанесе {ctx.DamageTaken} щети и леко намали защитата ти!");
         }
