@@ -52,6 +52,14 @@ public class DebugLocation : Location
             BuildOptions(eng);
         }));
 
+        Options.Add(new Option(id++, engine.State.Player.IsLevelUpBlocked ? "Деблокиране на Ниво (Unblock Level Up)" : "Блокиране на Ниво (Block Level Up)", "Включва/изключва качването на ниво при достигане на нужния опит.", (eng) => 
+        {
+            var player = eng.State.Player;
+            player.IsLevelUpBlocked = !player.IsLevelUpBlocked;
+            _message = player.IsLevelUpBlocked ? "Качването на ниво е блокирано!" : "Качването на ниво е деблокирано!";
+            BuildOptions(eng);
+        }));
+
         Options.Add(new Option(id++, "Тест Анимация Око (Debug)", "Тества анимацията на окото.", (eng) => 
         {
             var animPanel = new Harduni.Events.BlinkingEyeAnimationPanel((e) => e.ChangeRootPanel(this));

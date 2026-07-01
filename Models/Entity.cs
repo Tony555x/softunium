@@ -111,6 +111,12 @@ public abstract class Entity
         {
             ctx.IsLethal = true;
         }
+
+        if (ctx.Type == DamageType.Attack)
+        {
+            ctx.Attacker?.TriggerEvent(GameEvent.AfterAttack, ctx);
+            TriggerEvent(GameEvent.AfterAttacked, ctx);
+        }
     }
 
     public HealContext Heal(int amount)

@@ -101,6 +101,7 @@ public class SkillListPanel : IPanel
                     else
                     {
                         p.Mp -= currentMpCost;
+                        p.TriggerEvent(GameEvent.OnSkillUsed, new SkillUsedContext(skill));
                         string msg = skill.Execute(p, new System.Collections.Generic.List<Harduni.Enemies.Enemy>(), null);
                         _message = msg;
                     }

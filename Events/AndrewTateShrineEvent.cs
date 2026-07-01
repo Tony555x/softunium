@@ -39,7 +39,7 @@ public class AndrewTateShrineEvent : IPanel
                 break;
 
             case EventState.Repeating:
-                _message = "Виждате олтара отново.";
+                _message = "Виждате олтара отново. Все още е заобиколен от газирана вода.";
                 break;
 
             case EventState.BeepsHeard:

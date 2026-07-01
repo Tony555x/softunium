@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Harduni.Core;
 using Harduni.Enemies;
+using Harduni.Relics;
 
 namespace Harduni.Events;
 
 public class SlavEvent : IPanel
 {
-    private enum SlavState { Initial, Talking1, Talking2, Talking3, Done }
+    private enum SlavState { Initial, Talking1, Talking2, Talking3, Done, Repeated, Repeated2, Repeated3 }
     private SlavState _state = SlavState.Initial;
     private SlavState _lastBuiltState = (SlavState)(-1);
     private List<Option> _options = new();
@@ -43,7 +44,17 @@ public class SlavEvent : IPanel
         _options.Clear();
         if (_state == SlavState.Initial)
         {
-            _options.Add(new Option(1, "Говори", "Опитайте се да говорите със Слав.", (eng) => _state = SlavState.Talking1));
+            _options.Add(new Option(1, "Говори", "Опитайте се да говорите със Слав.", (eng) => 
+            {
+                if (eng.State.Flags.ContainsKey("WisdomRoomsUnlocked"))
+                {
+                    _state = SlavState.Repeated;
+                }
+                else
+                {
+                    _state = SlavState.Talking1;
+                }
+            }));
         }
         else if (_state == SlavState.Talking1)
         {
@@ -57,12 +68,38 @@ public class SlavEvent : IPanel
         {
             _options.Add(new Option(1, "Ок", "Приемете информацията и продължете.", (eng) => FinishTalking(eng)));
         }
+        else if (_state == SlavState.Repeated)
+        {
+            _options.Add(new Option(1, "Здрасти отново", "Поздравете Слав отново.", (eng) => _state = SlavState.Repeated2));
+        }
+        else if (_state == SlavState.Repeated2)
+        {
+            if (engine.State.Flags.ContainsKey("relics_unlocked") && !engine.State.Flags.ContainsKey("obtained_flash_drive"))
+            {
+                _options.Add(new Option(1, "Вземи 10 TB флашка", "Вземете реликвата от Слав.", (eng) => 
+                {
+                    eng.State.Flags["obtained_flash_drive"] = "true";
+                    var p = eng.State.Player;
+                    p.Relics.Add(new FlashDrive());
+                    _message = "Получихте реликва: 10 TB флашка!";
+                    _state = SlavState.Repeated3;
+                }));
+            }
+            else
+            {
+                _options.Add(new Option(1, "Тръгни си", "Продължете пътя си.", (eng) => Leave(eng)));
+            }
+        }
+        else if (_state == SlavState.Repeated3)
+        {
+            _options.Add(new Option(1, "Тръгни си", "Продължете пътя си.", (eng) => Leave(eng)));
+        }
         _lastBuiltState = _state;
     }
 
-    private void StartFight(GameEngine engine)
+    private void Leave(GameEngine engine)
     {
-        BattleManager.StartBattle(engine, new List<Enemy> { _slavEnemy }, engine.State.World.WisdomDungeon);
+        engine.State.DungeonData.IsEventActive = false;
     }
 
     private void FinishTalking(GameEngine engine)
@@ -75,6 +112,9 @@ public class SlavEvent : IPanel
 
     public void OnOpen(GameEngine engine)
     {
+        _state = SlavState.Initial;
+        _lastBuiltState = (SlavState)(-1);
+        _message = "";
         EnsureOptions(engine);
     }
 
@@ -86,7 +126,6 @@ public class SlavEvent : IPanel
             return;
         }
 
-        //VConsole.WriteLine("<=- СЛАВ -=>");
         if (_state == SlavState.Initial)
         {
             VConsole.WriteLine("Виждате Слав да стои спокойно в края на залата.");
@@ -103,6 +142,25 @@ public class SlavEvent : IPanel
         {
             VConsole.WriteLine("Слав: Там.");
             VConsole.WriteLine("Отключени са стаите: 'Стая Прогрес', 'Стая Тимуърк' и 'Стая Интегрити'.");
+        }
+        else if (_state == SlavState.Repeated)
+        {
+            VConsole.WriteLine("Слав: Ей отново.");
+        }
+        else if (_state == SlavState.Repeated2)
+        {
+            if (engine.State.Flags.ContainsKey("relics_unlocked") && !engine.State.Flags.ContainsKey("obtained_flash_drive"))
+            {
+                VConsole.WriteLine("Слав: А, отключил си реликви. Вземи тази 10 TB флашка.");
+            }
+            else
+            {
+                VConsole.WriteLine("Слав: Здрасти отново. Няма какво повече да ти кажа.");
+            }
+        }
+        else if (_state == SlavState.Repeated3)
+        {
+            VConsole.WriteLine("Слав стои спокойно в края на залата.");
         }
 
         VConsole.WriteLine("\nВъзможни действия:");

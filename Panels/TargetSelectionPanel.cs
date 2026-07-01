@@ -53,7 +53,7 @@ public class TargetSelectionPanel : IPanel
         var p = engine.State.Player;
         var skill = data.SelectedSkill;
 
-        if (p.Mp < skill.MpCost)
+        if (p.Mp < skill.GetMpCost(p))
         {
             data.Log($"Нямате достатъчно Айрян за {skill.Name}!");
             data.CurrentSubPanel = null;
@@ -67,9 +67,11 @@ public class TargetSelectionPanel : IPanel
             return;
         }
 
-        p.Mp -= skill.MpCost;
+        p.Mp -= skill.GetMpCost(p);
         p.Tempo -= skill.TempoCost;
         skill.Cooldown = skill.BaseCooldown + 1;
+
+        p.TriggerEvent(GameEvent.OnSkillUsed, new SkillUsedContext(skill));
 
         string resultMsg = skill.Execute(p, data.Enemies, target);
         

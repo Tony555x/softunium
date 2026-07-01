@@ -39,7 +39,7 @@ public class TikTokShrineEvent : IPanel
                 break;
 
             case EventState.Repeating:
-                _message = "Виждате странният олтар. Водата около него е черна като мастило.";
+                _message = "Виждате странният олтар. Заобиколен е от кръг от мастило.";
                 break;
 
             case EventState.BeepsHeard:

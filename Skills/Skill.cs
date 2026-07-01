@@ -22,7 +22,7 @@ public abstract class Skill
     
     public virtual int GetMpCost(Player player)
     {
-        var ctx = new MpCostContext(MpCost);
+        var ctx = new MpCostContext(this, MpCost);
         player.TriggerEvent(GameEvent.CalculateMpCost, ctx);
         return ctx.GetTotalCost();
     }

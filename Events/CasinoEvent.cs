@@ -150,12 +150,12 @@ public class CasinoEvent : IPanel
         if (_state == GameState.Main)
         {
             VConsole.WriteLine("Казино!!");
-            VConsole.WriteLine("Добре дошли в скритото казино сред панелките. Тук се играе Блекджек по специални правила:");
+            VConsole.WriteLine("Намирате казино в панелките. Тук се играе Блекджек по специални правила:");
             VConsole.WriteLine("- Целта е да се приближите възможно най-близо до 12, без да я надхвърляте.");
             VConsole.WriteLine("- Всяка карта добавя стойност от 1 до 6.");
             VConsole.WriteLine("- Дилърът тегли докато сумата му стане поне 9.");
             VConsole.WriteLine("- Победата ви носи 20 лв. Равенството връща залога ви от 10 лв.");
-            VConsole.WriteLine("\n* Мета съобщение: Генераторът на случайни числа (RNG) наистина не е нагласен! *");
+            VConsole.WriteLine("\n* ps късмета даже не нагласен но със сигурност пак ще загубиш*");
         }
         else if (_state == GameState.Playing)
         {

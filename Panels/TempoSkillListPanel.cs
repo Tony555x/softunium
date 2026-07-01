@@ -114,6 +114,7 @@ public class TempoSkillListPanel : IPanel
                     {
                         p.Mp -= currentMpCost;
                         p.Tempo -= skill.TempoCost;
+                        p.TriggerEvent(GameEvent.OnSkillUsed, new SkillUsedContext(skill));
                         string msg = skill.Execute(p, new System.Collections.Generic.List<Harduni.Enemies.Enemy>(), null);
                         _message = msg;
                     }

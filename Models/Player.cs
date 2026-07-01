@@ -15,6 +15,7 @@ public class Player : Entity
     public int Level { get; set; }
     public int Xp { get; set; }
     public int MaxXp => (int)(10 * Level * Math.Pow(1.2, Level-1));
+    public bool IsLevelUpBlocked { get; set; } = false;
     
     // Alignment
     public int Alignment { get; set; } // Positive = Peturium, Negative = Gamenium
@@ -81,7 +82,10 @@ public class Player : Entity
         while (Xp >= MaxXp)
         {
             Xp -= MaxXp;
-            Level++;
+            if (!IsLevelUpBlocked)
+            {
+                Level++;
+            }
         }
 
         if (Level > initialLevel)
@@ -142,47 +146,62 @@ public class Player : Entity
             messages.Add(string.Join(", ", otherStatsList));
 
         // Skill checks
-        CheckAndAddSkill(2, new HeavyStrike(), messages);
-        CheckAndAddSkill(3, new Heal(), messages);
-        CheckAndAddSkill(4, new Suppress(), messages);
-        CheckAndAddSkill(5, new Warcry(), messages);
-        CheckAndAddSkill(6, new PassiveDamageBonus(), messages);
-        CheckAndAddSkill(7, new PoisonStrike(), messages);
-        CheckAndAddSkill(8, new Concentration(), messages);
-        CheckAndAddSkill(9, new FinalStrike(), messages);
-        CheckAndAddSkill(10, new Exertion(), messages);
-        CheckAndAddSkill(11, new IronSkin(), messages);
-        CheckAndAddSkill(12, new Filth(), messages);
-        CheckAndAddSkill(13, new MagicAffinity(), messages);
-        CheckAndAddSkill(14, new PiercingStrike(), messages);
-        CheckAndAddSkill(15, new Pulse(), messages);
-        CheckAndAddSkill(16, new Cleave(), messages);
-        CheckAndAddSkill(17, new VampiricStrike(), messages);
-        CheckAndAddSkill(18, new Step(), messages);
+        CheckAndAddSkill(2, () => new HeavyStrike(), messages);
+        CheckAndAddSkill(3, () => new Heal(), messages);
+        CheckAndAddSkill(4, () => new Suppress(), messages);
+        CheckAndAddSkill(5, () => new Warcry(), messages);
+        CheckAndAddSkill(6, () => new PassiveDamageBonus(), messages);
+        CheckAndAddSkill(7, () => new PoisonStrike(), messages);
+        CheckAndAddSkill(8, () => new Concentration(), messages);
+        CheckAndAddSkill(9, () => new FinalStrike(), messages);
+        CheckAndAddSkill(10, () => new Exertion(), messages);
+        CheckAndAddSkill(11, () => new IronSkin(), messages);
+        CheckAndAddSkill(12, () => new Filth(), messages);
+        CheckAndAddSkill(13, () => new MagicAffinity(), messages);
+        CheckAndAddSkill(14, () => new PiercingStrike(), messages);
+        CheckAndAddSkill(15, () => new Pulse(), messages);
+        CheckAndAddSkill(16, () => new Cleave(), messages);
+        CheckAndAddSkill(17, () => new VampiricStrike(), messages);
+        CheckAndAddSkill(18, () => new Step(), messages);
 
         CheckAndAddTempoSkills(messages);
 
         return messages;
     }
 
-    private void CheckAndAddSkill(int minLevel, Skill skill, List<string> messages)
+    private void CheckAndAddSkill<T>(int minLevel, Func<T> skillFactory, List<string> messages) where T : Skill
     {
-        if (Level >= minLevel && !Skills.Exists(s => s.Name == skill.Name))
+        if (Level >= minLevel)
         {
-            Skills.Add(skill);
-            
-            if (EquippedSkills.Count < MaxSkillSlots)
+            if (!Skills.Exists(s => s is T))
             {
-                EquippedSkills.Add(skill);
-                messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+                Skill skill = skillFactory();
+                Skills.Add(skill);
+                
+                if (EquippedSkills.Count < MaxSkillSlots)
+                {
+                    EquippedSkills.Add(skill);
+                    messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+                }
+                else
+                {
+                    messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
+                    messages.Add($"(Може да го екипирате от Кордор, тъй като слотовете ви са пълни.)");
+                }
+                
+                RecalcStats();
             }
-            else
+        }
+        else
+        {
+            var existing = Skills.Find(s => s is T);
+            if (existing != null)
             {
-                messages.Add($"+++ НАУЧИХТЕ НОВО УМЕНИЕ: {skill.Name} +++");
-                messages.Add($"(Може да го екипирате от Кордор, тъй като слотовете ви са пълни.)");
+                Skills.Remove(existing);
+                EquippedSkills.RemoveAll(s => s is T);
+                messages.Add($"--- ЗАБРАВИХТЕ УМЕНИЕТО: {existing.Name} ---");
+                RecalcStats();
             }
-            
-            RecalcStats();
         }
     }
 
@@ -199,35 +218,48 @@ public class Player : Entity
 
     public void CheckAndAddTempoSkills(List<string> messages)
     {
-        if (GameState != null && GameState.Flags.ContainsKey("tempo_unlocked"))
-        {
-            CheckAndAddTempoSkill(3, new Combo(), messages);
-            CheckAndAddTempoSkill(6, new HolyLight(), messages);
-            CheckAndAddTempoSkill(9, new Rot(), messages);
-            CheckAndAddTempoSkill(12, new Accel(), messages);
-            CheckAndAddTempoSkill(15, new Nigredo(), messages);
-            CheckAndAddTempoSkill(18, new Rhythm(), messages);
-        }
+        CheckAndAddTempoSkill(3, () => new Combo(), messages);
+        CheckAndAddTempoSkill(6, () => new HolyLight(), messages);
+        CheckAndAddTempoSkill(9, () => new Rot(), messages);
+        CheckAndAddTempoSkill(12, () => new Accel(), messages);
+        CheckAndAddTempoSkill(15, () => new Nigredo(), messages);
+        CheckAndAddTempoSkill(18, () => new Rhythm(), messages);
     }
 
-    private void CheckAndAddTempoSkill(int minLevel, Skill skill, List<string> messages)
+    private void CheckAndAddTempoSkill<T>(int minLevel, Func<T> skillFactory, List<string> messages) where T : Skill
     {
-        if (Level >= minLevel && !TempoSkills.Exists(s => s.Name == skill.Name))
+        bool hasTempo = GameState != null && GameState.Flags.ContainsKey("tempo_unlocked");
+        if (Level >= minLevel && hasTempo)
         {
-            TempoSkills.Add(skill);
-            
-            if (EquippedTempoSkills.Count < MaxTempoSkillSlots)
+            if (!TempoSkills.Exists(s => s is T))
             {
-                EquippedTempoSkills.Add(skill);
-                messages.Add($"+++ НАУЧИХТЕ НОВО ТЕМПО УМЕНИЕ: {skill.Name} +++");
+                Skill skill = skillFactory();
+                TempoSkills.Add(skill);
+                
+                if (EquippedTempoSkills.Count < MaxTempoSkillSlots)
+                {
+                    EquippedTempoSkills.Add(skill);
+                    messages.Add($"+++ НАУЧИХТЕ НОВО ТЕМПО УМЕНИЕ: {skill.Name} +++");
+                }
+                else
+                {
+                    messages.Add($"+++ НАУЧИХТЕ НОВО ТЕМПО УМЕНИЕ: {skill.Name} +++");
+                    messages.Add($"(Може да го екипирате от Кордор, тъй като слотовете ви за темпо умения са пълни.)");
+                }
+                
+                RecalcStats();
             }
-            else
+        }
+        else
+        {
+            var existing = TempoSkills.Find(s => s is T);
+            if (existing != null)
             {
-                messages.Add($"+++ НАУЧИХТЕ НОВО ТЕМПО УМЕНИЕ: {skill.Name} +++");
-                messages.Add($"(Може да го екипирате от Кордор, тъй като слотовете ви за темпо умения са пълни.)");
+                TempoSkills.Remove(existing);
+                EquippedTempoSkills.RemoveAll(s => s is T);
+                messages.Add($"--- ЗАБРАВИХТЕ ТЕМПО УМЕНИЕТО: {existing.Name} ---");
+                RecalcStats();
             }
-            
-            RecalcStats();
         }
     }
 
