@@ -11,8 +11,8 @@ public class Kifla : Enemy
 
     public Kifla() : base(
         name: "Кифла",
-        maxHp: 75, // 65 - 10% (6.5) -> ~58.5 -> round to mult of 5 -> 60
-        attack: 13, // 15 - 2
+        maxHp: 125, // 65 - 10% (6.5) -> ~58.5 -> round to mult of 5 -> 60
+        attack: 12, // 15 - 2
         defence: 14, // 12 + 20% (2.4) -> 14
         speed: 6, // 6 - 1
         magic: 16,
